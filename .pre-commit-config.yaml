@@ -1,0 +1,28 @@
+fail_fast: false
+repos:
+- hooks:
+  - id: check-yaml
+  - exclude: .vscode
+    id: check-json
+  - id: end-of-file-fixer
+  - id: trailing-whitespace
+  repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.4.0
+- hooks:
+  - exclude_types:
+    - javascript
+    - json
+    id: clang-format
+  repo: https://github.com/pre-commit/mirrors-clang-format
+  rev: v16.0.3
+- hooks:
+  - id: commitizen
+  - id: commitizen-branch
+    stages:
+    - push
+  repo: https://github.com/commitizen-tools/commitizen
+  rev: v3.13.0
+- repo: https://github.com/gitleaks/gitleaks
+  rev: v8.17.0
+  hooks:
+    - id: gitleaks
