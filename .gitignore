@@ -145,3 +145,5 @@ ipch/
 *.e2e
 
 compile_commands.json
+.cache/
+
