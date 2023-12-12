@@ -4,25 +4,25 @@ project(Araknoid LANGUAGES CXX)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 
-set(SFML_DIR "/usr/local/Cellar/sfml/2.5.1_1/lib/cmake/SFML")
-
-
 include(FetchContent)
 FetchContent_Declare(SFML
     GIT_REPOSITORY https://github.com/SFML/SFML.git
     GIT_TAG 2.6.x)
 FetchContent_MakeAvailable(SFML)
 
+
+add_library(Ball src/Ball.cpp src/Ball.h)
+target_link_libraries(Ball sfml-network sfml-audio sfml-graphics sfml-window sfml-system)
+target_compile_features(Ball PRIVATE cxx_std_17)
+
 add_executable(Araknoid src/araknoid.cpp)
-target_link_libraries(Araknoid PRIVATE sfml-graphics)
+target_link_libraries(Araknoid PRIVATE sfml-graphics Ball)
 target_compile_features(Araknoid PRIVATE cxx_std_17)
 
-#find_package(SFML 2.5 COMPONENTS network audio graphics window system REQUIRED)
+#find_package(SFML 2.6 COMPONENTS network audio graphics window system REQUIRED)
 #if(SFML_FOUND)
 #  include_directories(${SFML_INCLUDE_DIR})
-#  # SFML version >= 2.5
-#  #In SFML Version 2.5 or later, ${SFML_LIBRARIES}, ${SFML_DEPENDENCIES}, ${SFML_INCLUDE_DIR} no longer exist. Specify libraries individually.
-#  target_link_libraries(${PROJECT_NAME} sfml-network sfml-audio sfml-graphics sfml-window sfml-system)
+#  target_link_libraries(${PROJECT_NAME} PRIVATE Ball)
 #endif()
 
 if(WIN32)
