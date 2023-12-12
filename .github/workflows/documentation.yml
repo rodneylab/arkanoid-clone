@@ -14,8 +14,8 @@ jobs:
     name: Build and publish documentation
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-python@v2
+    - uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # v2.7.0
+    - uses: actions/setup-python@e9aba2c848f5ebd159c070c61ea2c4e2b122355e # v2.3.4
     - name: Install Docs
       run: |
         sudo apt-get install doxygen
@@ -30,7 +30,7 @@ jobs:
       run: |
         cmake --build build --config Debug --target docs -j4
     - name: Deploy to GitHub Pages
-      uses: Cecilapp/GitHub-Pages-deploy@v3
+      uses: Cecilapp/GitHub-Pages-deploy@526a34f794dfdf7edd6a4ac94321b1e7945910c0 # v3
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
