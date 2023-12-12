@@ -10,8 +10,7 @@ find_package(
                audio
                graphics
                window
-               system
-    REQUIRED)
+               system)
 if(NOT SFML_FOUND)
     include(FetchContent)
     FetchContent_Declare(
