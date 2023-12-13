@@ -22,7 +22,7 @@ if(NOT SFML_FOUND)
     FetchContent_MakeAvailable(SFML)
 endif()
 
-add_library(Ball src/Ball.cpp src/Ball.h)
+add_library(Ball "${PROJECT_SOURCE_DIR}/src/Ball.cpp")
 target_link_libraries(
     Ball
     sfml-network
