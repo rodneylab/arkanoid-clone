@@ -4,17 +4,16 @@
 #include <variant>
 
 #include "Ball.h"
-
-constexpr unsigned int kWINDOW_WIDTH{800U}, kWINDOW_HEIGHT{600U},
-    kFRAMERATE_LIMIT{60U};
+#include "constants.h"
 
 int main()
 {
-    const Ball ball{static_cast<int>(kWINDOW_WIDTH / 2),
-                    static_cast<int>(kWINDOW_HEIGHT / 2)};
+    Ball ball{static_cast<int>(constants::kWindowWidth / 2),
+              static_cast<int>(constants::kWindowHeight / 2)};
 
-    sf::RenderWindow window{{kWINDOW_WIDTH, kWINDOW_HEIGHT}, "Araknoid - 1"};
-    window.setFramerateLimit(kFRAMERATE_LIMIT);
+    sf::RenderWindow window{{constants::kWindowWidth, constants::kWindowHeight},
+                            "Araknoid - 1"};
+    window.setFramerateLimit(constants::kFramerateLimit);
 
     while (window.isOpen())
     {
@@ -41,6 +40,7 @@ int main()
 
 
         window.clear(sf::Color::Black);
+        ball.update();
         window.draw(ball.shape);
         window.display();
     }
