@@ -4,7 +4,6 @@
 #include <variant>
 
 #include "Ball.h"
-#include "constants.h"
 
 int main()
 {

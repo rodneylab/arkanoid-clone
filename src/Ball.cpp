@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "Ball.h"
 
 Ball::Ball(float x_coordinate, float y_coordinate)
