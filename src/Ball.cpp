@@ -1,9 +1,16 @@
+#include <iostream>
+
 #include "Ball.h"
 
 Ball::Ball(float x_coordinate, float y_coordinate)
 {
     shape.setPosition(x_coordinate, y_coordinate);
-    shape.setRadius(kBALL_RADIUS);
+    shape.setRadius(constants::kBallRadius);
     shape.setFillColor(sf::Color::Red);
-    shape.setOrigin(kBALL_RADIUS, kBALL_RADIUS);
+    shape.setOrigin(constants::kBallRadius, constants::kBallRadius);
+}
+
+void Ball::update()
+{
+    shape.move(velocity);
 }
