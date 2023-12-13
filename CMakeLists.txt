@@ -22,9 +22,9 @@ if(NOT SFML_FOUND)
     FetchContent_MakeAvailable(SFML)
 endif()
 
-add_library(Ball STATIC "${PROJECT_SOURCE_DIR}/src/Ball.cpp")
+add_library(Ball_lib STATIC "${PROJECT_SOURCE_DIR}/src/Ball.cpp")
 target_link_libraries(
-    Ball
+    Ball_lib
     sfml-network
     sfml-audio
     sfml-graphics
@@ -32,7 +32,7 @@ target_link_libraries(
     sfml-system)
 
 add_executable(Arkanoid src/arkanoid.cpp)
-target_link_libraries(Arkanoid PUBLIC Ball)
+target_link_libraries(Arkanoid PUBLIC Ball_lib)
 target_include_directories(Arkanoid PUBLIC "${PROJECT_BINARY_DIR}")
 
 if(WIN32)
@@ -48,3 +48,5 @@ if(WIN32)
 endif()
 
 install(TARGETS Arkanoid)
+
+add_subdirectory(Catch_tests)
