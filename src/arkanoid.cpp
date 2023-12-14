@@ -11,7 +11,7 @@ int main()
               static_cast<int>(constants::kWindowHeight / 2)};
 
     sf::RenderWindow window{{constants::kWindowWidth, constants::kWindowHeight},
-                            "Araknoid - 1"};
+                            "Arkanoid - 1"};
     window.setFramerateLimit(constants::kFramerateLimit);
 
     while (window.isOpen())
