@@ -3,7 +3,8 @@ project(Arkanoid LANGUAGES CXX)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_EXPORT_COMPILE_COMMANDS True)
-set(CMAKE_CXX_STANDARD 17)
+add_library(arkanoid_compiler_flags INTERFACE)
+target_compile_features(arkanoid_compiler_flags INTERFACE cxx_std_17)
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 
 find_package(
@@ -29,10 +30,11 @@ target_link_libraries(
     sfml-audio
     sfml-graphics
     sfml-window
-    sfml-system)
+    sfml-system
+    arkanoid_compiler_flags)
 
 add_executable(Arkanoid src/arkanoid.cpp)
-target_link_libraries(Arkanoid PUBLIC Ball_lib)
+target_link_libraries(Arkanoid PUBLIC Ball_lib arkanoid_compiler_flags)
 target_include_directories(Arkanoid PUBLIC "${PROJECT_BINARY_DIR}")
 
 if(WIN32)
