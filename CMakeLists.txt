@@ -51,4 +51,7 @@ endif()
 
 install(TARGETS Arkanoid)
 
-add_subdirectory(Catch_tests)
+option(RUN_UNIT_TESTS "Run Catch2 unit tests" ON)
+if(RUN_UNIT_TESTS)
+    add_subdirectory(Catch_tests)
+endif()
