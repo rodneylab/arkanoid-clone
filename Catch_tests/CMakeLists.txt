@@ -18,14 +18,9 @@ include(CTest)
 include(Catch)
 catch_discover_tests(Catch_tests_run)
 
-if(WIN32)
-add_custom_command(
-    TARGET Catch_tests_run
-    POST_BUILD
-    COMMAND "cd ../bin && Catch_tests_run.exe")
-else()
-add_custom_command(
-    TARGET Catch_tests_run
-    POST_BUILD
-    COMMAND "../bin/Catch_tests_run")
+if(NOT WIN32)
+    add_custom_command(
+        TARGET Catch_tests_run
+        POST_BUILD
+        COMMAND "../bin/Catch_tests_run")
 endif()
