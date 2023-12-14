@@ -68,7 +68,6 @@ TEST_CASE("UpdateChangesVelocitDirectionWhenBallMovesOffScreen", "[BallTests]")
     // act
     ball.update();
 
-
     // assert
     CHECK(ball.velocity.x < 0);
     CHECK(ball.velocity.y < 0);
