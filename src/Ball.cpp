@@ -59,6 +59,5 @@ float Ball::top() const
 
 float Ball::bottom() const
 {
-
     return y() + constants::kBallRadius;
 }
