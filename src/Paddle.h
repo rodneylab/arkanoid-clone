@@ -1,13 +1,9 @@
 #include <SFML/Graphics.hpp>
 
-#include "constants.h"
-
-struct Ball
+struct Paddle
 {
-    Ball(float x_coordinate, float y_coordinate);
-
+    Paddle(float initial_x, float initial_y);
     void update();
-
     float x() const;
     float y() const;
     float left() const;
@@ -15,6 +11,6 @@ struct Ball
     float top() const;
     float bottom() const;
 
-    sf::CircleShape shape;
+    sf::RectangleShape shape;
     sf::Vector2f velocity;
 };
