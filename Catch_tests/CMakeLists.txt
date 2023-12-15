@@ -14,5 +14,13 @@ target_link_libraries(Catch_tests_run PUBLIC Ball_lib arkanoid_compiler_flags)
 target_link_libraries(Catch_tests_run PRIVATE Catch2::Catch2WithMain)
 target_include_directories(Catch_tests_run PUBLIC "${PROJECT_SOURCE_DIR}/src")
 
+include(CTest)
 include(Catch)
 catch_discover_tests(Catch_tests_run)
+
+if(NOT WIN32)
+    add_custom_command(
+        TARGET Catch_tests_run
+        POST_BUILD
+        COMMAND "../bin/Catch_tests_run")
+endif()
