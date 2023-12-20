@@ -5,6 +5,34 @@
 #include "Ball.h"
 #include "Paddle.h"
 
+template <class T1, class T2>
+bool is_intersecting(const T1 &mObjectA, const T2 &mObjectB)
+{
+    return mObjectA.right() >= mObjectB.left() &&
+           mObjectA.left() <= mObjectB.right() &&
+           mObjectA.bottom() >= mObjectB.top() &&
+           mObjectA.top() <= mObjectB.bottom();
+}
+
+void handle_collision(const Paddle &mPaddle, Ball &mBall)
+{
+    if (!is_intersecting(mPaddle, mBall))
+    {
+        return;
+    }
+
+    mBall.velocity.y = -constants::kBallVelocity;
+
+    if (mBall.x() < mPaddle.x())
+    {
+        mBall.velocity.x = -constants::kBallVelocity;
+    }
+    else
+    {
+        mBall.velocity.x = constants::kBallVelocity;
+    }
+}
+
 int main()
 {
     Ball ball{static_cast<int>(constants::kWindowWidth / 2),
@@ -12,7 +40,7 @@ int main()
     Paddle paddle{static_cast<int>(constants::kWindowWidth / 2),
                   constants::kWindowHeight - constants::kPaddleInsetBottom};
     sf::RenderWindow window{{constants::kWindowWidth, constants::kWindowHeight},
-                            "Arkanoid - 1"};
+                            "Arkanoid Clone"};
     window.setFramerateLimit(constants::kFramerateLimit);
 
     while (window.isOpen())
@@ -43,6 +71,8 @@ int main()
 
         ball.update();
         paddle.update();
+
+        handle_collision(paddle, ball);
 
         window.draw(ball.shape);
         window.draw(paddle.shape);
