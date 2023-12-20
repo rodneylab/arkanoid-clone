@@ -1,38 +1,35 @@
 name: Ubuntu CI Test
-
 on:
   push:
-    branches: [ main, master, dev ]
+    branches: [main, master, dev]
   pull_request:
-    branches: [ main, master, dev ]
-
+    branches: [main, master, dev]
 permissions:
   contents: read
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Harden Runner
-      uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
-      with:
-        egress-policy: audit
-    - uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # v2.7.0
-    - name: install
-      run: |
-        sudo apt-get install gcovr lcov
-    - name: prepare
-      run: |
-        make prepare
-    - name: configure
-      run: |
-        cmake -H. -Bbuild -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=On
-    - name: building
-      run: |
-        cmake --build build --config Debug --target coverage -j4
-    - name: testing
-      run: |
-        cd build
-        cd tests
-        ./unit_tests
-        bash <(curl -s https://codecov.io/bash)
+      - name: Harden Runner
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
+        with:
+          egress-policy: audit
+      - uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # v2.7.0
+      - name: install
+        run: |
+          sudo apt-get install gcovr lcov
+      - name: prepare
+        run: |
+          make prepare
+      - name: configure
+        run: |
+          cmake -H. -Bbuild -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=On
+      - name: building
+        run: |
+          cmake --build build --config Debug --target coverage -j4
+      - name: testing
+        run: |
+          cd build
+          cd tests
+          ./unit_tests
+          bash <(curl -s https://codecov.io/bash)
