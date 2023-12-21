@@ -33,6 +33,16 @@ target_link_libraries(
     sfml-system
     arkanoid_compiler_flags)
 
+add_library(Brick_lib STATIC "${PROJECT_SOURCE_DIR}/src/Brick.cpp")
+target_link_libraries(
+    Brick_lib
+    sfml-network
+    sfml-audio
+    sfml-graphics
+    sfml-window
+    sfml-system
+    arkanoid_compiler_flags)
+
 add_library(Paddle_lib STATIC "${PROJECT_SOURCE_DIR}/src/Paddle.cpp")
 target_link_libraries(
     Paddle_lib
@@ -44,7 +54,7 @@ target_link_libraries(
     arkanoid_compiler_flags)
 
 add_executable(Arkanoid src/arkanoid.cpp)
-target_link_libraries(Arkanoid PUBLIC Ball_lib Paddle_lib
+target_link_libraries(Arkanoid PUBLIC Ball_lib Brick_lib Paddle_lib
                                       arkanoid_compiler_flags)
 target_include_directories(Arkanoid PUBLIC "${PROJECT_BINARY_DIR}")
 
@@ -64,5 +74,6 @@ install(TARGETS Arkanoid)
 
 option(RUN_UNIT_TESTS "Run Catch2 unit tests" ON)
 if(RUN_UNIT_TESTS)
+    enable_testing()
     add_subdirectory(Catch_tests)
 endif()

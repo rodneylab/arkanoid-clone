@@ -3,6 +3,7 @@
 #include <variant>
 
 #include "Ball.h"
+#include "Brick.h"
 #include "Paddle.h"
 
 template <class T1, class T2>
@@ -39,6 +40,19 @@ int main()
               static_cast<int>(constants::kWindowHeight / 2)};
     Paddle paddle{static_cast<int>(constants::kWindowWidth / 2),
                   constants::kWindowHeight - constants::kPaddleInsetBottom};
+
+    std::vector<Brick> bricks;
+    for (int iX{0}; iX < constants::kCountBlocksX; ++iX)
+    {
+        for (int iY{0}; iY < constants::kCountBlocksY; ++iY)
+        {
+            bricks.emplace_back(
+                static_cast<float>(iX + 1) * (constants::kBlockWidth + 3) +
+                    constants::kBlocksInsetX,
+                static_cast<float>(iY + 2) * (constants::kBlockHeight + 3));
+        }
+    }
+
     sf::RenderWindow window{{constants::kWindowWidth, constants::kWindowHeight},
                             "Arkanoid Clone"};
     window.setFramerateLimit(constants::kFramerateLimit);
@@ -76,6 +90,10 @@ int main()
 
         window.draw(ball.shape);
         window.draw(paddle.shape);
+        for (auto &brick : bricks)
+        {
+            window.draw(brick.shape);
+        }
         window.display();
     }
     return 0;
