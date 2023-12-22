@@ -34,6 +34,38 @@ void handle_collision(const Paddle &mPaddle, Ball &mBall)
     }
 }
 
+void handle_collision(Brick &mBrick, Ball &mBall)
+{
+    if (!is_intersecting(mBall, mBrick))
+    {
+        return;
+    }
+
+    mBrick.destroyed = true;
+
+    const float overlap_left{mBall.right() - mBrick.left()};
+    const float overlap_right{mBrick.right() - mBall.left()};
+    const float overlap_top{mBall.bottom() - mBrick.top()};
+    const float overlap_bottom{mBrick.bottom() - mBall.top()};
+
+    const bool ball_from_left(std::abs(overlap_left) < std::abs(overlap_right));
+    const bool ball_from_top(std::abs(overlap_top) < std::abs(overlap_bottom));
+
+    const float min_overlap_x{ball_from_left ? overlap_left : overlap_right};
+    const float min_overlap_y{ball_from_top ? overlap_top : overlap_bottom};
+
+    if (std::abs(min_overlap_x) < std::abs(min_overlap_y))
+    {
+        mBall.velocity.x = ball_from_left ? -constants::kBallVelocity
+                                          : constants::kBallVelocity;
+    }
+    else
+    {
+        mBall.velocity.y = ball_from_top ? -constants::kBallVelocity
+                                         : constants::kBallVelocity;
+    }
+}
+
 int main()
 {
     Ball ball{static_cast<int>(constants::kWindowWidth / 2),
@@ -80,13 +112,24 @@ int main()
             }
         }
 
-
         window.clear(sf::Color::Black);
 
         ball.update();
         paddle.update();
 
         handle_collision(paddle, ball);
+        for (auto &brick : bricks)
+        {
+            handle_collision(brick, ball);
+        }
+
+        bricks.erase(
+            // remove_if moves satisfying elements to the end of the vector and
+            // returns an iterator to the first (moved) satisfying element
+            remove_if(begin(bricks),
+                      end(bricks),
+                      [](const Brick &mBrick) { return mBrick.destroyed; }),
+            end(bricks));
 
         window.draw(ball.shape);
         window.draw(paddle.shape);
