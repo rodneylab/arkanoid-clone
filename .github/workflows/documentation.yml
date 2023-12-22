@@ -20,7 +20,7 @@ jobs:
       - name: Install Docs
         run: |
           sudo apt-get install doxygen
-          pip install -r requirements.txt --require-hashes
+          pip install -r requirements.txt  --require-hashes
       - name: prepare
         run: |
           make prepare
