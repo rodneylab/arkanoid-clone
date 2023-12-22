@@ -20,7 +20,7 @@ jobs:
           cmake -H. -Bbuild -G "Unix Makefiles" -DCMAKE_BUILD_TYPE="Debug"
       - name: building
         run: |
-          cmake --build build --config Debug --target unit_tests -j4
+          cmake --build build --config Debug --target Catch_tests_run -j4
       - name: testing
         run: |
           cd build
