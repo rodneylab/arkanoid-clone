@@ -17,7 +17,7 @@ float Brick::x() const
 
 float Brick::y() const
 {
-    return shape.getPosition().x;
+    return shape.getPosition().y;
 }
 
 float Brick::left() const
