@@ -23,7 +23,7 @@ jobs:
           cmake -H. -Bbuild -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=On
       - name: building
         run: |
-          cmake --build build --config Debug --target Catch_tests_run -j4
+          cmake --build build --config Debug --target Catch_tests_run
       - name: run unit tests
         working-directory: ./build/bin
         run: |
@@ -32,8 +32,3 @@ jobs:
         working-directory: ./build
         run: |
           make cov
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3
-        working-directory: ./build
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
