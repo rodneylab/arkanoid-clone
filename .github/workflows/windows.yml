@@ -24,4 +24,4 @@ jobs:
       - name: run unit tests
         working-directory: ./build/bin
         run: |
-          ./Catch_tests_run.exe
+          .\Catch_tests_run.exe
