@@ -24,4 +24,4 @@ jobs:
       - name: run unit tests
         working-directory: .\build
         run: |
-          ls
+          ls Debug
