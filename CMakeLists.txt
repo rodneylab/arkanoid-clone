@@ -7,6 +7,11 @@ add_library(arkanoid_compiler_flags INTERFACE)
 target_compile_features(arkanoid_compiler_flags INTERFACE cxx_std_17)
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 
+set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${PROJECT_SOURCE_DIR}/cmake")
+option(RUN_TESTS "Enable tests" ON)
+include(coverage)
+add_coverage_target("*/Catch_tests/*")
+
 find_package(
     SFML 2.6
     COMPONENTS network
@@ -54,8 +59,12 @@ target_link_libraries(
     arkanoid_compiler_flags)
 
 add_executable(Arkanoid src/arkanoid.cpp)
-target_link_libraries(Arkanoid PUBLIC Ball_lib Brick_lib Paddle_lib
-                                      arkanoid_compiler_flags)
+target_link_libraries(
+    Arkanoid
+    PUBLIC Ball_lib
+           Brick_lib
+           Paddle_lib
+           arkanoid_compiler_flags)
 target_include_directories(Arkanoid PUBLIC "${PROJECT_BINARY_DIR}")
 
 if(WIN32)

@@ -7,7 +7,7 @@ CMakeUserPresets.json
 ################################
 ########### FOLDERS ############
 ################################
-build/
+#build/
 html/
 
 ################################
@@ -146,3 +146,5 @@ ipch/
 
 compile_commands.json
 .cache/
+
+.DS_Store

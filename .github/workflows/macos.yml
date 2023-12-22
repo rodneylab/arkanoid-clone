@@ -15,17 +15,22 @@ jobs:
         with:
           egress-policy: audit
       - uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # v2.7.0
-      - name: prepare
-        run: |
-          make prepare
       - name: configure
         run: |
           cmake -H. -Bbuild -G "Unix Makefiles" -DCMAKE_BUILD_TYPE="Debug"
       - name: building
         run: |
-          cmake --build build --config Debug --target unit_tests -j4
-      - name: testing
+          cmake --build build --config Debug --target Catch_tests_run -j4
+      - name: run unit tests
+        working-directory: ./build/bin
         run: |
-          cd build
-          cd tests
-          ./unit_tests
+          ./Catch_tests_run
+      - name: generate coverage
+        working-directory: ./build
+        run: |
+          make cov
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3
+        working-directory: ./build
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
