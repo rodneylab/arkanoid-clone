@@ -24,8 +24,8 @@ jobs:
       - name: run unit tests debug
         working-directory: .\build
         run: |
-          ls bin
+          ls bin\Debug
       - name: run unit tests
-        working-directory: .\build\bin
+        working-directory: .\build\bin\Debug
         run: |
           Catch_tests_run.exe
