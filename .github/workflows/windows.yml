@@ -20,8 +20,8 @@ jobs:
           cmake -H"." -Bbuild -T host=x86 -A x64 -DCMAKE_BUILD_TYPE="Debug"
       - name: building
         run: |
-          cmake --build build --config Debug --target unit_tests -j4
+          cmake --build build --config Debug --target Catch_tests_run -j4
       - name: run unit tests
         working-directory: ./build/bin
         run: |
-          ./Catch_tests_run
+          ./Catch_tests_run.exe
