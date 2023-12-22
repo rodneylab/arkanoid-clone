@@ -22,6 +22,6 @@ jobs:
         run: |
           cmake --build build --config Debug --target Catch_tests_run -j4
       - name: run unit tests
-        working-directory: ./build/bin
+        working-directory: .\build\Debug
         run: |
           .\Catch_tests_run.exe
