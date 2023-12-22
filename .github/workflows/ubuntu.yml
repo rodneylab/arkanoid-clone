@@ -16,20 +16,22 @@ jobs:
           egress-policy: audit
       - uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # v2.7.0
       - name: install
-        run: |
-          sudo apt-get install gcovr lcov
-      - name: prepare
-        run: |
-          make prepare
+        run: sudo apt-get update && sudo apt-get install gcovr lcov libxrandr-dev libxcursor-dev libudev-dev libopenal-dev libflac-dev libvorbis-dev libgl1-mesa-dev libegl1-mesa-dev freeglut3-dev
       - name: configure
         run: |
           cmake -H. -Bbuild -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=On
       - name: building
         run: |
-          cmake --build build --config Debug --target coverage -j4
-      - name: testing
+          cmake --build build --config Debug --target Catch_tests_run
+      - name: run unit tests
+        working-directory: ./build/bin
         run: |
-          cd build
-          cd tests
-          ./unit_tests
-          bash <(curl -s https://codecov.io/bash)
+          ./Catch_tests_run
+      - name: generate coverage
+        working-directory: ./build
+        run: |
+          make cov
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
