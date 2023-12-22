@@ -8,25 +8,22 @@ permissions:
   contents: read
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: windows-2022
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           egress-policy: audit
       - uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # v2.7.0
-      - name: prepare
-        run: |
-          make prepare
       - name: configure
         run: |
           cmake -H"." -Bbuild -T host=x86 -A x64 -DCMAKE_BUILD_TYPE="Debug"
       - name: building
         run: |
-          cmake --build build --config Debug --target unit_tests -j4
-      - name: testing
+          cmake --build build --config Debug --target Catch_tests_run -j4
+      - name: run unit tests
         run: |
           cd build
-          cd tests
+          cd bin
           cd Debug
-          .\unit_tests.exe
+          .\Catch_tests_run.exe
