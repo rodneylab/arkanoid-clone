@@ -31,6 +31,13 @@ jobs:
         working-directory: ./build
         run: |
           make cov
+      - name: Install gcovr
+        run: |
+          pip install -r requirements.txt  --require-hashes
+      - name: Generate JSON coverage report
+        working-directory: ./build
+        run: |
+          gcovr -r ../src . --branches --json > coverage.json
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3
         env:
