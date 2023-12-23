@@ -40,6 +40,5 @@ jobs:
           gcovr -r ../src . --branches --json > coverage.json
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3
-        working-directory: ./build
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
