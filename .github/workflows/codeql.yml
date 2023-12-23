@@ -66,15 +66,15 @@ jobs:
         name: Autobuild
         uses: github/codeql-action/autobuild@v2
       - if: matrix.language == 'c-cpp'
-        steps:
-          - name: install
-            run: sudo apt-get update && sudo apt-get install gcovr lcov libxrandr-dev libxcursor-dev libudev-dev libopenal-dev libflac-dev libvorbis-dev libgl1-mesa-dev libegl1-mesa-dev freeglut3-dev
-          - name: Configure
-            shell: bash
-            run: |
-              cmake -S . -B build -DCMAKE_INSTALL_PREFIX=install -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DBUILD_SHARED_LIBS=FALSE
-              cmake --build build --config Release
-              cmake --install build --config Release
+        name: install
+        run: sudo apt-get update && sudo apt-get install gcovr lcov libxrandr-dev libxcursor-dev libudev-dev libopenal-dev libflac-dev libvorbis-dev libgl1-mesa-dev libegl1-mesa-dev freeglut3-dev
+      - if: matrix.language == 'c-cpp'
+        name: Configure
+        shell: bash
+        run: |
+          cmake -S . -B build -DCMAKE_INSTALL_PREFIX=install -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DBUILD_SHARED_LIBS=FALSE
+          cmake --build build --config Release
+          cmake --install build --config Release
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
         with:
