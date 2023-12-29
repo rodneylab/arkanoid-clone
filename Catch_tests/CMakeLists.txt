@@ -1,6 +1,6 @@
 find_package(Catch2 3)
 if(NOT Catch2_FOUND)
-    cpmaddpackage("gh:catchorg/Catch2#v3.5.0")
+    cpmaddpackage("gh:catchorg/Catch2@3.5.0")
 endif()
 
 add_executable(Catch_tests_run BallTests.cpp PaddleTests.cpp)
