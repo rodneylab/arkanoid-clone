@@ -12,6 +12,8 @@ option(RUN_TESTS "Enable tests" ON)
 include(coverage)
 add_coverage_target("*/Catch_tests/*")
 
+include(cmake/CPM.cmake)
+
 find_package(
     SFML 2.6
     COMPONENTS network
@@ -20,12 +22,13 @@ find_package(
                window
                system)
 if(NOT SFML_FOUND)
-    include(FetchContent)
-    FetchContent_Declare(
-        SFML
-        GIT_REPOSITORY https://github.com/SFML/SFML.git
-        GIT_TAG 2.6.x)
-    FetchContent_MakeAvailable(SFML)
+    cpmaddpackage("gh:SFML/SFML#2.6.x")
+    #    include(FetchContent)
+    #    FetchContent_Declare(
+    #        SFML
+    #        GIT_REPOSITORY https://github.com/SFML/SFML.git
+    #        GIT_TAG 2.6.x)
+    #    FetchContent_MakeAvailable(SFML)
 endif()
 
 add_library(Ball_lib STATIC "${PROJECT_SOURCE_DIR}/src/Ball.cpp")
