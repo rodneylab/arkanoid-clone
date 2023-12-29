@@ -1,6 +1,11 @@
 find_package(Catch2 3)
 if(NOT Catch2_FOUND)
-    cpmaddpackage("gh:catchorg/Catch2@3.5.0")
+    include(FetchContent)
+    FetchContent_Declare(
+        Catch2
+        GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+        GIT_TAG v3.5.0)
+    FetchContent_MakeAvailable(Catch2)
 endif()
 
 add_executable(Catch_tests_run BallTests.cpp PaddleTests.cpp)
