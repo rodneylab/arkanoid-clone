@@ -1,4 +1,5 @@
 #include "Brick.h"
+
 #include "constants.h"
 
 Brick::Brick(float mPositionX, float mPositionY)

@@ -1,10 +1,10 @@
-#include <SFML/Window.hpp>
-
-#include <variant>
-
 #include "Ball.h"
 #include "Brick.h"
 #include "Paddle.h"
+
+#include <SFML/Window.hpp>
+
+#include <variant>
 
 template <class T1, class T2>
 bool is_intersecting(const T1 &mObjectA, const T2 &mObjectB)

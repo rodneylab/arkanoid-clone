@@ -1,7 +1,7 @@
+#include "Ball.h"
+
 #include <SFML/Graphics.hpp>
 #include <catch2/catch_test_macros.hpp>
-
-#include "Ball.h"
 
 // NOLINTNEXTLINE(misc-use-anonymous-namespace)
 TEST_CASE("BallCorrectlyInitialised", "[BallTests]")

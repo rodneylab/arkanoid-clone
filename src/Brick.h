@@ -1,6 +1,6 @@
-#include <SFML/Graphics.hpp>
-
 #include "constants.h"
+
+#include <SFML/Graphics.hpp>
 
 struct Brick
 {
