@@ -1,8 +1,7 @@
+#include "Paddle.h"
 
 #include <SFML/Graphics.hpp>
 #include <catch2/catch_test_macros.hpp>
-
-#include "Paddle.h"
 
 // NOLINTNEXTLINE(misc-use-anonymous-namespace)
 TEST_CASE("PaddleCorrectlyInitialised", "[PaddleTests]")

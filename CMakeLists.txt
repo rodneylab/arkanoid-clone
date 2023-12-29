@@ -23,12 +23,6 @@ find_package(
                system)
 if(NOT SFML_FOUND)
     cpmaddpackage("gh:SFML/SFML#2.6.x")
-    #    include(FetchContent)
-    #    FetchContent_Declare(
-    #        SFML
-    #        GIT_REPOSITORY https://github.com/SFML/SFML.git
-    #        GIT_TAG 2.6.x)
-    #    FetchContent_MakeAvailable(SFML)
 endif()
 
 add_library(Ball_lib STATIC "${PROJECT_SOURCE_DIR}/src/Ball.cpp")
