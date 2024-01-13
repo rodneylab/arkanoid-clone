@@ -10,7 +10,7 @@ option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${PROJECT_SOURCE_DIR}/cmake")
 option(RUN_TESTS "Enable tests" ON)
 include(coverage)
-add_coverage_target("*/Catch_tests/*")
+add_coverage_target("Catch_tests/*")
 
 include(cmake/CPM.cmake)
 
