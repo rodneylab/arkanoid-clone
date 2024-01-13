@@ -16,8 +16,8 @@ coverage:
       flag_coverage_not_uploaded_behavior: include
     patch: true
     project: true
-fixes:
-  - '::src/'
+    #fixes:
+    #- '::src/'
 github_checks:
   annotations: true
 slack_app: true
