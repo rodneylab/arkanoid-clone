@@ -37,7 +37,7 @@ jobs:
       - name: Generate JSON coverage report
         working-directory: ./build
         run: |
-          gcovr -r .. . --filter src/ --branches --cobertura > coverage.xml
+          gcovr -r .. . --filter ../src/ --branches --cobertura > coverage.xml
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3
         env:
