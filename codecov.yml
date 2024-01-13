@@ -17,7 +17,7 @@ coverage:
     patch: true
     project: true
 fixes:
-  - 'src/::'
+  - '::src/'
 github_checks:
   annotations: true
 slack_app: true
