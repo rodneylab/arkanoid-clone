@@ -1,12 +1,11 @@
-#include "constants.h"
+#ifndef SRC_RECTANGLE_H
+#define SRC_RECTANGLE_H
 
 #include <SFML/Graphics.hpp>
 
-struct Ball
+struct Rectangle
 {
-    Ball(float x_coordinate, float y_coordinate);
-
-    void update(FrameTime frame_time);
+    sf::RectangleShape shape;
 
     float x() const noexcept;
     float y() const noexcept;
@@ -14,7 +13,6 @@ struct Ball
     float right() const noexcept;
     float top() const noexcept;
     float bottom() const noexcept;
-
-    sf::CircleShape shape;
-    sf::Vector2f velocity;
 };
+
+#endif

@@ -55,7 +55,7 @@ TEST_CASE("UpdateChangesVelocitDirectionWhenBallMovesOffScreen", "[BallTests]")
     ball.velocity = sf::Vector2{-20.F, -20.F};
 
     // act
-    ball.update();
+    ball.update(1.F / 60.F);
 
     // assert
     CHECK(ball.velocity.x > 0);
@@ -66,7 +66,7 @@ TEST_CASE("UpdateChangesVelocitDirectionWhenBallMovesOffScreen", "[BallTests]")
     ball.velocity = sf::Vector2{20.F, 20.F};
 
     // act
-    ball.update();
+    ball.update(1.F / 60.F);
 
     // assert
     CHECK(ball.velocity.x < 0);
