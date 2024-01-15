@@ -14,6 +14,7 @@ target_link_libraries(
     Catch_tests_run
     PRIVATE Ball_lib
             Brick_lib
+            Game_lib
             Paddle_lib
             Rectangle_lib
             arkanoid_compiler_flags)
