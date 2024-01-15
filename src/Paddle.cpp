@@ -9,9 +9,9 @@ Paddle::Paddle(float initial_x, float initial_y)
     shape.setOrigin(constants::kPaddleWidth / static_cast<float>(2),
                     constants::kPaddleHeight / static_cast<float>(2));
 }
-void Paddle::update()
+void Paddle::update(FrameTime frame_time)
 {
-    shape.move(velocity);
+    shape.move(velocity * frame_time);
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) && left() > 0)
     {
@@ -26,34 +26,4 @@ void Paddle::update()
     {
         velocity.x = 0;
     }
-}
-
-float Paddle::x() const
-{
-    return shape.getPosition().x;
-}
-
-float Paddle::y() const
-{
-    return shape.getPosition().y;
-}
-
-float Paddle::left() const
-{
-    return x() - (shape.getSize().x / static_cast<float>(2));
-}
-
-float Paddle::right() const
-{
-    return x() + (shape.getSize().x / static_cast<float>(2));
-}
-
-float Paddle::top() const
-{
-    return y() - (shape.getSize().y / static_cast<float>(2));
-}
-
-float Paddle::bottom() const
-{
-    return y() + (shape.getSize().y / static_cast<float>(2));
 }

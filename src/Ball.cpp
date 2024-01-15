@@ -9,9 +9,9 @@ Ball::Ball(float x_coordinate, float y_coordinate)
     shape.setOrigin(constants::kBallRadius, constants::kBallRadius);
 }
 
-void Ball::update()
+void Ball::update(FrameTime frame_time)
 {
-    shape.move(velocity);
+    shape.move(velocity * frame_time);
 
     if (left() < 0)
     {
@@ -32,32 +32,32 @@ void Ball::update()
     }
 }
 
-float Ball::x() const
+float Ball::x() const noexcept
 {
     return shape.getPosition().x;
 }
 
-float Ball::y() const
+float Ball::y() const noexcept
 {
     return shape.getPosition().y;
 }
 
-float Ball::left() const
+float Ball::left() const noexcept
 {
     return x() - constants::kBallRadius;
 }
 
-float Ball::right() const
+float Ball::right() const noexcept
 {
     return x() + constants::kBallRadius;
 }
 
-float Ball::top() const
+float Ball::top() const noexcept
 {
     return y() - constants::kBallRadius;
 }
 
-float Ball::bottom() const
+float Ball::bottom() const noexcept
 {
     return y() + constants::kBallRadius;
 }

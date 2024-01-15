@@ -1,19 +1,12 @@
+#include "Rectangle.h"
 #include "constants.h"
 
 #include <SFML/Graphics.hpp>
 
-struct Brick
+struct Brick : public Rectangle
 {
 public:
-    Brick(float mPositionX, float mPositionY);
-
-    float x() const;
-    float y() const;
-    float left() const;
-    float right() const;
-    float top() const;
-    float bottom() const;
-
     bool destroyed{false};
-    sf::RectangleShape shape;
+
+    Brick(float mPositionX, float mPositionY);
 };
