@@ -7,14 +7,14 @@ repos:
       - id: end-of-file-fixer
       - id: trailing-whitespace
     repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v4.5.0
   - hooks:
       - exclude_types:
           - javascript
           - json
         id: clang-format
     repo: https://github.com/pre-commit/mirrors-clang-format
-    rev: v16.0.3
+    rev: v17.0.6
   - hooks:
       - id: commitizen
       - id: commitizen-branch
@@ -23,7 +23,7 @@ repos:
     repo: https://github.com/commitizen-tools/commitizen
     rev: v3.13.0
   - repo: https://github.com/gitleaks/gitleaks
-    rev: v8.17.0
+    rev: v8.18.1
     hooks:
       - id: gitleaks
   - repo: https://github.com/google/yamlfmt
