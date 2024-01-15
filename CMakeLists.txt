@@ -45,16 +45,6 @@ target_link_libraries(
     sfml-system
     arkanoid_compiler_flags)
 
-add_library(Game_lib STATIC "${PROJECT_SOURCE_DIR}/src/Game.cpp")
-target_link_libraries(
-    Game_lib
-    sfml-network
-    sfml-audio
-    sfml-graphics
-    sfml-window
-    sfml-system
-    arkanoid_compiler_flags)
-
 add_library(Paddle_lib STATIC "${PROJECT_SOURCE_DIR}/src/Paddle.cpp")
 target_link_libraries(
     Paddle_lib
@@ -75,15 +65,22 @@ target_link_libraries(
     sfml-system
     arkanoid_compiler_flags)
 
-add_executable(Arkanoid src/arkanoid.cpp)
+add_library(Game_lib STATIC "${PROJECT_SOURCE_DIR}/src/Game.cpp")
 target_link_libraries(
-    Arkanoid
+    Game_lib
     PUBLIC Ball_lib
            Brick_lib
-           Game_lib
            Paddle_lib
            Rectangle_lib
+           sfml-network
+           sfml-audio
+           sfml-graphics
+           sfml-window
+           sfml-system
            arkanoid_compiler_flags)
+
+add_executable(Arkanoid src/arkanoid.cpp)
+target_link_libraries(Arkanoid PUBLIC Game_lib arkanoid_compiler_flags)
 target_include_directories(Arkanoid PUBLIC "${PROJECT_BINARY_DIR}")
 
 if(WIN32)
