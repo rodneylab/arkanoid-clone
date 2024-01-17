@@ -31,9 +31,9 @@ jobs:
         working-directory: ./build
         run: |
           make cov
-      - name: Install gcovr
-        run: |
-          pip install -r requirements.txt  --require-hashes
+        #      - name: Install gcovr
+        #        run: |
+        #          pip install -r requirements.txt  --require-hashes
       - name: Generate JSON coverage report
         working-directory: ./build
         run: |
