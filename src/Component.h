@@ -8,6 +8,8 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 
+#include <functional>
+
 struct Component;
 class Entity;
 class Game;
