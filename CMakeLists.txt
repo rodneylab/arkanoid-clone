@@ -25,16 +25,6 @@ if(NOT SFML_FOUND)
     cpmaddpackage("gh:SFML/SFML#2.6.x")
 endif()
 
-add_library(Component_lib STATIC "${PROJECT_SOURCE_DIR}/src/Component.cpp")
-target_link_libraries(
-    Component_lib
-    sfml-network
-    sfml-audio
-    sfml-graphics
-    sfml-window
-    sfml-system
-    arkanoid_compiler_flags)
-
 add_library(Entity_lib STATIC "${PROJECT_SOURCE_DIR}/src/Entity.cpp")
 target_link_libraries(
     Entity_lib
@@ -55,10 +45,13 @@ target_link_libraries(
     sfml-system
     arkanoid_compiler_flags)
 
-add_library(Game_lib STATIC "${PROJECT_SOURCE_DIR}/src/Game.cpp" "${PROJECT_SOURCE_DIR}/src/templates.cpp")
+add_library(
+    Game_lib STATIC
+    "${PROJECT_SOURCE_DIR}/src/Component.cpp"
+    "${PROJECT_SOURCE_DIR}/src/Game.cpp"
+    "${PROJECT_SOURCE_DIR}/src/templates.cpp")
 target_link_libraries(
     Game_lib
-    Component_lib
     Entity_lib
     Manager_lib
     sfml-network
