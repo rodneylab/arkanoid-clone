@@ -25,9 +25,9 @@ if(NOT SFML_FOUND)
     cpmaddpackage("gh:SFML/SFML#2.6.x")
 endif()
 
-add_library(Ball_lib STATIC "${PROJECT_SOURCE_DIR}/src/Ball.cpp")
+add_library(Entity_lib STATIC "${PROJECT_SOURCE_DIR}/src/Entity.cpp")
 target_link_libraries(
-    Ball_lib
+    Entity_lib
     sfml-network
     sfml-audio
     sfml-graphics
@@ -35,9 +35,9 @@ target_link_libraries(
     sfml-system
     arkanoid_compiler_flags)
 
-add_library(Brick_lib STATIC "${PROJECT_SOURCE_DIR}/src/Brick.cpp")
+add_library(Manager_lib STATIC "${PROJECT_SOURCE_DIR}/src/Manager.cpp")
 target_link_libraries(
-    Brick_lib
+    Manager_lib
     sfml-network
     sfml-audio
     sfml-graphics
@@ -45,39 +45,21 @@ target_link_libraries(
     sfml-system
     arkanoid_compiler_flags)
 
-add_library(Paddle_lib STATIC "${PROJECT_SOURCE_DIR}/src/Paddle.cpp")
-target_link_libraries(
-    Paddle_lib
-    sfml-network
-    sfml-audio
-    sfml-graphics
-    sfml-window
-    sfml-system
-    arkanoid_compiler_flags)
-
-add_library(Rectangle_lib STATIC "${PROJECT_SOURCE_DIR}/src/Rectangle.cpp")
-target_link_libraries(
-    Rectangle_lib
-    sfml-network
-    sfml-audio
-    sfml-graphics
-    sfml-window
-    sfml-system
-    arkanoid_compiler_flags)
-
-add_library(Game_lib STATIC "${PROJECT_SOURCE_DIR}/src/Game.cpp")
+add_library(
+    Game_lib STATIC
+    "${PROJECT_SOURCE_DIR}/src/Component.cpp"
+    "${PROJECT_SOURCE_DIR}/src/Game.cpp"
+    "${PROJECT_SOURCE_DIR}/src/templates.cpp")
 target_link_libraries(
     Game_lib
-    PUBLIC Ball_lib
-           Brick_lib
-           Paddle_lib
-           Rectangle_lib
-           sfml-network
-           sfml-audio
-           sfml-graphics
-           sfml-window
-           sfml-system
-           arkanoid_compiler_flags)
+    Entity_lib
+    Manager_lib
+    sfml-network
+    sfml-audio
+    sfml-graphics
+    sfml-window
+    sfml-system
+    arkanoid_compiler_flags)
 
 add_executable(Arkanoid src/arkanoid.cpp)
 target_link_libraries(Arkanoid PUBLIC Game_lib arkanoid_compiler_flags)

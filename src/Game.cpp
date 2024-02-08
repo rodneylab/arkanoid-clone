@@ -1,79 +1,96 @@
 #include "Game.h"
 
-template <class T1, class T2>
-bool is_intersecting(const T1 &mObjectA, const T2 &mObjectB)
-{
-    return mObjectA.right() >= mObjectB.left() &&
-           mObjectA.left() <= mObjectB.right() &&
-           mObjectA.bottom() >= mObjectB.top() &&
-           mObjectA.top() <= mObjectB.bottom();
-}
-
-void handle_collision(const Paddle &mPaddle, Ball &mBall)
-{
-    if (!is_intersecting(mPaddle, mBall))
-    {
-        return;
-    }
-
-    mBall.velocity.y = -constants::kBallVelocity;
-
-    if (mBall.x() < mPaddle.x())
-    {
-        mBall.velocity.x = -constants::kBallVelocity;
-    }
-    else
-    {
-        mBall.velocity.x = constants::kBallVelocity;
-    }
-}
-
-void handle_collision(Brick &mBrick, Ball &mBall)
-{
-    if (!is_intersecting(mBall, mBrick))
-    {
-        return;
-    }
-
-    mBrick.destroyed = true;
-
-    const float overlap_left{mBall.right() - mBrick.left()};
-    const float overlap_right{mBrick.right() - mBall.left()};
-    const float overlap_top{mBall.bottom() - mBrick.top()};
-    const float overlap_bottom{mBrick.bottom() - mBall.top()};
-
-    const bool ball_from_left(std::abs(overlap_left) < std::abs(overlap_right));
-    const bool ball_from_top(std::abs(overlap_top) < std::abs(overlap_bottom));
-
-    const float min_overlap_x{ball_from_left ? overlap_left : overlap_right};
-    const float min_overlap_y{ball_from_top ? overlap_top : overlap_bottom};
-
-    if (std::abs(min_overlap_x) < std::abs(min_overlap_y))
-    {
-        mBall.velocity.x = ball_from_left ? -constants::kBallVelocity
-                                          : constants::kBallVelocity;
-    }
-    else
-    {
-        mBall.velocity.y = ball_from_top ? -constants::kBallVelocity
-                                         : constants::kBallVelocity;
-    }
-}
+#include "Component.h"
+#include "Entity.h"
 
 Game::Game()
 {
     window.setFramerateLimit(constants::kFramerateLimit);
+}
+
+void Game::CreateGameComponents()
+{
+    create_paddle();
+    create_ball();
 
     for (int iX{0}; iX < constants::kCountBlocksX; ++iX)
     {
         for (int iY{0}; iY < constants::kCountBlocksY; ++iY)
         {
-            bricks.emplace_back(
+            create_brick(sf::Vector2f{
                 static_cast<float>(iX + 1) * (constants::kBlockWidth + 3) +
                     constants::kBlocksInsetX,
-                static_cast<float>(iY + 2) * (constants::kBlockHeight + 3));
+                static_cast<float>(iY + 2) * (constants::kBlockHeight + 3)});
         }
     }
+}
+
+Entity &Game::create_ball()
+{
+    auto &entity(_manager.add_entity());
+
+    entity.add_component<PositionComponent>(
+        sf::Vector2f{constants::kWindowWidth / static_cast<float>(2),
+                     constants::kWindowHeight / static_cast<float>(2)});
+    entity.add_component<PhysicsComponent>(
+        sf::Vector2f{constants::kBallRadius, constants::kBallRadius});
+    entity.add_component<CircleComponent>(this, constants::kBallRadius);
+
+    auto &physics_component(entity.get_component<PhysicsComponent>());
+    physics_component._velocity =
+        sf::Vector2f{-constants::kBallVelocity, -constants::kBallVelocity};
+    physics_component.on_out_of_bounds =
+        [&physics_component](const sf::Vector2f &side) {
+            if (side.x != 0.F)
+            {
+                physics_component._velocity.x =
+                    std::abs(physics_component._velocity.x) * side.x;
+            }
+            if (side.y != 0.F)
+            {
+                physics_component._velocity.y =
+                    std::abs(physics_component._velocity.y) * side.y;
+            }
+        };
+
+    entity.add_group(ArkanoidGroup::GBall);
+
+    return entity;
+}
+
+Entity &Game::create_brick(const sf::Vector2f &position)
+{
+    sf::Vector2f half_size{constants::kBlockWidth / static_cast<float>(2),
+                           constants::kBlockHeight / static_cast<float>(2)};
+    auto &entity(_manager.add_entity());
+
+    entity.add_component<PositionComponent>(position);
+    entity.add_component<PhysicsComponent>(half_size);
+    entity.add_component<RectangleComponent>(this,
+                                             sf::Color::Yellow,
+                                             half_size);
+
+    entity.add_group(ArkanoidGroup::GBrick);
+
+    return entity;
+}
+
+Entity &Game::create_paddle()
+{
+    sf::Vector2f half_size{constants::kPaddleWidth / static_cast<float>(2),
+                           constants::kPaddleHeight / static_cast<float>(2)};
+    auto &entity(_manager.add_entity());
+
+    entity.add_component<PositionComponent>(
+        sf::Vector2f{constants::kWindowWidth / static_cast<float>(2),
+                     constants::kWindowHeight - constants::kPaddleInsetBottom});
+    entity.add_component<PhysicsComponent>(half_size);
+    entity.add_component<RectangleComponent>(this, half_size);
+    entity.add_component<PaddleControlComponent>();
+
+    entity.add_group(ArkanoidGroup::GPaddle);
+
+    return entity;
 }
 
 void Game::run()
@@ -99,8 +116,7 @@ void Game::run()
         auto frame_time_seconds(frame_time / kMillisecondsPerSecond);
         auto fps(1.F / frame_time_seconds);
 
-        window.setTitle("FT: " + std::to_string(frame_time) +
-                        "\tFPS: " + std::to_string(fps));
+        window.setTitle("Arkanoid Clone");
     }
 }
 
@@ -135,31 +151,36 @@ void Game::update_phase()
     for (; current_slice >= constants::kFrameTimeSlice;
          current_slice -= constants::kFrameTimeSlice)
     {
-        ball.update(constants::kFrameTimestep);
-        paddle.update(constants::kFrameTimestep);
+        _manager.refresh();
+        _manager.update(constants::kFrameTimestep);
 
-        handle_collision(paddle, ball);
-        for (auto &brick : bricks)
+        auto &paddles(_manager.get_entities_by_group(GPaddle));
+        auto &bricks(_manager.get_entities_by_group(GBrick));
+        auto &balls(_manager.get_entities_by_group(GBall));
+
+        for (auto &ball : balls)
         {
-            handle_collision(brick, ball);
+            for (auto &paddle : paddles)
+            {
+
+                handle_paddle_ball_collision(*paddle, *ball);
+            }
+            for (auto &brick : bricks)
+            {
+
+                handle_brick_ball_collision(*brick, *ball);
+            }
         }
-        bricks.erase(
-            // remove_if moves satisfying elements to the end of the vector and
-            // returns an iterator to the first (moved) satisfying element
-            remove_if(begin(bricks),
-                      end(bricks),
-                      [](const Brick &mBrick) { return mBrick.destroyed; }),
-            end(bricks));
     }
 }
 
 void Game::draw_phase()
 {
-    window.draw(ball.shape);
-    window.draw(paddle.shape);
-    for (auto &brick : bricks)
-    {
-        window.draw(brick.shape);
-    }
+    _manager.draw();
     window.display();
+}
+
+void Game::render(const sf::Drawable &drawable)
+{
+    window.draw(drawable);
 }

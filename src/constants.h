@@ -1,7 +1,5 @@
-#ifndef CONSTANTS_H
-#define CONSTANTS_H
-
-using FrameTime = float;
+#ifndef SRC_CONSTANTS_H
+#define SRC_CONSTANTS_H
 
 namespace constants
 {

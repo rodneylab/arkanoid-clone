@@ -2,7 +2,9 @@
 
 int main()
 {
-    Game{}.run();
+    Game game{};
+    game.CreateGameComponents();
+    game.run();
 
     return 0;
 }
