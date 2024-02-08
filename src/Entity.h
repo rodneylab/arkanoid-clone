@@ -4,6 +4,7 @@
 #include "Component.h"
 #include "utility.h"
 
+#include <array>
 #include <memory>
 #include <vector>
 
