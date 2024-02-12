@@ -11,7 +11,7 @@
 
 # arkanoid-clone
 
-Arkanoid clone built in C++ with SFML, and based on
+Arkanoid clone built in C++ with Raylib and flecs. Originally based on an SFML
 [Vittorio Romeo tutorial](https://www.youtube.com/watch?v=_4K3tsKa1Uc).
 
 ## Usage
