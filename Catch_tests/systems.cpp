@@ -2,6 +2,8 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include <cstdint>
+
 TEST_CASE("It computes collision box top", "[top]")
 {
     // arrange
