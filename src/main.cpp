@@ -3,7 +3,6 @@
 #include "entities.h"
 #include "systems.h"
 
-#include <dbg.h>
 #include <flecs.h>
 #include <fmt/format.h>
 #include <raylib.h>
@@ -13,8 +12,6 @@
 
 int main()
 {
-    dbg(42, "hello world", false);
-
     flecs::world world;
 
     create_ball(&world);
