@@ -6,6 +6,8 @@
 #include <flecs.h>
 #include <raylib.h>
 
+#include <cmath>
+
 flecs::system add_paddle_movement_system(flecs::world *world)
 {
     auto paddle_movement_system =
