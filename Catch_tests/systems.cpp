@@ -1,8 +1,12 @@
 #include "systems.h"
 
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/matchers/catch_matchers_floating_point.hpp>
 
 #include <cstdint>
+
+constexpr float kFloatEps{0.001F};
+constexpr float kFloatAbsMargin{0.000001F};
 
 TEST_CASE("It computes collision box top", "[top]")
 {
@@ -17,7 +21,10 @@ TEST_CASE("It computes collision box top", "[top]")
     const float ball_top{top(position, collision_box)};
 
     // assert
-    CHECK(ball_top == 35);
+    constexpr float expected{35.F};
+    REQUIRE_THAT(ball_top,
+                 Catch::Matchers::WithinRel(expected, kFloatEps) ||
+                     Catch::Matchers::WithinAbs(expected, kFloatAbsMargin));
 }
 
 TEST_CASE("It computes collision box right", "[right]")
@@ -33,7 +40,10 @@ TEST_CASE("It computes collision box right", "[right]")
     const float ball_right{right(position, collision_box)};
 
     // assert
-    CHECK(ball_right == 35);
+    constexpr float expected{35.F};
+    REQUIRE_THAT(ball_right,
+                 Catch::Matchers::WithinRel(expected, kFloatEps) ||
+                     Catch::Matchers::WithinAbs(expected, kFloatAbsMargin));
 }
 
 TEST_CASE("It computes collision box bottom", "[bottom]")
@@ -49,7 +59,10 @@ TEST_CASE("It computes collision box bottom", "[bottom]")
     const float ball_bottom{bottom(position, collision_box)};
 
     // assert
-    CHECK(ball_bottom == 45);
+    constexpr float expected{45.F};
+    REQUIRE_THAT(ball_bottom,
+                 Catch::Matchers::WithinRel(expected, kFloatEps) ||
+                     Catch::Matchers::WithinAbs(expected, kFloatAbsMargin));
 }
 
 TEST_CASE("It computes collision box left", "[left]")
@@ -65,5 +78,8 @@ TEST_CASE("It computes collision box left", "[left]")
     const float ball_left{left(position, collision_box)};
 
     // assert
-    CHECK(ball_left == 25);
+    constexpr float expected{25.F};
+    REQUIRE_THAT(ball_left,
+                 Catch::Matchers::WithinRel(expected, kFloatEps) ||
+                     Catch::Matchers::WithinAbs(expected, kFloatAbsMargin));
 }
