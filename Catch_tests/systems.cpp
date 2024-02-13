@@ -11,10 +11,10 @@ constexpr float kFloatAbsMargin{0.000001F};
 TEST_CASE("It computes collision box top", "[top]")
 {
     // arrange
-    const Position position{Vector2{
-        .x = 30,
-        .y = 40,
-    }};
+    const Position position{
+        30,
+        40,
+    };
     const CollisionBox collision_box{5, 5};
 
     // act
@@ -30,10 +30,10 @@ TEST_CASE("It computes collision box top", "[top]")
 TEST_CASE("It computes collision box right", "[right]")
 {
     // arrange
-    const Position position{Vector2{
-        .x = 30,
-        .y = 40,
-    }};
+    const Position position{
+        30,
+        40,
+    };
     const CollisionBox collision_box{5, 5};
 
     // act
@@ -49,10 +49,10 @@ TEST_CASE("It computes collision box right", "[right]")
 TEST_CASE("It computes collision box bottom", "[bottom]")
 {
     // arrange
-    const Position position{Vector2{
-        .x = 30,
-        .y = 40,
-    }};
+    const Position position{
+        30,
+        40,
+    };
     const CollisionBox collision_box{5, 5};
 
     // act
@@ -68,10 +68,10 @@ TEST_CASE("It computes collision box bottom", "[bottom]")
 TEST_CASE("It computes collision box left", "[left]")
 {
     // arrange
-    const Position position{Vector2{
-        .x = 30,
-        .y = 40,
-    }};
+    const Position position{
+        30,
+        40,
+    };
     const CollisionBox collision_box{5, 5};
 
     // act

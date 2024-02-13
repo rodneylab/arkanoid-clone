@@ -18,17 +18,17 @@ flecs::system add_paddle_movement_system(flecs::world *world)
                const Velocity /*&velocity*/) {
                 if (IsKeyDown(KEY_LEFT))
                 {
-                    entity.set<Velocity>(Velocity{
-                        Vector2{.x = -constants::kPaddleVelocity, .y = 0.F}});
+                    entity.set<Velocity>(
+                        Velocity{-constants::kPaddleVelocity, 0.F});
                 }
                 else if (IsKeyDown(KEY_RIGHT))
                 {
-                    entity.set<Velocity>(Velocity{
-                        Vector2{.x = constants::kPaddleVelocity, .y = 0.F}});
+                    entity.set<Velocity>(
+                        Velocity{constants::kPaddleVelocity, 0.F});
                 }
                 else
                 {
-                    entity.set<Velocity>(Velocity{Vector2{.x = 0.F, .y = 0.F}});
+                    entity.set<Velocity>(Velocity{0.F, 0.F});
                 }
             });
 
@@ -79,14 +79,12 @@ flecs::system add_ball_with_paddle_collision_system(flecs::world *world,
                 if (ball->get<Position>()->centre.x < position.centre.x)
                 {
                     ball->set<Velocity>(
-                        Velocity{Vector2{.x = -constants::kBallVelocity,
-                                         .y = new_velocity_y}});
+                        Velocity{-constants::kBallVelocity, new_velocity_y});
                 }
                 else
                 {
                     ball->set<Velocity>(
-                        Velocity{Vector2{.x = constants::kBallVelocity,
-                                         .y = new_velocity_y}});
+                        Velocity{constants::kBallVelocity, new_velocity_y});
                 }
             });
 
@@ -138,14 +136,14 @@ flecs::system add_ball_with_brick_collision_system(flecs::world *world,
                 if (std::abs(min_overlap_x) < std::abs(min_overlap_y))
                 {
                     ball->set<Velocity>(
-                        Velocity{Vector2{.x = -current_ball_velocity_values.x,
-                                         .y = current_ball_velocity_values.y}});
+                        Velocity{-current_ball_velocity_values.x,
+                                 current_ball_velocity_values.y});
                 }
                 else
                 {
-                    ball->set<Velocity>(Velocity{
-                        Vector2{.x = current_ball_velocity_values.x,
-                                .y = -current_ball_velocity_values.y}});
+                    ball->set<Velocity>(
+                        Velocity{current_ball_velocity_values.x,
+                                 -current_ball_velocity_values.y});
                 }
                 entity.destruct();
             });
