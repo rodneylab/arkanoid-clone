@@ -4,7 +4,7 @@ project(RaylibGame LANGUAGES CXX)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_EXPORT_COMPILE_COMMANDS True)
 add_library(arkanoid_compiler_flags INTERFACE)
-target_compile_features(arkanoid_compiler_flags INTERFACE cxx_std_20)
+target_compile_features(arkanoid_compiler_flags INTERFACE cxx_std_17)
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 
 set(gcc_like_cxx "$<COMPILE_LANG_AND_ID:CXX,ARMClang,AppleClang,Clang,GNU,LCC>")
