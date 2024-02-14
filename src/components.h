@@ -3,6 +3,10 @@
 
 #include <raylib.h>
 
+struct Ball
+{
+};
+
 struct Brick
 {
 };

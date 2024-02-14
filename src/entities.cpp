@@ -9,6 +9,7 @@
 void create_ball(flecs::world *world)
 {
     auto ball(world->entity("Ball"));
+    ball.add<Ball>();
     ball.set<CircleComponent>(CircleComponent(constants::kBallRadius, RED));
 
     Position position(static_cast<float>(constants::kWindowWidth) / 2,
