@@ -11,17 +11,21 @@
 flecs::system add_paddle_movement_system(flecs::world *world)
 {
     auto paddle_movement_system =
-        world->system<Paddle, Position, Velocity>().each(
+        world->system<Paddle, Position, CollisionBox>().each(
             [](flecs::entity entity,
-               const Paddle /* paddle */,
-               const Position /*&position */,
-               const Velocity /*&velocity*/) {
-                if (IsKeyDown(KEY_LEFT))
+               const Paddle & /* paddle */,
+               const Position &position,
+               const CollisionBox &collision_box
+
+            ) {
+                if (IsKeyDown(KEY_LEFT) && left(position, collision_box) > 0)
                 {
                     entity.set<Velocity>(
                         Velocity{-constants::kPaddleVelocity, 0.F});
                 }
-                else if (IsKeyDown(KEY_RIGHT))
+                else if (IsKeyDown(KEY_RIGHT) &&
+                         right(position, collision_box) <
+                             constants::kWindowWidth)
                 {
                     entity.set<Velocity>(
                         Velocity{constants::kPaddleVelocity, 0.F});
@@ -37,10 +41,10 @@ flecs::system add_paddle_movement_system(flecs::world *world)
 
 flecs::system add_ball_with_wall_collision_system(flecs::world *world)
 {
-
     flecs::system add_ball_with_wall_collision_system =
-        world->system<Position, Velocity, CollisionBox>().each(
-            [](const Position &position,
+        world->system<Ball, Position, Velocity, CollisionBox>().each(
+            [](const Ball & /* ball */,
+               const Position &position,
                Velocity &velocity,
                const CollisionBox &collision_box) {
                 if (left(position, collision_box) < 0 ||
