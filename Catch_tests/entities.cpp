@@ -24,7 +24,7 @@ TEST_CASE("It creates ball with expected components and tags", "[create_ball]")
     create_ball(&world);
     auto ball_entity(world.entity("Ball"));
 
-    SECTION("It has Ball tag")
+    SECTION("It has a Ball tag")
     {
         // assert
         // Test Ball exists with expected label
@@ -34,7 +34,7 @@ TEST_CASE("It creates ball with expected components and tags", "[create_ball]")
         REQUIRE(ball_entity.has<Ball>());
     }
 
-    SECTION("It has a Circle component tag")
+    SECTION("It has a Circle component")
     {
         // assert
         const CircleComponent *circle_component{
@@ -52,7 +52,7 @@ TEST_CASE("It creates ball with expected components and tags", "[create_ball]")
         REQUIRE(circle_component->colour.a == expected_colour.a);
     }
 
-    SECTION("It has a Position component tag")
+    SECTION("It has a Position component")
     {
         // assert
         const Position *position_component{ball_entity.get<Position>()};
@@ -69,7 +69,7 @@ TEST_CASE("It creates ball with expected components and tags", "[create_ball]")
                 Catch::Matchers::WithinAbs(expected_centre_y, kFloatAbsMargin));
     }
 
-    SECTION("It has a Collision Box component tag")
+    SECTION("It has a Collision Box component")
     {
         // assert
         const CollisionBox *collision_box_component{
@@ -91,7 +91,7 @@ TEST_CASE("It creates ball with expected components and tags", "[create_ball]")
                                            kFloatAbsMargin));
     }
 
-    SECTION("It has a Velocity component tag")
+    SECTION("It has a Velocity component")
     {
         // assert
         const Velocity *velocity_component{ball_entity.get<Velocity>()};
