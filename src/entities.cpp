@@ -20,8 +20,9 @@ void create_ball(flecs::world *world)
         CollisionBox(constants::kBallRadius, constants::kBallRadius));
 
     // Randomly set ball x direction
-    const float ball_x_velocity{constants::kBallVelocity -
-                                static_cast<float>(GetRandomValue(0, 1)) * 2.F};
+    const float ball_x_velocity{
+        constants::kBallVelocity *
+        (-1.F + static_cast<float>(GetRandomValue(0, 1)) * 2.F)};
     ball.set<Velocity>(Velocity(ball_x_velocity, -constants::kBallVelocity));
 }
 
