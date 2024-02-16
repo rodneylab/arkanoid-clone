@@ -113,7 +113,7 @@ TEST_CASE("It creates ball with expected components and tags", "[create_ball]")
     {
         // Test randomness of the ball initial x velocity, should average close
         // to zero and have min, max equal and opposite in sign arrange
-        constexpr std::size_t iterations{100};
+        constexpr std::size_t iterations{128};
         std::array<float, iterations> x_velocities{};
         float velocity_sum{0.F};
 

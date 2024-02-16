@@ -4,13 +4,17 @@ if(NOT Catch2_FOUND)
     )# v3.5.2
 endif()
 
-add_executable(Catch_tests_run entities.cpp systems.cpp)
+list(APPEND CMAKE_MODULE_PATH ${Catch2_SOURCE_DIR}/extras)
+add_subdirectory(components)
+add_subdirectory(entities)
+
+add_executable(Catch_tests_run systems.cpp)
 
 target_link_libraries(Catch_tests_run PRIVATE Entities_lib Systems_lib
                                               arkanoid_compiler_flags)
 target_link_libraries(Catch_tests_run PRIVATE Catch2::Catch2WithMain)
 target_include_directories(Catch_tests_run PUBLIC "${PROJECT_SOURCE_DIR}/src")
 
-list(APPEND CMAKE_MODULE_PATH ${Catch2_SOURCE_DIR}/extras)
 include(Catch)
+#catch_discover_tests(Catch_tests_run ComponentTests EntityTests)
 catch_discover_tests(Catch_tests_run)

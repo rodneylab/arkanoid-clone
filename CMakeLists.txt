@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(RaylibGame LANGUAGES CXX)
+project(Arkanoid LANGUAGES CXX)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_EXPORT_COMPILE_COMMANDS True)
@@ -35,6 +35,7 @@ add_library(Entities_lib STATIC "${PROJECT_SOURCE_DIR}/src/entities.cpp")
 target_link_libraries(
     Entities_lib
     flecs::flecs_static
+    fmt::fmt
     raylib
     arkanoid_compiler_flags)
 

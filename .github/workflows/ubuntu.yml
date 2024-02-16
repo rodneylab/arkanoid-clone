@@ -22,11 +22,19 @@ jobs:
           cmake -H. -Bbuild -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=On
       - name: building
         run: |
-          cmake --build build --config Debug --target Catch_tests_run
+          cmake --build build --config Debug --target Catch_tests_run ComponentTests EntityTests
       - name: run unit tests
         working-directory: ./build/bin
         run: |
           ./Catch_tests_run
+      - name: run component tests
+        working-directory: ./build/bin
+        run: |
+          ./ComponentTests
+      - name: run entity tests
+        working-directory: ./build/bin
+        run: |
+          ./EntityTests
       - name: generate coverage
         working-directory: ./build
         run: |
