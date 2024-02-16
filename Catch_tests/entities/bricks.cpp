@@ -46,8 +46,9 @@ TEST_CASE("It creates bricks with expected components and tags",
 
     SECTION("It gives bricks a Rectangle component")
     {
-        const std::string random_brick_name =
-            fmt::format("Brick_{:02}_{:02}", random_row(mt), random_column(mt));
+        const std::string random_brick_name{fmt::format("Brick_{:02}_{:02}",
+                                                        random_row(mt),
+                                                        random_column(mt))};
         flecs::entity first_brick_entity(
             world.lookup(random_brick_name.c_str()));
 
@@ -91,8 +92,9 @@ TEST_CASE("It creates bricks with expected components and tags",
     SECTION("It gives bricks a CollisionBox component")
     {
         // assert
-        const std::string random_brick_name =
-            fmt::format("Brick_{:02}_{:02}", random_row(mt), random_column(mt));
+        const std::string random_brick_name{fmt::format("Brick_{:02}_{:02}",
+                                                        random_row(mt),
+                                                        random_column(mt))};
         flecs::entity first_brick_entity(
             world.lookup(random_brick_name.c_str()));
         REQUIRE(first_brick_entity != 0);

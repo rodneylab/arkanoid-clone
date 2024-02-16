@@ -42,7 +42,6 @@ void create_bricks(flecs::world *world)
             .set<CollisionBox>(CollisionBox{collision_box_half_width,
                                             collision_box_half_height});
 
-    ecs_defer_begin(*world);
     for (int column{0}; column < constants::kBrickRows; ++column)
     {
         for (int row{0}; row < constants::kBrickColumns; ++row)
@@ -58,7 +57,6 @@ void create_bricks(flecs::world *world)
                     (static_cast<float>(column + 2) * padded_brick_height)));
         }
     }
-    ecs_defer_end(*world);
 }
 
 void create_paddle(flecs::world *world)
