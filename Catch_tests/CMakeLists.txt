@@ -16,4 +16,5 @@ target_include_directories(Catch_tests_run PUBLIC "${PROJECT_SOURCE_DIR}/src")
 
 list(APPEND CMAKE_MODULE_PATH ${Catch2_SOURCE_DIR}/extras)
 include(Catch)
-catch_discover_tests(Catch_tests_run ComponentTests EntityTests)
+#catch_discover_tests(Catch_tests_run ComponentTests EntityTests)
+catch_discover_tests(Catch_tests_run)
