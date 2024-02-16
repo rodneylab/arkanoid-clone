@@ -27,10 +27,6 @@ jobs:
         working-directory: ./build/bin
         run: |
           ./Catch_tests_run
-      - name: list executables
-        working-directory: ./build/bin
-        run: |
-          ls
       - name: run component tests
         working-directory: ./build/bin
         run: |
