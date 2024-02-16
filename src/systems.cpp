@@ -178,8 +178,8 @@ void render_position_entities(flecs::world *world)
                                            0.5 * rectangle.width),
                           static_cast<int>(std::round(position.centre.y) -
                                            0.5 * rectangle.height),
-                          rectangle.width,
-                          rectangle.height,
+                          static_cast<int>(std::round(rectangle.width)),
+                          static_cast<int>(std::round(rectangle.height)),
                           rectangle.colour);
             // NOLINTEND(readability-magic-numbers)
         });

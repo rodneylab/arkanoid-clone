@@ -70,15 +70,21 @@ struct RectangleComponent
     {
     }
 
-    RectangleComponent(const int width_value,
-                       const int height_value,
+    RectangleComponent(const float width_value,
+                       const float height_value,
                        const Color colour_value)
         : width{width_value}, height{height_value}, colour{colour_value}
     {
     }
 
-    int width;
-    int height;
+    RectangleComponent(const RectangleComponent &other) = default;
+    RectangleComponent(RectangleComponent &&other) = default;
+    RectangleComponent &operator=(const RectangleComponent &other) = default;
+    RectangleComponent &operator=(RectangleComponent &&other) = default;
+    ~RectangleComponent() = default;
+
+    float width;
+    float height;
     Color colour;
 };
 

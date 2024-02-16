@@ -27,6 +27,14 @@ jobs:
         working-directory: ./build/bin
         run: |
           ./Catch_tests_run
+      - name: run component tests
+        working-directory: ./build/bin
+        run: |
+          ./ComponentTests
+      - name: run entity tests
+        working-directory: ./build/bin
+        run: |
+          ./EntityTests
       - name: generate coverage
         working-directory: ./build
         run: |

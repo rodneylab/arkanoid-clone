@@ -14,8 +14,8 @@ inline constexpr int kTargetFramerate{240};
 inline constexpr float kBallRadius{10.F};
 inline constexpr float kBallVelocity{0.8F};
 
-inline constexpr int kBrickWidth{60};
-inline constexpr int kBrickHeight{20};
+inline constexpr float kBrickWidth{60};
+inline constexpr float kBrickHeight{20};
 inline constexpr int kBricksInsetX{22};
 inline constexpr int kBrickRows{4};
 inline constexpr int kBrickColumns{11};
