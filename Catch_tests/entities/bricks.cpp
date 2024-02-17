@@ -14,7 +14,7 @@
 #include <random>
 
 constexpr float kFloatEps{0.001F};
-constexpr float kFloatAbsMargin{0.000001F};
+constexpr float kFloatAbsMargin{0.000'001F};
 
 TEST_CASE("It creates bricks with expected components and tags",
           "[create_bricks]")

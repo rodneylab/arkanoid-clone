@@ -6,7 +6,7 @@
 #include <cstdint>
 
 constexpr float kFloatEps{0.001F};
-constexpr float kFloatAbsMargin{0.000001F};
+constexpr float kFloatAbsMargin{0.000'001F};
 
 TEST_CASE("It computes collision box top", "[top]")
 {
@@ -82,4 +82,77 @@ TEST_CASE("It computes collision box left", "[left]")
     REQUIRE_THAT(ball_left,
                  Catch::Matchers::WithinRel(expected, kFloatEps) ||
                      Catch::Matchers::WithinAbs(expected, kFloatAbsMargin));
+}
+
+TEST_CASE("It computes partial overlap intersections successfully",
+          "[is_intersecting]")
+{
+    // arrange
+    const Position position_1{
+        30,
+        40,
+    };
+    const Position position_2{
+        34,
+        44,
+    };
+    const CollisionBox collision_box_1{5, 5};
+    const CollisionBox collision_box_2{5, 5};
+
+    // act
+    const bool result{is_intersecting(position_1,
+                                      collision_box_1,
+                                      position_2,
+                                      collision_box_2)};
+
+    // assert
+    REQUIRE(result);
+}
+TEST_CASE("It computes complete overlap intersections successfully",
+          "[is_intersecting]")
+{
+    // arrange
+    const Position position_1{
+        30,
+        40,
+    };
+    const Position position_2{
+        32,
+        42,
+    };
+    const CollisionBox collision_box_1{5, 5};
+    const CollisionBox collision_box_2{15, 15};
+
+    // act
+    const bool result{is_intersecting(position_1,
+                                      collision_box_1,
+                                      position_2,
+                                      collision_box_2)};
+
+    // assert
+    REQUIRE(result);
+}
+
+TEST_CASE("It computes no overlap successfully", "[is_intersecting]")
+{
+    // arrange
+    const Position position_1{
+        130,
+        140,
+    };
+    const Position position_2{
+        32,
+        42,
+    };
+    const CollisionBox collision_box_1{5, 5};
+    const CollisionBox collision_box_2{15, 15};
+
+    // act
+    const bool result{is_intersecting(position_1,
+                                      collision_box_1,
+                                      position_2,
+                                      collision_box_2)};
+
+    // assert
+    REQUIRE(!result);
 }

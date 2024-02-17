@@ -5,7 +5,7 @@
 #include <raylib.h>
 
 constexpr float kFloatEps{0.001F};
-constexpr float kFloatAbsMargin{0.000001F};
+constexpr float kFloatAbsMargin{0.000'001F};
 
 TEST_CASE("It creates rectangle", "[Rectangle(float,float,colour)]")
 {
