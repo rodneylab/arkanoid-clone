@@ -12,7 +12,7 @@
 #include <cmath>
 
 constexpr float kFloatEps{0.001F};
-constexpr float kFloatAbsMargin{0.000001F};
+constexpr float kFloatAbsMargin{0.000'001F};
 
 TEST_CASE("It creates ball with expected components and tags", "[create_ball]")
 {
