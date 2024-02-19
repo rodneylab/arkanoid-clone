@@ -1,4 +1,4 @@
-add_executable(EntityTests ball.cpp bricks.cpp)
+add_executable(EntityTests ball.cpp bricks.cpp paddle.cpp)
 
 target_link_libraries(EntityTests PRIVATE Entities_lib Systems_lib
                                           arkanoid_compiler_flags)
