@@ -7,6 +7,13 @@ add_library(arkanoid_compiler_flags INTERFACE)
 target_compile_features(arkanoid_compiler_flags INTERFACE cxx_std_17)
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 
+if(EMSCRIPTEN)
+    set(CMAKE_EXE_LINKER_FLAGS
+        "${CMAKE_EXE_LINKER_FLAGS} -s USE_GLFW=3 -s ASSERTIONS=1 -s WASM=1 -s ASYNCIFY -s GL_ENABLE_GET_PROC_ADDRESS=1"
+    )
+    set(CMAKE_EXECUTABLE_SUFFIX ".html")
+endif()
+
 set(gcc_like_cxx "$<COMPILE_LANG_AND_ID:CXX,ARMClang,AppleClang,Clang,GNU,LCC>")
 set(msvc_cxx "$<COMPILE_LANG_AND_ID:CXX,MSVC>")
 target_compile_options(
@@ -38,6 +45,8 @@ target_link_libraries(
     fmt::fmt
     raylib
     arkanoid_compiler_flags)
+target_compile_definitions(
+    Entities_lib PUBLIC ASSETS_PATH="${CMAKE_CURRENT_SOURCE_DIR}/assets/")
 
 add_library(Systems_lib STATIC "${PROJECT_SOURCE_DIR}/src/systems.cpp")
 target_link_libraries(

@@ -67,9 +67,9 @@ flecs::system add_ball_with_paddle_collision_system(flecs::world *world,
 {
     flecs::system ball_with_paddle_collision_system =
         world->system<Paddle, CollisionBox, Position>().each(
-            [ball](const Paddle /* paddle */,
-                   const CollisionBox &collision_box,
-                   const Position &position) {
+            [ball, world](const Paddle /* paddle */,
+                          const CollisionBox &collision_box,
+                          const Position &position) {
                 if (!is_intersecting(*ball->get<Position>(),
                                      *ball->get<CollisionBox>(),
                                      position,
@@ -77,6 +77,11 @@ flecs::system add_ball_with_paddle_collision_system(flecs::world *world,
                 {
                     return;
                 }
+
+                const Sound sound = world->lookup("BallPaddleCollisionSound")
+                                        .get<Audible>()
+                                        ->sound;
+                PlaySound(sound);
 
                 float new_velocity_y{-ball->get<Velocity>()->values.y};
 

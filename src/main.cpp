@@ -6,6 +6,8 @@
 #include <flecs.h>
 #include <fmt/format.h>
 #include <raylib.h>
+#include <spdlog/common.h>
+#include <spdlog/spdlog.h>
 
 #include <cmath>
 #include <iostream>
@@ -20,6 +22,15 @@ int main()
     create_paddle(&world);
     create_bricks(&world);
 
+    InitWindow(constants::kWindowWidth,
+               constants::kWindowHeight,
+               constants::kWindowTitle.data());
+    InitAudioDevice();
+    //Sound paddle_ball_collision_sound =
+    //  LoadSound(ASSETS_PATH "ArkanoidSFX6.wav");
+
+    create_ball_with_paddle_collision_sound(&world);
+
     flecs::entity ball{world.lookup("Ball")};
     flecs::system paddle_movement_system{add_paddle_movement_system(&world)};
     flecs::system ball_with_wall_collision_system{
@@ -29,10 +40,8 @@ int main()
     flecs::system ball_with_brick_collision_system{
         add_ball_with_brick_collision_system(&world, &ball)};
 
-    InitWindow(constants::kWindowWidth,
-               constants::kWindowHeight,
-               constants::kWindowTitle.data());
     SetTargetFPS(constants::kTargetFramerate);
+
 
     while (!WindowShouldClose())
     {
@@ -58,6 +67,9 @@ int main()
         EndDrawing();
     }
 
+    destroy_ball_with_paddle_collision_sound(&world);
+    //UnloadSound(paddle_ball_collision_sound);
+    CloseAudioDevice();
     CloseWindow();
 
     return 0;

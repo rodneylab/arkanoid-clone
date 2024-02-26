@@ -77,3 +77,18 @@ void create_paddle(flecs::world *world)
     // NOLINTEND(readability-magic-numbers)
     paddle.set<Velocity>(Velocity{0.F, 0.F});
 }
+
+void create_ball_with_paddle_collision_sound(flecs::world *world)
+{
+    Sound paddle_ball_collision_sound =
+        LoadSound(ASSETS_PATH "ArkanoidSFX6.wav");
+    auto sound_entity(world->entity("BallPaddleCollisionSound"));
+    sound_entity.set<Audible>(Audible{paddle_ball_collision_sound});
+}
+
+void destroy_ball_with_paddle_collision_sound(flecs::world *world)
+{
+    const Sound paddle_ball_collision_sound =
+        world->lookup("BallPaddleCollisionSound").get<Audible>()->sound;
+    UnloadSound(paddle_ball_collision_sound);
+}
