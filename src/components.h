@@ -3,6 +3,11 @@
 
 #include <raylib.h>
 
+struct Audible
+{
+    Sound sound;
+};
+
 struct Ball
 {
 };
