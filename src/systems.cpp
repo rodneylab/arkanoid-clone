@@ -78,10 +78,13 @@ flecs::system add_ball_with_paddle_collision_system(flecs::world *world,
                     return;
                 }
 
-                const Sound sound = world->lookup("BallPaddleCollisionSound")
-                                        .get<Audible>()
-                                        ->sound;
-                PlaySound(sound);
+                if (IsAudioDeviceReady())
+                {
+                    const Sound sound{world->lookup("BallPaddleCollisionSound")
+                                          .get<Audible>()
+                                          ->sound};
+                    PlaySound(sound);
+                }
 
                 float new_velocity_y{-ball->get<Velocity>()->values.y};
 
