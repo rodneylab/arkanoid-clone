@@ -26,8 +26,6 @@ int main()
                constants::kWindowHeight,
                constants::kWindowTitle.data());
     InitAudioDevice();
-    //Sound paddle_ball_collision_sound =
-    //  LoadSound(ASSETS_PATH "ArkanoidSFX6.wav");
 
     create_ball_with_paddle_collision_sound(&world);
 
@@ -68,7 +66,6 @@ int main()
     }
 
     destroy_ball_with_paddle_collision_sound(&world);
-    //UnloadSound(paddle_ball_collision_sound);
     CloseAudioDevice();
     CloseWindow();
 
