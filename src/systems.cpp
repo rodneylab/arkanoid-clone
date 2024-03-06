@@ -3,7 +3,9 @@
 #include "components.h"
 #include "constants.h"
 
-#include <flecs.h>
+#include <flecs/addons/cpp/flecs.hpp>
+#include <flecs/addons/cpp/mixins/system/impl.hpp>
+#include <flecs/addons/cpp/world.hpp>
 #include <raylib.h>
 
 #include <cmath>
@@ -86,7 +88,7 @@ flecs::system add_ball_with_paddle_collision_system(flecs::world *world,
                     PlaySound(sound);
                 }
 
-                float new_velocity_y{-ball->get<Velocity>()->values.y};
+                const float new_velocity_y{-ball->get<Velocity>()->values.y};
 
                 if (ball->get<Position>()->centre.x < position.centre.x)
                 {
@@ -108,16 +110,24 @@ flecs::system add_ball_with_brick_collision_system(flecs::world *world,
 {
     flecs::system ball_with_brick_collision_system =
         world->system<Brick, Position, CollisionBox>().each(
-            [ball](flecs::entity entity,
-                   Brick /* brick */,
-                   Position position,
-                   CollisionBox collision_box) {
+            [ball, world](flecs::entity entity,
+                          Brick /* brick */,
+                          Position position,
+                          CollisionBox collision_box) {
                 if (!is_intersecting(*ball->get<Position>(),
                                      *ball->get<CollisionBox>(),
                                      position,
                                      collision_box))
                 {
                     return;
+                }
+
+                if (IsAudioDeviceReady())
+                {
+                    const Sound sound{world->lookup("BallBrickCollisionSound")
+                                          .get<Audible>()
+                                          ->sound};
+                    PlaySound(sound);
                 }
                 const float overlap_left{
                     right(*ball->get<Position>(), *ball->get<CollisionBox>()) -

@@ -22,6 +22,9 @@ target_compile_options(
         "$<${gcc_like_cxx}:$<BUILD_INTERFACE:-pedantic-errors;-Werror;-Wall;-Weffc++;-Wextra;-Wconversion;-Wsign-conversion>>"
         "$<${msvc_cxx}:$<BUILD_INTERFACE:-W4>>")
 
+include(cmake/StaticAnalysers.cmake)
+enable_clang_tidy()
+
 set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${PROJECT_SOURCE_DIR}/cmake")
 option(RUN_TESTS "Enable tests" ON)
 include(coverage)
@@ -39,6 +42,7 @@ cpmaddpackage("gh:gabime/spdlog#7c02e204c92545f869e2f04edaab1f19fe8b19fd"
 )# v1.13.0
 
 add_library(Entities_lib STATIC "${PROJECT_SOURCE_DIR}/src/entities.cpp")
+set_target_properties(Entities_lib PROPERTIES CXX_CLANG_TIDY "${CLANG_TIDY_COMMAND}")
 target_link_libraries(
     Entities_lib
     flecs::flecs_static
@@ -49,6 +53,7 @@ target_compile_definitions(
     Entities_lib PUBLIC ASSETS_PATH="${CMAKE_CURRENT_SOURCE_DIR}/assets/")
 
 add_library(Systems_lib STATIC "${PROJECT_SOURCE_DIR}/src/systems.cpp")
+set_target_properties(Systems_lib PROPERTIES CXX_CLANG_TIDY "${CLANG_TIDY_COMMAND}")
 target_link_libraries(
     Systems_lib
     flecs::flecs_static
@@ -56,6 +61,7 @@ target_link_libraries(
     arkanoid_compiler_flags)
 
 add_executable(Arkanoid src/main.cpp)
+set_target_properties(Arkanoid PROPERTIES CXX_CLANG_TIDY "${CLANG_TIDY_COMMAND}")
 target_link_libraries(
     Arkanoid
     PUBLIC Entities_lib

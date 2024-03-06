@@ -3,9 +3,19 @@
 #include "components.h"
 #include "constants.h"
 
-#include <flecs.h>
+#include <flecs/addons/cpp/entity.hpp>
+#include <flecs/addons/cpp/world.hpp>
 #include <fmt/core.h>
 #include <raylib.h>
+
+#include <string>
+
+constexpr float kPaddleTop{static_cast<float>(constants::kWindowHeight) -
+                           constants::kPaddleHeight -
+                           constants::kPaddleInsetBottom};
+
+constexpr float kBallInitialPositionTop{kPaddleTop -
+                                        2.F * constants::kBallRadius};
 
 void create_ball(flecs::world *world)
 {
@@ -17,24 +27,22 @@ void create_ball(flecs::world *world)
     world->entity("Ball")
         .add<Ball>()
         .set<CircleComponent>(CircleComponent(constants::kBallRadius, RED))
-        .set<Position>(
-            Position(static_cast<float>(constants::kWindowWidth) / 2,
-                     static_cast<float>(constants::kWindowHeight) / 2))
+        .set<Position>(Position(static_cast<float>(constants::kWindowWidth) / 2,
+                                kBallInitialPositionTop))
         .set<CollisionBox>(
-            CollisionBox(constants::kBallRadius, constants::kBallRadius))
-        .set<Velocity>(Velocity(ball_x_velocity, -constants::kBallVelocity));
+            CollisionBox(constants::kBallRadius, 0.5F * constants::kBallRadius))
+        .set<Velocity>(
+            Velocity(ball_x_velocity, -0.5F * constants::kBallVelocity));
 }
 
 void create_bricks(flecs::world *world)
 {
     constexpr float padded_brick_width{constants::kBrickWidth + 3};
     constexpr float padded_brick_height{constants::kBrickHeight + 3};
-    // NOLINTBEGIN(readability-magic-numbers)
     constexpr float collision_box_half_width{0.5F * constants::kBrickWidth};
     constexpr float collision_box_half_height{0.5F * constants::kBrickHeight};
-    // NOLINTEND(readability-magic-numbers)
 
-    flecs::entity BrickEntity =
+    const flecs::entity BrickEntity =
         world->prefab("Brick")
             .set<RectangleComponent>(RectangleComponent(constants::kBrickWidth,
                                                         constants::kBrickHeight,
@@ -66,22 +74,32 @@ void create_paddle(flecs::world *world)
     paddle.set<RectangleComponent>(RectangleComponent{constants::kPaddleWidth,
                                                       constants::kPaddleHeight,
                                                       RED});
-    paddle.set<Position>(Position{
-        static_cast<float>(constants::kWindowWidth) / 2,
-        static_cast<float>(constants::kWindowHeight) -
-            constants::kPaddleInsetBottom,
-    });
-    // NOLINTBEGIN(readability-magic-numbers)
+    paddle.set<Position>(
+        Position{static_cast<float>(constants::kWindowWidth) / 2, kPaddleTop});
     paddle.set<CollisionBox>(CollisionBox{0.5F * constants::kPaddleWidth,
                                           0.5F * constants::kPaddleHeight});
-    // NOLINTEND(readability-magic-numbers)
     paddle.set<Velocity>(Velocity{0.F, 0.F});
+}
+
+void create_ball_with_brick_collision_sound(flecs::world *world)
+{
+    const Sound ball_brick_collision_sound{
+        LoadSound(ASSETS_PATH "ArkanoidSFX7.wav")};
+    auto sound_entity(world->entity("BallBrickCollisionSound"));
+    sound_entity.set<Audible>(Audible{ball_brick_collision_sound});
+}
+
+void destroy_ball_with_brick_collision_sound(flecs::world *world)
+{
+    const Sound ball_brick_collision_sound{
+        world->lookup("BallBrickCollisionSound").get<Audible>()->sound};
+    UnloadSound(ball_brick_collision_sound);
 }
 
 void create_ball_with_paddle_collision_sound(flecs::world *world)
 {
-    Sound paddle_ball_collision_sound =
-        LoadSound(ASSETS_PATH "ArkanoidSFX6.wav");
+    const Sound paddle_ball_collision_sound{
+        LoadSound(ASSETS_PATH "ArkanoidSFX6.wav")};
     auto sound_entity(world->entity("BallPaddleCollisionSound"));
     sound_entity.set<Audible>(Audible{paddle_ball_collision_sound});
 }
