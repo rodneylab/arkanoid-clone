@@ -31,13 +31,14 @@ jobs:
       - name: Setup Cpp
         uses: aminya/setup-cpp@290824452986e378826155f3379d31bce8753d76 # v0.37.0
         with:
+          clangtidy: true
           # compiler: ${{ matrix.compiler }}
           # vcvarsall: ${{ contains(matrix.os, 'windows' )}}
           # cmake: true
           # ninja: true
           # vcpkg: false
           # ccache: true
-          clangtidy: true
+          # clangtidy: true
           # cppcheck: true
           # gcovr: true
           # opencppcoverage: true
