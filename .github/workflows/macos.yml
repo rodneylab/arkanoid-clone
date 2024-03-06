@@ -15,6 +15,20 @@ jobs:
         with:
           egress-policy: audit
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - name: Setup Cpp
+        uses: aminya/setup-cpp@290824452986e378826155f3379d31bce8753d76 # v0.37.0
+        with:
+          clangtidy: true
+          # compiler: ${{ matrix.compiler }}
+          # vcvarsall: ${{ contains(matrix.os, 'windows' )}}
+          # cmake: true
+          # ninja: true
+          # vcpkg: false
+          # ccache: true
+          # clangtidy: true
+          # cppcheck: true
+          # gcovr: true
+          # opencppcoverage: true
       - name: configure
         run: |
           cmake -H. -Bbuild -G "Unix Makefiles" -DCMAKE_BUILD_TYPE="Debug"
