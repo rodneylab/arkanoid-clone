@@ -21,18 +21,18 @@ jobs:
         run: |
           sudo apt-get install doxygen
           pip install -r requirements.txt  --require-hashes
-      - name: prepare
-        run: |
-          make prepare
+        #      - name: prepare
+        #        run: |
+        #          make prepare
       - name: configure
         run: |
           cmake -H. -Bbuild -G "Unix Makefiles" -DCMAKE_BUILD_TYPE="Debug"
       - name: building
         run: |
-          cmake --build build --config Debug --target docs -j4
+          cmake --build build --config Debug --target doc_doxygen -j4
       - name: Deploy to GitHub Pages
         uses: Cecilapp/GitHub-Pages-deploy@526a34f794dfdf7edd6a4ac94321b1e7945910c0 # v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          build_dir: ./docs/html
+          build_dir: ./build/docs/doc_doxygen/html
