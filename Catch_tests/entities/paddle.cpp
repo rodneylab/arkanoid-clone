@@ -62,7 +62,7 @@ TEST_CASE("It creates paddle with expected components and tags",
         // assert
         const Position *position_component{paddle_entity.get<Position>()};
         constexpr float expected_centre_x{400.F};
-        constexpr float expected_centre_y{550.F};
+        constexpr float expected_centre_y{530.F};
         REQUIRE(position_component != nullptr);
         REQUIRE_THAT(
             position_component->centre.x,
