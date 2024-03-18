@@ -1,6 +1,10 @@
 #ifndef SRC_SYSTEMS_H
 #define SRC_SYSTEMS_H
 
+/*! \file src/systems.h
+ * \brief Declarations for ECS system functions
+ */
+
 #include "components.h"
 
 #include <flecs.h>

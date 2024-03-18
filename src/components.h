@@ -1,6 +1,10 @@
 #ifndef SRC_COMPONENTS_H
 #define SRC_COMPONENTS_H
 
+/*! \file src/components.h
+ * \brief Declarations for ECS component classes and sructs
+ */
+
 #include <raylib.h>
 
 struct Audible
