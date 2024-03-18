@@ -5,8 +5,8 @@ on:
       - "*"
     branches: [main, master]
 permissions:
-  contents: read/write
-  pages: read/write
+  contents: write
+  pages: write
 jobs:
   build:
     name: Build and publish documentation
