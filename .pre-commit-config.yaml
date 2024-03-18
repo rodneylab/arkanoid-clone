@@ -1,13 +1,18 @@
 fail_fast: false
 repos:
   - hooks:
-      - id: check-yaml
-      - exclude: .vscode
-        id: check-json
-      - id: end-of-file-fixer
-      - id: trailing-whitespace
-    repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
+      - id: commitizen
+        stages:
+          - commit-msg
+      - id: commitizen-branch
+        stages:
+          - push
+    repo: https://github.com/commitizen-tools/commitizen
+    rev: v3.18.4
+  - hooks:
+      - id: gitleaks
+    repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.2
   - hooks:
       - exclude_types:
           - javascript
@@ -16,17 +21,17 @@ repos:
     repo: https://github.com/pre-commit/mirrors-clang-format
     rev: v18.1.1
   - hooks:
-      - id: commitizen
-      - id: commitizen-branch
-        stages:
-          - push
-    repo: https://github.com/commitizen-tools/commitizen
-    rev: v3.18.4
-  - repo: https://github.com/gitleaks/gitleaks
-    rev: v8.18.2
-    hooks:
-      - id: gitleaks
-  - repo: https://github.com/google/yamlfmt
-    rev: v0.11.0
-    hooks:
+      - args:
+          - --markdown-linebreak-ext=md
+        id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - exclude: .vscode
+        id: check-json
+      - id: no-commit-to-branch
+    repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+  - hooks:
       - id: yamlfmt
+    repo: https://github.com/google/yamlfmt
+    rev: v0.11.0
