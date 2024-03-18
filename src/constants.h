@@ -1,6 +1,10 @@
 #ifndef SRC_CONSTANTS_H
 #define SRC_CONSTANTS_H
 
+/*! \file src/constants.h
+ * \brief Declarations for game constants used throughout the project
+ */
+
 #include <string>
 
 namespace constants

@@ -1,6 +1,10 @@
 #ifndef SRC_ENTITIES_H
 #define SRC_ENTITIES_H
 
+/*! \file src/entities.h
+ * \brief Declarations for ECS entity functions
+ */
+
 #include <flecs.h>
 #include <raylib.h>
 
