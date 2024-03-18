@@ -57,7 +57,7 @@ TEST_CASE("It creates ball with expected components and tags", "[create_ball]")
         // assert
         const Position *position_component{ball_entity.get<Position>()};
         constexpr float expected_centre_x{400.F};
-        constexpr float expected_centre_y{300.F};
+        constexpr float expected_centre_y{510.F};
         REQUIRE(position_component != nullptr);
         REQUIRE_THAT(
             position_component->centre.x,
@@ -75,7 +75,7 @@ TEST_CASE("It creates ball with expected components and tags", "[create_ball]")
         const CollisionBox *collision_box_component{
             ball_entity.get<CollisionBox>()};
         constexpr float expected_collision_box_half_width{10.F};
-        constexpr float expected_collision_box_half_height{10.F};
+        constexpr float expected_collision_box_half_height{5.F};
         REQUIRE(collision_box_component != nullptr);
         REQUIRE_THAT(
             collision_box_component->half_width,
@@ -96,7 +96,7 @@ TEST_CASE("It creates ball with expected components and tags", "[create_ball]")
         // assert
         const Velocity *velocity_component{ball_entity.get<Velocity>()};
         constexpr float expected_speed_x{0.8F};
-        constexpr float expected_velocity_y{-0.8F};
+        constexpr float expected_velocity_y{-0.4F};
         REQUIRE(velocity_component != nullptr);
         REQUIRE_THAT(
             fabs(velocity_component->values.x),
