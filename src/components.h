@@ -2,7 +2,7 @@
 #define SRC_COMPONENTS_H
 
 /*! \file src/components.h
- * \brief Declarations for ECS component classes and sructs
+ * \brief Declarations for ECS component classes and structs
  */
 
 #include <raylib.h>

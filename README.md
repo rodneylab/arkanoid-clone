@@ -29,6 +29,10 @@ cmake --build build
 In game, use the left and right arrow keys to move the paddle at the bottom of
 the screen.
 
+## Documentation
+
+- [Source Documentation](https://rodneylab.github.io/arkanoid-clone/)
+
 ## Issues
 
 Feel free to jump into the

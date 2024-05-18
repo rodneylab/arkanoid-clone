@@ -117,6 +117,7 @@ bld/
 *.vspscc
 *.vssscc
 .builds
+.build-em
 *.pidb
 *.svclog
 *.scc
