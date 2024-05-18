@@ -3,10 +3,9 @@
 #include "Game.h"
 #include "Manager.h"
 
-#include <memory>
-
-#include <SFML/Graphics.hpp>
 #include <catch2/catch_test_macros.hpp>
+
+#include <memory>
 
 // NOLINTNEXTLINE(misc-use-anonymous-namespace)
 TEST_CASE("PositionComponent", "[ComponentTests]")

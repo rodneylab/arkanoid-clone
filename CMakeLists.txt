@@ -44,8 +44,9 @@ cpmaddpackage("gh:SanderMertens/flecs#198607d10ab8f8fc44540043271d6e3be019250b"
 cpmaddpackage("gh:fmtlib/fmt#e69e5f977d458f2650bb346dadf2ad30c5320281") # 10.x
 cpmaddpackage("gh:raysan5/raylib#ae50bfa2cc569c0f8d5bc4315d39db64005b1b0"
 )# v5.0
-cpmaddpackage("gh:gabime/spdlog#7c02e204c92545f869e2f04edaab1f19fe8b19fd"
-)# v1.13.0
+message(STATUS "Include spdlog")
+cpmaddpackage("gh:gabime/spdlog#27cb4c76708608465c413f6d0e6b8d99a4d84302"
+)# v1.14.1
 
 add_library(Entities_lib STATIC "${PROJECT_SOURCE_DIR}/src/entities.cpp")
 set_target_properties(Entities_lib PROPERTIES CXX_CLANG_TIDY
