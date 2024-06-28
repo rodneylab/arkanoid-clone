@@ -11,7 +11,7 @@
 #include <string>
 
 constexpr float kPaddleTop{static_cast<float>(constants::kWindowHeight) -
-                           constants::kPaddleHeight -
+                           0.5 * constants::kPaddleHeight -
                            constants::kPaddleInsetBottom};
 
 constexpr float kBallInitialPositionTop{kPaddleTop -
