@@ -191,7 +191,6 @@ void render_position_entities(flecs::world *world)
     });
     world->each(
         [](const RectangleComponent &rectangle, const Position &position) {
-            // NOLINTBEGIN(readability-magic-numbers)
             DrawRectangle(static_cast<int>(std::round(position.centre.x) -
                                            0.5 * rectangle.width),
                           static_cast<int>(std::round(position.centre.y) -
@@ -199,7 +198,6 @@ void render_position_entities(flecs::world *world)
                           static_cast<int>(std::round(rectangle.width)),
                           static_cast<int>(std::round(rectangle.height)),
                           rectangle.colour);
-            // NOLINTEND(readability-magic-numbers)
         });
 }
 

@@ -10,7 +10,7 @@
 namespace constants
 {
 inline constexpr int kWindowWidth{800U};
-inline constexpr int kWindowHeight{600U};
+inline constexpr int kWindowHeight{450U};
 inline const std::string kWindowTitle{"Arkanoid Clone"};
 
 inline constexpr int kTargetFramerate{240};
@@ -27,7 +27,7 @@ inline constexpr int kBrickColumns{11};
 inline constexpr int kPaddleWidth{60};
 inline constexpr int kPaddleHeight{20};
 inline constexpr float kPaddleVelocity{0.6F};
-inline constexpr float kPaddleInsetBottom{50.F};
+inline constexpr float kPaddleInsetBottom{30.F};
 
 } // namespace constants
 

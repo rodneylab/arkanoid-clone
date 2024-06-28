@@ -57,7 +57,7 @@ TEST_CASE("It creates ball with expected components and tags", "[create_ball]")
         // assert
         const Position *position_component{ball_entity.get<Position>()};
         constexpr float expected_centre_x{400.F};
-        constexpr float expected_centre_y{510.F};
+        constexpr float expected_centre_y{390.F};
         REQUIRE(position_component != nullptr);
         REQUIRE_THAT(
             position_component->centre.x,
