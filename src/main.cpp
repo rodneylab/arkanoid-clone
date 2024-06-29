@@ -127,6 +127,7 @@ int main()
     const flecs::system ball_with_brick_collision_system{
         add_ball_with_brick_collision_system(&world, &ball)};
 
+    const auto game_state_query = get_game_state_query(world);
     const auto game_state_update_query = get_game_state_update_query(world);
 
     SetTargetFPS(constants::kTargetFramerate);
@@ -134,9 +135,15 @@ int main()
 
     const GameState *game_state{world.get<GameState>()};
 
+    double previous_time{GetTime()};
+    double current_time{0.0};
+    double update_draw_time{0.0};
+    float delta_time{0.F};
+
     while (!WindowShouldClose())
     {
         const float frame_time{GetFrameTime()};
+        update_timer_system(game_state_update_query, delta_time);
 
         handle_game_state_input_system(game_state_update_query);
 
@@ -155,6 +162,22 @@ int main()
             render_title(arkanoid_font);
 
             EndDrawing();
+            break;
+
+        case GameMode::ROUND_TITLE:
+            handle_round_title_playing_transition_system(
+                game_state_update_query);
+            BeginDrawing();
+
+            ClearBackground(BLACK);
+
+            BeginShaderMode(shader);
+            render_hud(sdf_hud_font);
+            render_round_title(game_state_query, sdf_hud_font);
+            EndShaderMode();
+
+            EndDrawing();
+
             break;
 
         case GameMode::PLAYING:
@@ -178,6 +201,11 @@ int main()
             EndDrawing();
             break;
         }
+
+        current_time = GetTime();
+        update_draw_time = current_time - previous_time;
+        delta_time = static_cast<float>(update_draw_time);
+        previous_time = current_time;
     }
 
     destroy_ball_with_brick_collision_sound(&world);

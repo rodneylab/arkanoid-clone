@@ -67,6 +67,7 @@ set_target_properties(Systems_lib PROPERTIES CXX_CLANG_TIDY
 target_link_libraries(
     Systems_lib
     flecs::flecs_static
+    fmt::fmt
     raylib
     arkanoid_compiler_flags)
 

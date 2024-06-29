@@ -8,6 +8,10 @@
 #include <flecs/addons/cpp/mixins/query/impl.hpp>
 #include <flecs/addons/cpp/mixins/system/impl.hpp>
 #include <flecs/addons/cpp/world.hpp>
+#include <fmt/core.h>
+
+#undef near
+#undef far
 #include <raylib.h>
 
 #include <cmath>
@@ -18,6 +22,19 @@ void handle_game_state_input_system(
 {
     game_state_update_query.each([](GameState &game_state) {
         if (game_state.game_mode == GameMode::TITLE && IsKeyDown(KEY_SPACE))
+        {
+            game_state.timer.reset();
+            game_state.game_mode = GameMode::ROUND_TITLE;
+        }
+    });
+}
+
+void handle_round_title_playing_transition_system(
+    const flecs::query<GameState> &game_state_update_query)
+{
+    game_state_update_query.each([](GameState &game_state) {
+        constexpr float kWaitTime{3.F};
+        if (game_state.timer.time > kWaitTime)
         {
             game_state.game_mode = GameMode::PLAYING;
         }
@@ -195,6 +212,14 @@ void update_velocity_entities(flecs::world *world, const float /* frame_time */)
     });
 }
 
+void update_timer_system(const flecs::query<GameState> &game_state_update_query,
+                         const float delta_time)
+{
+    game_state_update_query.each([&delta_time](GameState &game_state) {
+        game_state.timer.increment(delta_time);
+    });
+}
+
 void render_hud(const Font &hud_font)
 {
     constexpr int kPlayerTextPositionX{50};
@@ -270,6 +295,28 @@ void render_title(const Font &title_font)
                kFontSize,
                kFontSpacing,
                DARKBLUE);
+}
+
+void render_round_title(const flecs::query<const GameState> &game_state_query,
+                        const Font &hud_font)
+{
+    game_state_query.each([&hud_font](const GameState &game_state) {
+        constexpr int kFontSize{18};
+        constexpr float kFontSpacing{1.F};
+        const std::string text{fmt::format("ROUND {}", game_state.round)};
+        const Vector2 text_measurements{
+            MeasureTextEx(hud_font, text.data(), kFontSize, kFontSpacing)};
+
+        DrawTextEx(hud_font,
+                   text.data(),
+                   Vector2{0.5F * static_cast<float>(constants::kWindowWidth -
+                                                     text_measurements.x),
+                           0.5F * static_cast<float>(constants::kWindowHeight -
+                                                     text_measurements.y)},
+                   kFontSize,
+                   kFontSpacing,
+                   WHITE);
+    });
 }
 
 void render_position_entities(flecs::world *world)
