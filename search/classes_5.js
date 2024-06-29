@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['velocity_21',['Velocity',['../structVelocity.html',1,'']]]
+  ['rectanglecomponent_22',['RectangleComponent',['../structRectangleComponent.html',1,'']]]
 ];

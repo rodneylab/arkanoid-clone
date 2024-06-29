@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['rectanglecomponent_10',['RectangleComponent',['../structRectangleComponent.html',1,'']]]
+  ['paddle_9',['Paddle',['../structPaddle.html',1,'']]],
+  ['position_10',['Position',['../structPosition.html',1,'']]]
 ];

@@ -76,6 +76,7 @@ $(function() {
 <p>Declarations for ECS system functions.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="components_8h_source.html">components.h</a>&quot;</code><br />
+<code>#include &quot;resources.h&quot;</code><br />
 <code>#include &lt;flecs.h&gt;</code><br />
 </div>
 <p><a href="systems_8h_source.html">Go to the source code of this file.</a></p>
@@ -94,9 +95,18 @@ flecs::system&#160;</td><td class="memItemRight" valign="bottom"><b>add_ball_wit
 <tr class="memitem:ad946635dbdd1d0672b89afee7d8b4b56"><td class="memItemLeft" align="right" valign="top"><a id="ad946635dbdd1d0672b89afee7d8b4b56"></a>
 flecs::system&#160;</td><td class="memItemRight" valign="bottom"><b>add_ball_with_brick_collision_system</b> (flecs::world *world, flecs::entity *ball)</td></tr>
 <tr class="separator:ad946635dbdd1d0672b89afee7d8b4b56"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a27ff9ed8987817e6301119a91c1c9eb9"><td class="memItemLeft" align="right" valign="top"><a id="a27ff9ed8987817e6301119a91c1c9eb9"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>update_velocity_entities</b> (flecs::world *world, const float frame_time)</td></tr>
-<tr class="separator:a27ff9ed8987817e6301119a91c1c9eb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3622143c106c840722bfdc8b29925fc9"><td class="memItemLeft" align="right" valign="top"><a id="a3622143c106c840722bfdc8b29925fc9"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>handle_game_state_input_system</b> (const flecs::query&lt; <a class="el" href="structGameState.html">GameState</a> &gt; &amp;game_state_update_query)</td></tr>
+<tr class="separator:a3622143c106c840722bfdc8b29925fc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c67db19ceaa2527aea97ad55a929f09"><td class="memItemLeft" align="right" valign="top"><a id="a6c67db19ceaa2527aea97ad55a929f09"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>update_velocity_entities</b> (flecs::world *world, float frame_time)</td></tr>
+<tr class="separator:a6c67db19ceaa2527aea97ad55a929f09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa73af88fc08b1aee12b64bde929e20ad"><td class="memItemLeft" align="right" valign="top"><a id="aa73af88fc08b1aee12b64bde929e20ad"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>render_hud</b> (const Font &amp;hud_font)</td></tr>
+<tr class="separator:aa73af88fc08b1aee12b64bde929e20ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa071b6971fba12ba1be5ad9c57104049"><td class="memItemLeft" align="right" valign="top"><a id="aa071b6971fba12ba1be5ad9c57104049"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>render_instructions</b> (const Font &amp;hud_font)</td></tr>
+<tr class="separator:aa071b6971fba12ba1be5ad9c57104049"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6eda5f4a6d7b430d956cfecbd665b3dc"><td class="memItemLeft" align="right" valign="top"><a id="a6eda5f4a6d7b430d956cfecbd665b3dc"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>render_position_entities</b> (flecs::world *world)</td></tr>
 <tr class="separator:a6eda5f4a6d7b430d956cfecbd665b3dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
