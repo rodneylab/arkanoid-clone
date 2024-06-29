@@ -22,7 +22,7 @@
  * applied.  Smoothing reduces the pixelation, which is a design feature of the
  * font.
  */
-void initialise_sdf_hud_font(Font *sdf_huf_font, Shader *shader)
+void initialise_sdf_hud_font(Font *sdf_hud_font, Shader *shader)
 {
     // Load font into memory
     int fileSize = 0;
@@ -55,11 +55,11 @@ void initialise_sdf_hud_font(Font *sdf_huf_font, Shader *shader)
     UnloadImage(atlas);
 
     // Generate SDF font from TTF font
-    *sdf_huf_font = Font{};
-    sdf_huf_font->baseSize = kFontBaseSize;
-    sdf_huf_font->glyphCount = kFontGlyphs;
+    *sdf_hud_font = Font{};
+    sdf_hud_font->baseSize = kFontBaseSize;
+    sdf_hud_font->glyphCount = kFontGlyphs;
     constexpr int kFontPadding{0};
-    sdf_huf_font->glyphs = LoadFontData(fileData,
+    sdf_hud_font->glyphs = LoadFontData(fileData,
                                         fileSize,
                                         kFontBaseSize,
                                         nullptr,
@@ -67,13 +67,13 @@ void initialise_sdf_hud_font(Font *sdf_huf_font, Shader *shader)
                                         FONT_SDF);
     constexpr int kImageFontSize{10};
     constexpr int kSkylinePackingAlgorihm{1};
-    atlas = GenImageFontAtlas(sdf_huf_font->glyphs,
-                              &sdf_huf_font->recs,
+    atlas = GenImageFontAtlas(sdf_hud_font->glyphs,
+                              &sdf_hud_font->recs,
                               kFontGlyphs,
                               kImageFontSize,
                               kFontPadding,
                               kSkylinePackingAlgorihm);
-    sdf_huf_font->texture = LoadTextureFromImage(atlas);
+    sdf_hud_font->texture = LoadTextureFromImage(atlas);
     UnloadImage(atlas);
 
     // Free memory
@@ -111,6 +111,8 @@ int main()
     Font sdf_hud_font{};
     Shader shader{};
     initialise_sdf_hud_font(&sdf_hud_font, &shader);
+
+    const Font arkanoid_font{LoadFont(ASSETS_PATH "Arka_solid.ttf")};
 
     create_ball_with_brick_collision_sound(&world);
     create_ball_with_paddle_collision_sound(&world);
@@ -150,6 +152,8 @@ int main()
             render_instructions(sdf_hud_font);
             EndShaderMode();
 
+            render_title(arkanoid_font);
+
             EndDrawing();
             break;
 
@@ -178,6 +182,10 @@ int main()
 
     destroy_ball_with_brick_collision_sound(&world);
     destroy_ball_with_paddle_collision_sound(&world);
+
+    UnloadFont(arkanoid_font);
+    UnloadFont(sdf_hud_font);
+
     CloseAudioDevice();
     CloseWindow();
 

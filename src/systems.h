@@ -23,6 +23,7 @@ void update_velocity_entities(flecs::world *world, float frame_time);
 void render_hud(const Font &hud_font);
 void render_instructions(const Font &hud_font);
 void render_position_entities(flecs::world *world);
+void render_title(const Font &title_font);
 
 float top(const Position &position, const CollisionBox &collision_box);
 float right(const Position &position, const CollisionBox &collision_box);
