@@ -237,7 +237,7 @@ void render_hud(const Font &hud_font)
 void render_instructions(const Font &hud_font)
 {
     constexpr int kTextPositionY{300};
-    constexpr int kFontSize{24};
+    constexpr int kFontSize{18};
     constexpr float kFontSpacing{1.F};
     const std::string text{"PRESS SPACE TO START"};
     const Vector2 text_measurements{
@@ -251,6 +251,25 @@ void render_instructions(const Font &hud_font)
                kFontSize,
                kFontSpacing,
                WHITE);
+}
+
+void render_title(const Font &title_font)
+{
+    constexpr int kTextPositionY{110};
+    constexpr int kFontSize{72};
+    constexpr float kFontSpacing{1.F};
+    const std::string text{"ARKANOID"};
+    const Vector2 text_measurements{
+        MeasureTextEx(title_font, text.data(), kFontSize, kFontSpacing)};
+
+    DrawTextEx(title_font,
+               text.data(),
+               Vector2{0.5F * static_cast<float>(constants::kWindowWidth -
+                                                 text_measurements.x),
+                       kTextPositionY},
+               kFontSize,
+               kFontSpacing,
+               DARKBLUE);
 }
 
 void render_position_entities(flecs::world *world)
