@@ -82,7 +82,6 @@ TEST_CASE("PhysicsComponentWithNoVelicityDoesNotMove",
 
     SECTION("Physics component with no velocity does not move")
     {
-
         constexpr float kUpdateFrameTime{60.F};
         physics_component.update(kUpdateFrameTime);
 
@@ -95,7 +94,6 @@ TEST_CASE("PhysicsComponentWithNoVelicityDoesNotMove",
         CHECK(physics_component.bottom() ==
               kInitialPositionY + kHalfSizeHeight);
     }
-
 
     SECTION("Physics component with velocity moves")
     {

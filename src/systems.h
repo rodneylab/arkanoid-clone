@@ -6,6 +6,7 @@
  */
 
 #include "components.h"
+#include "resources.h"
 
 #include <flecs.h>
 
@@ -16,7 +17,11 @@ flecs::system add_ball_with_paddle_collision_system(flecs::world *world,
 flecs::system add_ball_with_brick_collision_system(flecs::world *world,
                                                    flecs::entity *ball);
 
-void update_velocity_entities(flecs::world *world, const float frame_time);
+void handle_game_state_input_system(
+    const flecs::query<GameState> &game_state_update_query);
+void update_velocity_entities(flecs::world *world, float frame_time);
+void render_hud(const Font &hud_font);
+void render_instructions(const Font &hud_font);
 void render_position_entities(flecs::world *world);
 
 float top(const Position &position, const CollisionBox &collision_box);

@@ -2,13 +2,27 @@
 
 #include "components.h"
 #include "constants.h"
+#include "resources.h"
 
 #include <flecs/addons/cpp/flecs.hpp>
+#include <flecs/addons/cpp/mixins/query/impl.hpp>
 #include <flecs/addons/cpp/mixins/system/impl.hpp>
 #include <flecs/addons/cpp/world.hpp>
 #include <raylib.h>
 
 #include <cmath>
+#include <string>
+
+void handle_game_state_input_system(
+    const flecs::query<GameState> &game_state_update_query)
+{
+    game_state_update_query.each([](GameState &game_state) {
+        if (game_state.game_mode == GameMode::TITLE && IsKeyDown(KEY_SPACE))
+        {
+            game_state.game_mode = GameMode::PLAYING;
+        }
+    });
+}
 
 flecs::system add_paddle_movement_system(flecs::world *world)
 {
@@ -179,6 +193,64 @@ void update_velocity_entities(flecs::world *world, const float /* frame_time */)
         position.centre.x += velocity.values.x;
         position.centre.y += velocity.values.y;
     });
+}
+
+void render_hud(const Font &hud_font)
+{
+    constexpr int kPlayerTextPositionX{50};
+    constexpr int kTextPositionY{10};
+    constexpr int kScoreTextOffsetX{33};
+    constexpr int kScoreTextPositionY{27};
+    constexpr float kTextFontSize{16.F};
+    constexpr float kTextFontSpacing{1.F};
+    DrawTextEx(hud_font,
+               "1UP",
+               Vector2{kPlayerTextPositionX, kTextPositionY},
+               kTextFontSize,
+               kTextFontSpacing,
+               RED);
+    DrawTextEx(
+        hud_font,
+        "00",
+        Vector2{kPlayerTextPositionX + kScoreTextOffsetX, kScoreTextPositionY},
+        kTextFontSize,
+        kTextFontSpacing,
+        WHITE);
+
+    constexpr int kHiScoreTextPositionX{190};
+    DrawTextEx(hud_font,
+               "HIGH SCORE",
+               Vector2{kHiScoreTextPositionX, kTextPositionY},
+               kTextFontSize,
+               kTextFontSpacing,
+               RED);
+    constexpr int kHiScoreTextOffsetX{51};
+    DrawTextEx(hud_font,
+               "50000",
+               Vector2{kHiScoreTextPositionX + kHiScoreTextOffsetX,
+                       kScoreTextPositionY},
+               kTextFontSize,
+               kTextFontSpacing,
+               WHITE);
+}
+
+void render_instructions(const Font &hud_font)
+{
+    constexpr int kTextPositionY{300};
+    constexpr int kFontSize{24};
+    constexpr float kFontSpacing{1.F};
+    const std::string text{"PRESS SPACE TO START"};
+    const Vector2 text_measurements{
+        MeasureTextEx(hud_font, text.data(), kFontSize, kFontSpacing)};
+
+    DrawTextEx(hud_font,
+               text.data(),
+               Vector2{0.5F * static_cast<float>(constants::kWindowWidth -
+                                                 text_measurements.x),
+                       kTextPositionY},
+               kFontSize,
+               kFontSpacing,
+               WHITE);
 }
 
 void render_position_entities(flecs::world *world)
