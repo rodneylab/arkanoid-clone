@@ -73,26 +73,37 @@ $(function() {
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef SRC_QUERIES_H</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define SRC_QUERIES_H</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;resources.h&quot;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;flecs.h&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;flecs/addons/cpp/mixins/query/impl.hpp&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;flecs::query&lt;const GameState&gt; get_game_state_query(<span class="keyword">const</span> flecs::world &amp;world)</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;{</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keywordflow">return</span> world.query_builder&lt;<span class="keyword">const</span> <a class="code" href="structGameState.html">GameState</a>&gt;()</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        .term_at(1)</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        .singleton()</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        .build();</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;}</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;flecs::query&lt;GameState&gt; get_game_state_update_query(<span class="keyword">const</span> flecs::world &amp;world)</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;{</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keywordflow">return</span> world.query_builder&lt;<a class="code" href="structGameState.html">GameState</a>&gt;().term_at(1).singleton().build();</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;}</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="astructGameState_html"><div class="ttname"><a href="structGameState.html">GameState</a></div><div class="ttdef"><b>Definition:</b> resources.h:27</div></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="components_8h.html">components.h</a>&quot;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;resources.h&quot;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;flecs.h&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;flecs/addons/cpp/mixins/query/impl.hpp&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;flecs::query&lt;const GameState&gt; get_game_state_query(<span class="keyword">const</span> flecs::world &amp;world)</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;{</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <span class="keywordflow">return</span> world.query_builder&lt;<span class="keyword">const</span> <a class="code" href="structGameState.html">GameState</a>&gt;()</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        .term_at(1)</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        .singleton()</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        .build();</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;}</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;flecs::query&lt;GameState&gt; get_game_state_update_query(<span class="keyword">const</span> flecs::world &amp;world)</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;{</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keywordflow">return</span> world.query_builder&lt;<a class="code" href="structGameState.html">GameState</a>&gt;().term_at(1).singleton().build();</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;}</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;flecs::query&lt;const Wall, const AxisAlignedOneWayCollider&gt;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;get_wall_collider_query(<span class="keyword">const</span> flecs::world &amp;world)</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;{</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keywordflow">return</span> world.query_builder&lt;<span class="keyword">const</span> <a class="code" href="structWall.html">Wall</a>, <span class="keyword">const</span> <a class="code" href="structAxisAlignedOneWayCollider.html">AxisAlignedOneWayCollider</a>&gt;()</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        .build();</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;}</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="acomponents_8h_html"><div class="ttname"><a href="components_8h.html">components.h</a></div><div class="ttdoc">Declarations for ECS component classes and structs.</div></div>
+<div class="ttc" id="astructAxisAlignedOneWayCollider_html"><div class="ttname"><a href="structAxisAlignedOneWayCollider.html">AxisAlignedOneWayCollider</a></div><div class="ttdoc">One-sided collider suitable for walls and platforms.</div><div class="ttdef"><b>Definition:</b> components.h:59</div></div>
+<div class="ttc" id="astructGameState_html"><div class="ttname"><a href="structGameState.html">GameState</a></div><div class="ttdef"><b>Definition:</b> resources.h:29</div></div>
+<div class="ttc" id="astructWall_html"><div class="ttname"><a href="structWall.html">Wall</a></div><div class="ttdoc">Wall ECS tag.</div><div class="ttdef"><b>Definition:</b> components.h:111</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

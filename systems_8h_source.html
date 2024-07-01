@@ -79,41 +79,48 @@ $(function() {
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;flecs.h&gt;</span></div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;flecs::system add_paddle_movement_system(flecs::world *world);</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;flecs::system add_ball_with_wall_collision_system(flecs::world *world);</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;flecs::system add_ball_with_paddle_collision_system(flecs::world *world,</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;                                                    flecs::entity *ball);</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;flecs::system add_ball_with_brick_collision_system(flecs::world *world,</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;                                                   flecs::entity *ball);</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keywordtype">void</span> update_timer_system(<span class="keyword">const</span> flecs::query&lt;GameState&gt; &amp;game_state_update_query,</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;                         <span class="keywordtype">float</span> delta_time);</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;flecs::system add_ball_with_wall_collision_system(</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    flecs::world *world,</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keyword">const</span> flecs::query&lt;const Wall, const AxisAlignedOneWayCollider&gt;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        &amp;wall_collider_query);</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;flecs::system add_ball_with_paddle_collision_system(flecs::world *world,</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;                                                    flecs::entity *ball);</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;flecs::system add_ball_with_brick_collision_system(flecs::world *world,</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;                                                   flecs::entity *ball);</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keywordtype">void</span> handle_game_state_input_system(</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keyword">const</span> flecs::query&lt;GameState&gt; &amp;game_state_update_query);</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keywordtype">void</span> handle_round_title_playing_transition_system(</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keyword">const</span> flecs::query&lt;GameState&gt; &amp;game_state_update_query);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keywordtype">void</span> update_velocity_entities(flecs::world *world, <span class="keywordtype">float</span> frame_time);</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keywordtype">void</span> render_hud(<span class="keyword">const</span> Font &amp;hud_font);</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keywordtype">void</span> render_instructions(<span class="keyword">const</span> Font &amp;hud_font);</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keywordtype">void</span> render_position_entities(flecs::world *world);</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keywordtype">void</span> render_title(<span class="keyword">const</span> Font &amp;title_font);</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keywordtype">void</span> render_round_title(<span class="keyword">const</span> flecs::query&lt;const GameState&gt; &amp;game_state_query,</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;                        <span class="keyword">const</span> Font &amp;hud_font);</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keywordtype">float</span> top(<span class="keyword">const</span> <a class="code" href="structPosition.html">Position</a> &amp;position, <span class="keyword">const</span> <a class="code" href="structCollisionBox.html">CollisionBox</a> &amp;collision_box);</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keywordtype">float</span> right(<span class="keyword">const</span> <a class="code" href="structPosition.html">Position</a> &amp;position, <span class="keyword">const</span> <a class="code" href="structCollisionBox.html">CollisionBox</a> &amp;collision_box);</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keywordtype">float</span> bottom(<span class="keyword">const</span> <a class="code" href="structPosition.html">Position</a> &amp;position, <span class="keyword">const</span> <a class="code" href="structCollisionBox.html">CollisionBox</a> &amp;collision_box);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keywordtype">float</span> left(<span class="keyword">const</span> <a class="code" href="structPosition.html">Position</a> &amp;position, <span class="keyword">const</span> <a class="code" href="structCollisionBox.html">CollisionBox</a> &amp;collision_box);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keywordtype">bool</span> is_intersecting(<span class="keyword">const</span> <a class="code" href="structPosition.html">Position</a> &amp;position_1,</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;                     <span class="keyword">const</span> <a class="code" href="structCollisionBox.html">CollisionBox</a> &amp;collision_box_1,</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;                     <span class="keyword">const</span> <a class="code" href="structPosition.html">Position</a> &amp;position_2,</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;                     <span class="keyword">const</span> <a class="code" href="structCollisionBox.html">CollisionBox</a> &amp;collision_box_2);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keywordtype">void</span> update_timer_system(<span class="keyword">const</span> flecs::query&lt;GameState&gt; &amp;game_state_update_query,</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;                         <span class="keywordtype">float</span> delta_time);</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keywordtype">void</span> handle_game_state_input_system(</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keyword">const</span> flecs::query&lt;GameState&gt; &amp;game_state_update_query);</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keywordtype">void</span> handle_round_title_playing_transition_system(</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keyword">const</span> flecs::query&lt;GameState&gt; &amp;game_state_update_query);</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keywordtype">void</span> update_velocity_entities(flecs::world *world, <span class="keywordtype">float</span> frame_time);</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">//void render_hud(const Font &amp;hud_font);</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keywordtype">void</span> render_hud(<span class="keyword">const</span> flecs::query&lt;const GameState&gt; &amp;game_state_query,</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;                <span class="keyword">const</span> Font &amp;hud_font);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keywordtype">void</span> render_instructions(<span class="keyword">const</span> Font &amp;hud_font);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keywordtype">void</span> render_position_entities(flecs::world *world);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keywordtype">void</span> render_title(<span class="keyword">const</span> Font &amp;title_font);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keywordtype">void</span> render_round_title(<span class="keyword">const</span> flecs::query&lt;const GameState&gt; &amp;game_state_query,</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;                        <span class="keyword">const</span> Font &amp;hud_font);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keywordtype">void</span> render_side_panel(<span class="keyword">const</span> flecs::query&lt;const GameState&gt; &amp;game_state_query,</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;                       <span class="keyword">const</span> Font &amp;hud_font);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keywordtype">float</span> top(<span class="keyword">const</span> <a class="code" href="structPosition.html">Position</a> &amp;position, <span class="keyword">const</span> <a class="code" href="structCollisionBox.html">CollisionBox</a> &amp;collision_box);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keywordtype">float</span> right(<span class="keyword">const</span> <a class="code" href="structPosition.html">Position</a> &amp;position, <span class="keyword">const</span> <a class="code" href="structCollisionBox.html">CollisionBox</a> &amp;collision_box);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keywordtype">float</span> bottom(<span class="keyword">const</span> <a class="code" href="structPosition.html">Position</a> &amp;position, <span class="keyword">const</span> <a class="code" href="structCollisionBox.html">CollisionBox</a> &amp;collision_box);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keywordtype">float</span> left(<span class="keyword">const</span> <a class="code" href="structPosition.html">Position</a> &amp;position, <span class="keyword">const</span> <a class="code" href="structCollisionBox.html">CollisionBox</a> &amp;collision_box);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keywordtype">bool</span> is_intersecting(<span class="keyword">const</span> <a class="code" href="structPosition.html">Position</a> &amp;position_1,</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;                     <span class="keyword">const</span> <a class="code" href="structCollisionBox.html">CollisionBox</a> &amp;collision_box_1,</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                     <span class="keyword">const</span> <a class="code" href="structPosition.html">Position</a> &amp;position_2,</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;                     <span class="keyword">const</span> <a class="code" href="structCollisionBox.html">CollisionBox</a> &amp;collision_box_2);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="acomponents_8h_html"><div class="ttname"><a href="components_8h.html">components.h</a></div><div class="ttdoc">Declarations for ECS component classes and structs.</div></div>
-<div class="ttc" id="astructCollisionBox_html"><div class="ttname"><a href="structCollisionBox.html">CollisionBox</a></div><div class="ttdef"><b>Definition:</b> components.h:39</div></div>
-<div class="ttc" id="astructPosition_html"><div class="ttname"><a href="structPosition.html">Position</a></div><div class="ttdef"><b>Definition:</b> components.h:58</div></div>
+<div class="ttc" id="astructCollisionBox_html"><div class="ttname"><a href="structCollisionBox.html">CollisionBox</a></div><div class="ttdef"><b>Definition:</b> components.h:86</div></div>
+<div class="ttc" id="astructPosition_html"><div class="ttname"><a href="structPosition.html">Position</a></div><div class="ttdef"><b>Definition:</b> components.h:115</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
