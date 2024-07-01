@@ -11,6 +11,7 @@
 #include <algorithm>
 #include <array>
 #include <cmath>
+#include <iostream>
 #include <random>
 
 constexpr float kFloatEps{0.001F};
@@ -34,7 +35,7 @@ TEST_CASE("It creates bricks with expected components and tags",
     SECTION("It gives each brick a Brick tag")
     {
         // assert
-        REQUIRE(world.count<Brick>() == 44);
+        REQUIRE(world.count<Brick>() == 55);
     }
 
     // arrange
@@ -57,8 +58,8 @@ TEST_CASE("It creates bricks with expected components and tags",
         // assert
         const RectangleComponent *rectangle_component{
             random_brick_entity.get<RectangleComponent>()};
-        constexpr float expected_width{60.F};
-        constexpr float expected_height{20.F};
+        constexpr float expected_width{42.F};
+        constexpr float expected_height{16.F};
         constexpr Color expected_colour{YELLOW};
         REQUIRE(rectangle_component != nullptr);
         REQUIRE(random_brick_entity.has<RectangleComponent>());
@@ -84,7 +85,7 @@ TEST_CASE("It creates bricks with expected components and tags",
         // check position of top-left brick
         flecs::entity top_left_brick = brick_position_query.find(
             [](const Brick & /* brick */, const Position &position) {
-                return position.centre.x == 85 && position.centre.y == 46;
+                return position.centre.x == 45 && position.centre.y == 89.5;
             });
         REQUIRE(top_left_brick != 0);
     }
@@ -101,8 +102,8 @@ TEST_CASE("It creates bricks with expected components and tags",
 
         const CollisionBox *collision_box{
             random_brick_entity.get<CollisionBox>()};
-        constexpr float expected_half_width{30.F};
-        constexpr float expected_half_height{10.F};
+        constexpr float expected_half_width{21.F};
+        constexpr float expected_half_height{8.F};
         REQUIRE(collision_box != nullptr);
         REQUIRE(random_brick_entity.has<CollisionBox>());
         REQUIRE(collision_box->half_width == expected_half_width);

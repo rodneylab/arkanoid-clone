@@ -8,7 +8,16 @@
 #include <flecs/addons/cpp/mixins/query/impl.hpp>
 #include <flecs/addons/cpp/mixins/system/impl.hpp>
 #include <flecs/addons/cpp/world.hpp>
+
+// Windows workarounds for CloseWindow / ShowCursor errors
+
+#if defined(_WIN32)
+#define NOGDI  // All GDI defines and routines
+#define NOUSER // All USER defines and routines
+#endif
+
 #include <fmt/core.h>
+#include <spdlog/spdlog.h>
 
 #undef near
 #undef far
@@ -16,6 +25,7 @@
 
 #include <cmath>
 #include <string>
+#include <string_view>
 
 void handle_game_state_input_system(
     const flecs::query<GameState> &game_state_update_query)
@@ -33,7 +43,7 @@ void handle_round_title_playing_transition_system(
     const flecs::query<GameState> &game_state_update_query)
 {
     game_state_update_query.each([](GameState &game_state) {
-        constexpr float kWaitTime{3.F};
+        constexpr float kWaitTime{2.F};
         if (game_state.timer.time > kWaitTime)
         {
             game_state.game_mode = GameMode::PLAYING;
@@ -51,14 +61,15 @@ flecs::system add_paddle_movement_system(flecs::world *world)
                const CollisionBox &collision_box
 
             ) {
-                if (IsKeyDown(KEY_LEFT) && left(position, collision_box) > 0)
+                if (IsKeyDown(KEY_LEFT) &&
+                    left(position, collision_box) > constants::kWallWidth)
                 {
                     entity.set<Velocity>(
                         Velocity{-constants::kPaddleVelocity, 0.F});
                 }
                 else if (IsKeyDown(KEY_RIGHT) &&
                          right(position, collision_box) <
-                             constants::kWindowWidth)
+                             constants::kWallWidth + constants::kBricksWidth)
                 {
                     entity.set<Velocity>(
                         Velocity{constants::kPaddleVelocity, 0.F});
@@ -72,26 +83,69 @@ flecs::system add_paddle_movement_system(flecs::world *world)
     return paddle_movement_system;
 }
 
-flecs::system add_ball_with_wall_collision_system(flecs::world *world)
+flecs::system add_ball_with_wall_collision_system(
+    flecs::world *world,
+    const flecs::query<const Wall, const AxisAlignedOneWayCollider>
+        &wall_collider_query)
 {
     flecs::system add_ball_with_wall_collision_system =
         world->system<Ball, Position, Velocity, CollisionBox>().each(
-            [](const Ball & /* ball */,
-               const Position &position,
-               Velocity &velocity,
-               const CollisionBox &collision_box) {
-                if (left(position, collision_box) < 0 ||
-                    right(position, collision_box) > constants::kWindowWidth)
-                {
-                    velocity.values.x = -velocity.values.x;
-                }
+            [wall_collider_query](const flecs::entity ball_entity,
+                                  const Ball & /* ball */,
+                                  const Position &ball_position,
+                                  Velocity &ball_velocity,
+                                  const CollisionBox &ball_collision_box) {
+                wall_collider_query.each(
+                    [ball_entity,
+                     &ball_position,
+                     &ball_velocity,
+                     &ball_collision_box](
+                        const flecs::entity wall_entity,
+                        const Wall & /* wall */,
+                        const AxisAlignedOneWayCollider &wall_collider) {
+                        bool collision_detected = false;
+                        switch (wall_collider.collision_side)
+                        {
+                        case CollisionSide::TOP:
+                            // currently no collider on the floor
+                            break;
+                        case CollisionSide::RIGHT:
+                            if (left(ball_position, ball_collision_box) <
+                                wall_collider.displacement)
+                            {
+                                ball_velocity.values.x =
+                                    -ball_velocity.values.x;
+                                collision_detected = true;
+                            }
+                            break;
+                        case CollisionSide::BOTTOM:
+                            if (top(ball_position, ball_collision_box) <
+                                wall_collider.displacement)
+                            {
+                                ball_velocity.values.y =
+                                    -ball_velocity.values.y;
+                                collision_detected = true;
+                            }
+                            break;
+                        case CollisionSide::LEFT:
+                            if (right(ball_position, ball_collision_box) >
+                                wall_collider.displacement)
+                            {
+                                ball_velocity.values.x =
+                                    -ball_velocity.values.x;
+                                collision_detected = true;
+                            }
+                        }
 
-                if (top(position, collision_box) < 0 ||
-                    bottom(position, collision_box) > constants::kWindowHeight)
-                {
-                    velocity.values.y = -velocity.values.y;
-                }
+                        if (collision_detected)
+                        {
+                            spdlog::trace("{} collision with {} detected.",
+                                          ball_entity.name().c_str(),
+                                          wall_entity.name().c_str());
+                        }
+                    });
             });
+
     return add_ball_with_wall_collision_system;
 }
 
@@ -220,43 +274,46 @@ void update_timer_system(const flecs::query<GameState> &game_state_update_query,
     });
 }
 
-void render_hud(const Font &hud_font)
+void render_hud(const flecs::query<const GameState> &game_state_query,
+                const Font &hud_font)
 {
-    constexpr int kPlayerTextPositionX{50};
-    constexpr int kTextPositionY{10};
-    constexpr int kScoreTextOffsetX{33};
-    constexpr int kScoreTextPositionY{27};
-    constexpr float kTextFontSize{16.F};
-    constexpr float kTextFontSpacing{1.F};
-    DrawTextEx(hud_font,
-               "1UP",
-               Vector2{kPlayerTextPositionX, kTextPositionY},
-               kTextFontSize,
-               kTextFontSpacing,
-               RED);
-    DrawTextEx(
-        hud_font,
-        "00",
-        Vector2{kPlayerTextPositionX + kScoreTextOffsetX, kScoreTextPositionY},
-        kTextFontSize,
-        kTextFontSpacing,
-        WHITE);
+    game_state_query.each([&hud_font](const GameState &game_state) {
+        constexpr int kPlayerTextPositionX{50};
+        constexpr int kTextPositionY{10};
+        constexpr int kScoreTextOffsetX{33};
+        constexpr int kScoreTextPositionY{27};
+        constexpr float kTextFontSize{16.F};
+        constexpr float kTextFontSpacing{1.F};
+        DrawTextEx(hud_font,
+                   "1UP",
+                   Vector2{kPlayerTextPositionX, kTextPositionY},
+                   kTextFontSize,
+                   kTextFontSpacing,
+                   RED);
+        DrawTextEx(hud_font,
+                   fmt::format("{:0>2}", game_state.score).data(),
+                   Vector2{kPlayerTextPositionX + kScoreTextOffsetX,
+                           kScoreTextPositionY},
+                   kTextFontSize,
+                   kTextFontSpacing,
+                   WHITE);
 
-    constexpr int kHiScoreTextPositionX{190};
-    DrawTextEx(hud_font,
-               "HIGH SCORE",
-               Vector2{kHiScoreTextPositionX, kTextPositionY},
-               kTextFontSize,
-               kTextFontSpacing,
-               RED);
-    constexpr int kHiScoreTextOffsetX{51};
-    DrawTextEx(hud_font,
-               "50000",
-               Vector2{kHiScoreTextPositionX + kHiScoreTextOffsetX,
-                       kScoreTextPositionY},
-               kTextFontSize,
-               kTextFontSpacing,
-               WHITE);
+        constexpr int kHiScoreTextPositionX{190};
+        DrawTextEx(hud_font,
+                   "HIGH SCORE",
+                   Vector2{kHiScoreTextPositionX, kTextPositionY},
+                   kTextFontSize,
+                   kTextFontSpacing,
+                   RED);
+        constexpr int kHiScoreTextOffsetX{51};
+        DrawTextEx(hud_font,
+                   std::to_string(game_state.high_score).data(),
+                   Vector2{kHiScoreTextPositionX + kHiScoreTextOffsetX,
+                           kScoreTextPositionY},
+                   kTextFontSize,
+                   kTextFontSpacing,
+                   WHITE);
+    });
 }
 
 void render_instructions(const Font &hud_font)
@@ -316,6 +373,92 @@ void render_round_title(const flecs::query<const GameState> &game_state_query,
                    kFontSize,
                    kFontSpacing,
                    WHITE);
+    });
+}
+
+void render_text_line_left_aligned(Font font,
+                                   const std::string_view &text,
+                                   const float left_x_offset,
+                                   const int line_number,
+                                   const Color colour)
+{
+    DrawTextEx(
+        font,
+        text.data(),
+        Vector2{left_x_offset,
+                static_cast<float>(line_number) * constants::kHudFontSize},
+        constants::kHudFontSize,
+        constants::kHudFontSpacing,
+        colour);
+}
+
+void render_text_line_right_aligned(Font font,
+                                    const std::string_view &text,
+                                    const float right_x_offset,
+                                    const int line_number,
+                                    const Color colour)
+{
+    const Vector2 text_measurements{MeasureTextEx(font,
+                                                  text.data(),
+                                                  constants::kHudFontSize,
+                                                  constants::kHudFontSpacing)};
+    DrawTextEx(
+        font,
+        text.data(),
+        Vector2{right_x_offset - text_measurements.x,
+                static_cast<float>(line_number) * constants::kHudFontSize},
+        constants::kHudFontSize,
+        constants::kHudFontSpacing,
+        colour);
+}
+
+void render_side_panel(const flecs::query<const GameState> &game_state_query,
+                       const Font &hud_font)
+{
+    game_state_query.each([&hud_font](const GameState &game_state) {
+        constexpr float kSidePanelXOffset{550.F};
+
+        render_text_line_left_aligned(hud_font,
+                                      std::string_view{"HIGH"},
+                                      kSidePanelXOffset,
+                                      2,
+                                      RED);
+
+        constexpr int kScoreLabelTextLineIndex{3};
+        render_text_line_left_aligned(hud_font,
+                                      std::string_view{"SCORE"},
+                                      kSidePanelXOffset,
+                                      kScoreLabelTextLineIndex,
+                                      RED);
+
+        constexpr int kHighScoreValueTextLineIndex{4};
+        render_text_line_right_aligned(
+            hud_font,
+            std::to_string(constants::kDefaultHighScore),
+            constants::kWindowWidth,
+            kHighScoreValueTextLineIndex,
+            RAYWHITE);
+
+        constexpr int kScoreValueTextLineIndex{7};
+        render_text_line_right_aligned(hud_font,
+                                       fmt::format("{:0>2}", game_state.score),
+                                       constants::kWindowWidth,
+                                       kScoreValueTextLineIndex,
+                                       RAYWHITE);
+
+        constexpr int kRoundLabelTextLineIndex{20};
+        render_text_line_right_aligned(hud_font,
+                                       std::string_view{"ROUND"},
+                                       constants::kWindowWidth,
+                                       kRoundLabelTextLineIndex,
+                                       RED);
+
+        constexpr int kRoundValueTextLineIndex{21};
+        render_text_line_right_aligned(hud_font,
+                                       std::to_string(game_state.round),
+                                       constants::kWindowWidth,
+                                       kRoundValueTextLineIndex,
+                                       RAYWHITE);
     });
 }
 

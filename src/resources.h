@@ -1,6 +1,8 @@
 #ifndef SRC_RESOURCES_H
 #define SRC_RESOURCES_H
 
+#include "constants.h"
+
 enum class GameMode
 {
     TITLE,
@@ -28,6 +30,8 @@ struct GameState
     GameMode game_mode{GameMode::TITLE};
     int round{1};
     Timer timer{};
+    int score{0};
+    int high_score{constants::kDefaultHighScore};
 };
 
 #endif

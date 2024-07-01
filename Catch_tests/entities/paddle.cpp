@@ -39,8 +39,8 @@ TEST_CASE("It creates paddle with expected components and tags",
         // assert
         const RectangleComponent *rectangle_component{
             paddle_entity.get<RectangleComponent>()};
-        constexpr float expected_width{60.F};
-        constexpr float expected_height{20.F};
+        constexpr float expected_width{72.F};
+        constexpr float expected_height{16.F};
         constexpr Color expected_colour{RED};
         REQUIRE(rectangle_component != nullptr);
         REQUIRE_THAT(
@@ -61,8 +61,8 @@ TEST_CASE("It creates paddle with expected components and tags",
     {
         // assert
         const Position *position_component{paddle_entity.get<Position>()};
-        constexpr float expected_centre_x{400.F};
-        constexpr float expected_centre_y{410.F};
+        constexpr float expected_centre_x{271.5F};
+        constexpr float expected_centre_y{412.F};
         REQUIRE(position_component != nullptr);
         REQUIRE_THAT(
             position_component->centre.x,
@@ -79,8 +79,8 @@ TEST_CASE("It creates paddle with expected components and tags",
         // assert
         const CollisionBox *collision_box_component{
             paddle_entity.get<CollisionBox>()};
-        constexpr float expected_collision_box_half_width{30.F};
-        constexpr float expected_collision_box_half_height{10.F};
+        constexpr float expected_collision_box_half_width{36.F};
+        constexpr float expected_collision_box_half_height{8.F};
         REQUIRE(collision_box_component != nullptr);
         REQUIRE_THAT(
             collision_box_component->half_width,

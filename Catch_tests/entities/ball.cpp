@@ -39,7 +39,7 @@ TEST_CASE("It creates ball with expected components and tags", "[create_ball]")
         // assert
         const CircleComponent *circle_component{
             ball_entity.get<CircleComponent>()};
-        constexpr float expected_radius{10.F};
+        constexpr float expected_radius{8.F};
         constexpr Color expected_colour{RED};
         REQUIRE(circle_component != nullptr);
         REQUIRE_THAT(
@@ -56,8 +56,8 @@ TEST_CASE("It creates ball with expected components and tags", "[create_ball]")
     {
         // assert
         const Position *position_component{ball_entity.get<Position>()};
-        constexpr float expected_centre_x{400.F};
-        constexpr float expected_centre_y{390.F};
+        constexpr float expected_centre_x{271.5F};
+        constexpr float expected_centre_y{396.F};
         REQUIRE(position_component != nullptr);
         REQUIRE_THAT(
             position_component->centre.x,
@@ -74,8 +74,8 @@ TEST_CASE("It creates ball with expected components and tags", "[create_ball]")
         // assert
         const CollisionBox *collision_box_component{
             ball_entity.get<CollisionBox>()};
-        constexpr float expected_collision_box_half_width{10.F};
-        constexpr float expected_collision_box_half_height{5.F};
+        constexpr float expected_collision_box_half_width{8.F};
+        constexpr float expected_collision_box_half_height{4.F};
         REQUIRE(collision_box_component != nullptr);
         REQUIRE_THAT(
             collision_box_component->half_width,
