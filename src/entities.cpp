@@ -6,6 +6,9 @@
 #include <flecs/addons/cpp/entity.hpp>
 #include <flecs/addons/cpp/world.hpp>
 #include <fmt/core.h>
+
+#undef near
+#undef far
 #include <raylib.h>
 
 #include <string>
