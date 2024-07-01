@@ -29,9 +29,6 @@ jobs:
         run: |
           sudo apt-get install doxygen
           pip install -r requirements.txt  --require-hashes
-        #      - name: prepare
-        #        run: |
-        #          make prepare
       - name: configure
         run: |
           cmake -H. -Bbuild -G "Unix Makefiles" -DCMAKE_BUILD_TYPE="Debug"
