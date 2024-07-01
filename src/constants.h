@@ -15,19 +15,31 @@ inline const std::string kWindowTitle{"Arkanoid Clone"};
 
 inline constexpr int kTargetFramerate{240};
 
-inline constexpr float kBallRadius{10.F};
+inline constexpr float kBallRadius{8.F};
 inline constexpr float kBallVelocity{0.8F};
 
-inline constexpr float kBrickWidth{60.F};
-inline constexpr float kBrickHeight{20.F};
-inline constexpr int kBricksInsetX{22};
-inline constexpr int kBrickRows{4};
-inline constexpr int kBrickColumns{11};
+inline constexpr int kWallWidth{24};
 
-inline constexpr int kPaddleWidth{60};
-inline constexpr int kPaddleHeight{20};
+inline constexpr float kBrickWidth{42.F};
+inline constexpr float kBrickHeight{16.F};
+inline constexpr float kBrickPadding{3.F};
+inline constexpr int kBricksInsetX{kWallWidth};
+inline constexpr int kBricksInsetY{80};
+inline constexpr int kBrickRows{5};
+inline constexpr int kBrickColumns{11};
+inline constexpr float kBricksWidth{
+    constants::kBrickColumns *
+    (constants::kBrickWidth + 1.F * constants::kBrickPadding)};
+
+inline constexpr int kHudFontSize{18};
+inline constexpr float kHudFontSpacing{1.F};
+
+inline constexpr int kPaddleWidth{72};
+inline constexpr int kPaddleHeight{16};
 inline constexpr float kPaddleVelocity{0.6F};
 inline constexpr float kPaddleInsetBottom{30.F};
+
+inline constexpr int kDefaultHighScore{50'000};
 
 } // namespace constants
 

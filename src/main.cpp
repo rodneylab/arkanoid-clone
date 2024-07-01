@@ -8,6 +8,7 @@
 #include <flecs/addons/cpp/mixins/system/impl.hpp>
 #include <flecs/addons/cpp/world.hpp>
 #include <fmt/core.h>
+#include <spdlog/cfg/env.h>
 
 #undef near
 #undef far
@@ -94,6 +95,9 @@ void initialise_sdf_hud_font(Font *sdf_hud_font, Shader *shader)
 
 int main()
 {
+    spdlog::cfg::
+        load_env_levels(); // use `export SPDLOG_LEVEL=trace` to set log level from command line
+
     flecs::world world;
     world.set<GameState>({});
 
@@ -102,6 +106,7 @@ int main()
     create_ball(&world);
     create_paddle(&world);
     create_bricks(&world);
+    create_walls(&world);
 
     InitWindow(constants::kWindowWidth,
                constants::kWindowHeight,
@@ -118,17 +123,19 @@ int main()
     create_ball_with_paddle_collision_sound(&world);
 
     flecs::entity ball{world.lookup("Ball")};
+
+    const auto game_state_query = get_game_state_query(world);
+    const auto game_state_update_query = get_game_state_update_query(world);
+    const auto wall_collider_query = get_wall_collider_query(world);
+
     const flecs::system paddle_movement_system{
         add_paddle_movement_system(&world)};
     const flecs::system ball_with_wall_collision_system{
-        add_ball_with_wall_collision_system(&world)};
+        add_ball_with_wall_collision_system(&world, wall_collider_query)};
     const flecs::system ball_with_paddle_collision_system{
         add_ball_with_paddle_collision_system(&world, &ball)};
     const flecs::system ball_with_brick_collision_system{
         add_ball_with_brick_collision_system(&world, &ball)};
-
-    const auto game_state_query = get_game_state_query(world);
-    const auto game_state_update_query = get_game_state_update_query(world);
 
     SetTargetFPS(constants::kTargetFramerate);
     SetTextureFilter(sdf_hud_font.texture, TEXTURE_FILTER_POINT);
@@ -155,7 +162,7 @@ int main()
             ClearBackground(BLACK);
 
             BeginShaderMode(shader);
-            render_hud(sdf_hud_font);
+            render_hud(game_state_query, sdf_hud_font);
             render_instructions(sdf_hud_font);
             EndShaderMode();
 
@@ -172,7 +179,7 @@ int main()
             ClearBackground(BLACK);
 
             BeginShaderMode(shader);
-            render_hud(sdf_hud_font);
+            render_hud(game_state_query, sdf_hud_font);
             render_round_title(game_state_query, sdf_hud_font);
             EndShaderMode();
 
@@ -197,6 +204,10 @@ int main()
             ClearBackground(BLACK);
 
             render_position_entities(&world);
+
+            BeginShaderMode(shader);
+            render_side_panel(game_state_query, sdf_hud_font);
+            EndShaderMode();
 
             EndDrawing();
             break;

@@ -27,7 +27,8 @@ void create_ball(flecs::world *world)
     world->entity("Ball")
         .add<Ball>()
         .set<CircleComponent>(CircleComponent(constants::kBallRadius, RED))
-        .set<Position>(Position(static_cast<float>(constants::kWindowWidth) / 2,
+        .set<Position>(Position(static_cast<float>(constants::kWallWidth) +
+                                    0.5F * constants::kBricksWidth,
                                 kBallInitialPositionTop))
         .set<CollisionBox>(
             CollisionBox(constants::kBallRadius, 0.5F * constants::kBallRadius))
@@ -37,19 +38,20 @@ void create_ball(flecs::world *world)
 
 void create_bricks(flecs::world *world)
 {
-    constexpr float padded_brick_width{constants::kBrickWidth + 3};
-    constexpr float padded_brick_height{constants::kBrickHeight + 3};
+    constexpr float padded_brick_width{constants::kBrickWidth +
+                                       constants::kBrickPadding};
+    constexpr float padded_brick_height{constants::kBrickHeight +
+                                        constants::kBrickPadding};
     constexpr float collision_box_half_width{0.5F * constants::kBrickWidth};
     constexpr float collision_box_half_height{0.5F * constants::kBrickHeight};
 
-    const flecs::entity BrickEntity =
+    const flecs::entity BrickEntity{
         world->prefab("Brick")
             .set<RectangleComponent>(RectangleComponent(constants::kBrickWidth,
                                                         constants::kBrickHeight,
                                                         YELLOW))
             .set<CollisionBox>(CollisionBox{collision_box_half_width,
-                                            collision_box_half_height});
-
+                                            collision_box_half_height})};
     for (int column{0}; column < constants::kBrickRows; ++column)
     {
         for (int row{0}; row < constants::kBrickColumns; ++row)
@@ -60,9 +62,11 @@ void create_bricks(flecs::world *world)
                 .is_a(BrickEntity)
                 .add<Brick>()
                 .set<Position>(Position(
-                    (static_cast<float>(row + 1) * padded_brick_width +
-                     constants::kBricksInsetX),
-                    (static_cast<float>(column + 2) * padded_brick_height)));
+                    static_cast<float>(row) * padded_brick_width +
+                        constants::kBricksInsetX +
+                        0.5F * constants::kBrickWidth,
+                    static_cast<float>(column) * padded_brick_height +
+                        constants::kBricksInsetY + 0.5F * padded_brick_height));
         }
     }
 }
@@ -74,11 +78,36 @@ void create_paddle(flecs::world *world)
     paddle.set<RectangleComponent>(RectangleComponent{constants::kPaddleWidth,
                                                       constants::kPaddleHeight,
                                                       RED});
-    paddle.set<Position>(
-        Position{static_cast<float>(constants::kWindowWidth) / 2, kPaddleTop});
+    paddle.set<Position>(Position{static_cast<float>(constants::kWallWidth) +
+                                      0.5F * constants::kBricksWidth,
+                                  kPaddleTop});
     paddle.set<CollisionBox>(CollisionBox{0.5F * constants::kPaddleWidth,
                                           0.5F * constants::kPaddleHeight});
     paddle.set<Velocity>(Velocity{0.F, 0.F});
+}
+
+void create_walls(flecs::world *world)
+{
+    auto top_wall(world->entity("TopWall"));
+    top_wall.add<Wall>();
+    top_wall.set<AxisAlignedOneWayCollider>(
+        AxisAlignedOneWayCollider(constants::kBricksInsetX,
+                                  CollisionSide::BOTTOM));
+
+    auto left_wall(world->entity("LeftWall"));
+    left_wall.add<Wall>();
+    left_wall.set<AxisAlignedOneWayCollider>(
+        AxisAlignedOneWayCollider(constants::kBricksInsetX,
+                                  CollisionSide::RIGHT));
+
+    constexpr float kRightWallLeftSideDisplacement{constants::kWallWidth +
+                                                   constants::kBricksWidth};
+
+    auto right_wall(world->entity("RightWall"));
+    right_wall.add<Wall>();
+    right_wall.set<AxisAlignedOneWayCollider>(
+        AxisAlignedOneWayCollider(kRightWallLeftSideDisplacement,
+                                  CollisionSide::LEFT));
 }
 
 void create_ball_with_brick_collision_sound(flecs::world *world)

@@ -69,7 +69,9 @@ target_link_libraries(
     flecs::flecs_static
     fmt::fmt
     raylib
+    spdlog::spdlog_header_only
     arkanoid_compiler_flags)
+target_compile_definitions(Systems_lib PRIVATE SPDLOG_FMT_EXTERNAL)
 
 add_executable(Arkanoid src/main.cpp)
 set_target_properties(Arkanoid PROPERTIES CXX_CLANG_TIDY
@@ -89,6 +91,7 @@ target_include_directories(Arkanoid PUBLIC "${PROJECT_BINARY_DIR}")
 
 target_compile_definitions(
     Arkanoid PUBLIC ASSETS_PATH="${CMAKE_CURRENT_SOURCE_DIR}/assets/")
+target_compile_definitions(Arkanoid PRIVATE SPDLOG_FMT_EXTERNAL)
 
 option(RUN_UNIT_TESTS "Run Catch2 unit tests" ON)
 if(RUN_UNIT_TESTS)
@@ -96,4 +99,7 @@ if(RUN_UNIT_TESTS)
     add_subdirectory(Catch_tests)
 endif()
 
-add_subdirectory(docs)
+option(CREATE_DOCUMENTATION "Create documentation" ON)
+if(CREATE_DOCUMENTATION)
+    add_subdirectory(docs)
+endif()

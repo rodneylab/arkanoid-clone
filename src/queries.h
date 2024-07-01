@@ -1,6 +1,7 @@
 #ifndef SRC_QUERIES_H
 #define SRC_QUERIES_H
 
+#include "components.h"
 #include "resources.h"
 
 #include <flecs.h>
@@ -17,6 +18,13 @@ flecs::query<const GameState> get_game_state_query(const flecs::world &world)
 flecs::query<GameState> get_game_state_update_query(const flecs::world &world)
 {
     return world.query_builder<GameState>().term_at(1).singleton().build();
+}
+
+flecs::query<const Wall, const AxisAlignedOneWayCollider>
+get_wall_collider_query(const flecs::world &world)
+{
+    return world.query_builder<const Wall, const AxisAlignedOneWayCollider>()
+        .build();
 }
 
 #endif
