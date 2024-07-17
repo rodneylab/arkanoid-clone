@@ -319,7 +319,7 @@ void render_hud(const flecs::query<const GameState> &game_state_query,
 void render_instructions(const Font &hud_font)
 {
     constexpr int kTextPositionY{300};
-    constexpr int kFontSize{18};
+    constexpr int kFontSize{27};
     constexpr float kFontSpacing{1.F};
     const std::string text{"PRESS SPACE TO START"};
     const Vector2 text_measurements{
