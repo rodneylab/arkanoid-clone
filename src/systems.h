@@ -28,7 +28,6 @@ void handle_game_state_input_system(
 void handle_round_title_playing_transition_system(
     const flecs::query<GameState> &game_state_update_query);
 void update_velocity_entities(flecs::world *world, float frame_time);
-//void render_hud(const Font &hud_font);
 void render_hud(const flecs::query<const GameState> &game_state_query,
                 const Font &hud_font);
 void render_instructions(const Font &hud_font);

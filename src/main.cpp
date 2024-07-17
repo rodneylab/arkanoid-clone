@@ -14,6 +14,7 @@
 #define NOGDI  // All GDI defines and routines
 #define NOUSER // All USER defines and routines
 #endif
+
 #include <fmt/core.h>
 #include <spdlog/cfg/env.h>
 
@@ -23,65 +24,40 @@
 #include <raylib.h>
 
 #include <ctime>
+#include <string_view>
 
-/*
- * HUD font is pixelated to mimic font used in arcade games in the 1980s.  SDF
- * is used for HUD font to be able to scale it without default smoothing being
- * applied.  Smoothing reduces the pixelation, which is a design feature of the
- * font.
- */
-void initialise_sdf_hud_font(Font *sdf_hud_font, Shader *shader)
+void initialise_sdf_font(const std::string_view &font_path,
+                         Font *sdf_font,
+                         Shader *shader)
 {
     // Load font into memory
-    int fileSize = 0;
-    unsigned char *fileData =
-        LoadFileData(ASSETS_PATH "press-start-2p-v15-latin-regular.ttf",
-                     &fileSize);
+    int fileSize{0};
+    unsigned char *fileData = LoadFileData(font_path.data(), &fileSize);
 
     // Generate default font from TTF
-    constexpr int kFontBaseSize{16};
+    constexpr int kFontBaseSize{27};
     constexpr int kFontGlyphs{95};
-    Font fontDefault{};
-    fontDefault.baseSize = kFontBaseSize;
-    fontDefault.glyphCount = kFontGlyphs;
-
-    // Load font data from in-memory font
-    fontDefault.glyphs = LoadFontData(fileData,
-                                      fileSize,
-                                      kFontBaseSize,
-                                      nullptr,
-                                      kFontGlyphs,
-                                      FONT_DEFAULT);
-    constexpr int kFontAtlasPadding{4};
-    constexpr int kBasicPackingAlgorihm{0};
-    Image atlas = GenImageFontAtlas(fontDefault.glyphs,
-                                    &fontDefault.recs,
-                                    kFontGlyphs,
-                                    kFontBaseSize,
-                                    kFontAtlasPadding,
-                                    kBasicPackingAlgorihm);
-    UnloadImage(atlas);
 
     // Generate SDF font from TTF font
-    *sdf_hud_font = Font{};
-    sdf_hud_font->baseSize = kFontBaseSize;
-    sdf_hud_font->glyphCount = kFontGlyphs;
+    *sdf_font = Font{};
+    sdf_font->baseSize = kFontBaseSize;
+    sdf_font->glyphCount = kFontGlyphs;
     constexpr int kFontPadding{0};
-    sdf_hud_font->glyphs = LoadFontData(fileData,
-                                        fileSize,
-                                        kFontBaseSize,
-                                        nullptr,
-                                        kFontPadding,
-                                        FONT_SDF);
+    sdf_font->glyphs = LoadFontData(fileData,
+                                    fileSize,
+                                    kFontBaseSize,
+                                    nullptr,
+                                    kFontPadding,
+                                    FONT_SDF);
     constexpr int kImageFontSize{10};
     constexpr int kSkylinePackingAlgorihm{1};
-    atlas = GenImageFontAtlas(sdf_hud_font->glyphs,
-                              &sdf_hud_font->recs,
-                              kFontGlyphs,
-                              kImageFontSize,
-                              kFontPadding,
-                              kSkylinePackingAlgorihm);
-    sdf_hud_font->texture = LoadTextureFromImage(atlas);
+    const Image atlas = GenImageFontAtlas(sdf_font->glyphs,
+                                          &sdf_font->recs,
+                                          kFontGlyphs,
+                                          kImageFontSize,
+                                          kFontPadding,
+                                          kSkylinePackingAlgorihm);
+    sdf_font->texture = LoadTextureFromImage(atlas);
     UnloadImage(atlas);
 
     // Free memory
@@ -98,6 +74,8 @@ void initialise_sdf_hud_font(Font *sdf_hud_font, Shader *shader)
         TextFormat( // NOLINT [cppcoreguidelines-pro-type-vararg]
             ASSETS_PATH "%s",
             fmt::format("shaders/glsl{}/sdf.fs", kGLSLVersion).c_str()))};
+
+    SetTextureFilter(sdf_font->texture, TEXTURE_FILTER_BILINEAR);
 }
 
 int main()
@@ -120,11 +98,28 @@ int main()
                constants::kWindowTitle.data());
     InitAudioDevice();
 
-    Font sdf_hud_font{};
+    Font sdf_instruction_font{};
     Shader shader{};
-    initialise_sdf_hud_font(&sdf_hud_font, &shader);
+    initialise_sdf_font(
+        std::string_view{ASSETS_PATH "jetbrains-mono-v18-latin-regular.ttf"},
+        &sdf_instruction_font,
+        &shader);
 
-    const Font arkanoid_font{LoadFont(ASSETS_PATH "Arka_solid.ttf")};
+    const Font hud_font{
+        LoadFont(ASSETS_PATH "press-start-2p-v15-latin-regular.ttf")};
+
+    constexpr int kFontBaseSize{27};
+    const Font instruction_font{
+        LoadFontEx(ASSETS_PATH "jetbrains-mono-v18-latin-regular.ttf",
+                   kFontBaseSize,
+                   nullptr,
+                   0)};
+
+    constexpr int kArkanoidFontBaseSize{72};
+    const Font arkanoid_font{LoadFontEx(ASSETS_PATH "Arka_solid.ttf",
+                                        kArkanoidFontBaseSize,
+                                        nullptr,
+                                        0)};
 
     create_ball_with_brick_collision_sound(&world);
     create_ball_with_paddle_collision_sound(&world);
@@ -145,7 +140,6 @@ int main()
         add_ball_with_brick_collision_system(&world, &ball)};
 
     SetTargetFPS(constants::kTargetFramerate);
-    SetTextureFilter(sdf_hud_font.texture, TEXTURE_FILTER_POINT);
 
     const GameState *game_state{world.get<GameState>()};
 
@@ -169,8 +163,8 @@ int main()
             ClearBackground(BLACK);
 
             BeginShaderMode(shader);
-            render_hud(game_state_query, sdf_hud_font);
-            render_instructions(sdf_hud_font);
+            render_hud(game_state_query, hud_font);
+            render_instructions(sdf_instruction_font);
             EndShaderMode();
 
             render_title(arkanoid_font);
@@ -186,8 +180,8 @@ int main()
             ClearBackground(BLACK);
 
             BeginShaderMode(shader);
-            render_hud(game_state_query, sdf_hud_font);
-            render_round_title(game_state_query, sdf_hud_font);
+            render_hud(game_state_query, hud_font);
+            render_round_title(game_state_query, hud_font);
             EndShaderMode();
 
             EndDrawing();
@@ -213,7 +207,7 @@ int main()
             render_position_entities(&world);
 
             BeginShaderMode(shader);
-            render_side_panel(game_state_query, sdf_hud_font);
+            render_side_panel(game_state_query, hud_font);
             EndShaderMode();
 
             EndDrawing();
@@ -230,7 +224,9 @@ int main()
     destroy_ball_with_paddle_collision_sound(&world);
 
     UnloadFont(arkanoid_font);
-    UnloadFont(sdf_hud_font);
+    UnloadFont(hud_font);
+    UnloadFont(instruction_font);
+    UnloadFont(sdf_instruction_font);
 
     CloseAudioDevice();
     CloseWindow();
