@@ -104,18 +104,21 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>handle_game_state_inp
 <tr class="memitem:a89bbf10683c7e2959321ccea56ea0bfa"><td class="memItemLeft" align="right" valign="top"><a id="a89bbf10683c7e2959321ccea56ea0bfa"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>handle_round_title_playing_transition_system</b> (const flecs::query&lt; <a class="el" href="structGameState.html">GameState</a> &gt; &amp;game_state_update_query)</td></tr>
 <tr class="separator:a89bbf10683c7e2959321ccea56ea0bfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c67db19ceaa2527aea97ad55a929f09"><td class="memItemLeft" align="right" valign="top"><a id="a6c67db19ceaa2527aea97ad55a929f09"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>update_velocity_entities</b> (flecs::world *world, float frame_time)</td></tr>
-<tr class="separator:a6c67db19ceaa2527aea97ad55a929f09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa66893f43dab693e63998da17276739e"><td class="memItemLeft" align="right" valign="top"><a id="aa66893f43dab693e63998da17276739e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>update_velocity_entities</b> (const flecs::query&lt; <a class="el" href="structPosition.html">Position</a>, const <a class="el" href="structVelocity.html">Velocity</a> &gt; &amp;velocity_entity_position_update_query, float)</td></tr>
+<tr class="separator:aa66893f43dab693e63998da17276739e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a39430f2ee6c41986d6fe732f137fd11c"><td class="memItemLeft" align="right" valign="top"><a id="a39430f2ee6c41986d6fe732f137fd11c"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>render_hud</b> (const flecs::query&lt; const <a class="el" href="structGameState.html">GameState</a> &gt; &amp;game_state_query, const Font &amp;hud_font)</td></tr>
 <tr class="separator:a39430f2ee6c41986d6fe732f137fd11c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa071b6971fba12ba1be5ad9c57104049"><td class="memItemLeft" align="right" valign="top"><a id="aa071b6971fba12ba1be5ad9c57104049"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>render_instructions</b> (const Font &amp;hud_font)</td></tr>
 <tr class="separator:aa071b6971fba12ba1be5ad9c57104049"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6eda5f4a6d7b430d956cfecbd665b3dc"><td class="memItemLeft" align="right" valign="top"><a id="a6eda5f4a6d7b430d956cfecbd665b3dc"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>render_position_entities</b> (flecs::world *world)</td></tr>
-<tr class="separator:a6eda5f4a6d7b430d956cfecbd665b3dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aacf0b9e8b5b74e151438d99bc39f3a57"><td class="memItemLeft" align="right" valign="top"><a id="aacf0b9e8b5b74e151438d99bc39f3a57"></a>
+flecs::system&#160;</td><td class="memItemRight" valign="bottom"><b>add_render_circle_position_entities_system</b> (flecs::world *world)</td></tr>
+<tr class="separator:aacf0b9e8b5b74e151438d99bc39f3a57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28d23f3724b061b94b1dee560ca3fd0e"><td class="memItemLeft" align="right" valign="top"><a id="a28d23f3724b061b94b1dee560ca3fd0e"></a>
+flecs::system&#160;</td><td class="memItemRight" valign="bottom"><b>add_render_rectangle_position_entities_system</b> (flecs::world *world)</td></tr>
+<tr class="separator:a28d23f3724b061b94b1dee560ca3fd0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a811c9d915e0bf9e761832fc577a81de6"><td class="memItemLeft" align="right" valign="top"><a id="a811c9d915e0bf9e761832fc577a81de6"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>render_title</b> (const Font &amp;title_font)</td></tr>
 <tr class="separator:a811c9d915e0bf9e761832fc577a81de6"><td class="memSeparator" colspan="2">&#160;</td></tr>
