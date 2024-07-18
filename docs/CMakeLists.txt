@@ -1,4 +1,3 @@
-#if(CMAKE_BUILD_TYPE MATCHES "^[Rr]elease")
 option(BUILD_DOC "Build documentation" ON)
 
 # check if Doxygen is installed
@@ -10,7 +9,7 @@ if(DOXYGEN_FOUND)
     configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)
     message("Doxygen build started")
 
-    # note the option ALL which allows to build the docs together with the application
+    # note the option ALL which enables building the docs together with the application
     add_custom_target(
         doc_doxygen ALL
         COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
@@ -19,6 +18,5 @@ if(DOXYGEN_FOUND)
         VERBATIM)
 else(DOXYGEN_FOUND)
     message(
-        "Doxygen need to be installed to generate the doxygen documentation")
+        "Doxygen needs to be installed to generate the doxygen documentation")
 endif(DOXYGEN_FOUND)
-#endif()

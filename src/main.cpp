@@ -50,13 +50,13 @@ void initialise_sdf_font(const std::string_view &font_path,
                                     kFontPadding,
                                     FONT_SDF);
     constexpr int kImageFontSize{10};
-    constexpr int kSkylinePackingAlgorihm{1};
+    constexpr int kSkylinePackingAlgorithm{1};
     const Image atlas = GenImageFontAtlas(sdf_font->glyphs,
                                           &sdf_font->recs,
                                           kFontGlyphs,
                                           kImageFontSize,
                                           kFontPadding,
-                                          kSkylinePackingAlgorihm);
+                                          kSkylinePackingAlgorithm);
     sdf_font->texture = LoadTextureFromImage(atlas);
     UnloadImage(atlas);
 
