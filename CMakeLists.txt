@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 project(
     Arkanoid
     VERSION 0.0.1
-    DESCRIPTION "Arkanoid clone built in C++ with Raylib and flecs."
+    DESCRIPTION "Arkanoid clone built in C++ with raylib and flecs."
     LANGUAGES CXX)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
@@ -39,8 +39,8 @@ endif()
 include(cmake/CPM.cmake)
 cpmaddpackage("gh:sharkdp/dbg-macro#fb9976f410f8b29105818b20278cd0be0e853fe8"
 )# v0.5.1
-cpmaddpackage("gh:SanderMertens/flecs#198607d10ab8f8fc44540043271d6e3be019250b"
-)# v3.2.11
+cpmaddpackage("gh:SanderMertens/flecs#eeb9eaa64243536c5d5c19279c9c305a52d0b9b3"
+)# v4.0.0
 cpmaddpackage("gh:fmtlib/fmt#e69e5f977d458f2650bb346dadf2ad30c5320281") # 10.x
 cpmaddpackage("gh:raysan5/raylib#ae50bfa2cc569c0f8d5bc4315d39db64005b1b0"
 )# v5.0

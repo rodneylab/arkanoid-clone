@@ -258,12 +258,15 @@ flecs::system add_ball_with_brick_collision_system(flecs::world *world,
     return ball_with_brick_collision_system;
 }
 
-void update_velocity_entities(flecs::world *world, const float /* frame_time */)
+void update_velocity_entities(const flecs::query<Position, const Velocity>
+                                  &velocity_entity_position_update_query,
+                              const float /* frame_time */)
 {
-    world->each([](Position &position, const Velocity &velocity) {
-        position.centre.x += velocity.values.x;
-        position.centre.y += velocity.values.y;
-    });
+    velocity_entity_position_update_query.each(
+        [](Position &position, const Velocity &velocity) {
+            position.centre.x += velocity.values.x;
+            position.centre.y += velocity.values.y;
+        });
 }
 
 void update_timer_system(const flecs::query<GameState> &game_state_update_query,
@@ -462,24 +465,35 @@ void render_side_panel(const flecs::query<const GameState> &game_state_query,
     });
 }
 
-void render_position_entities(flecs::world *world)
+flecs::system add_render_circle_position_entities_system(flecs::world *world)
 {
-    world->each([](const CircleComponent &circle, const Position &position) {
-        DrawCircle(static_cast<int>(std::round(position.centre.x)),
-                   static_cast<int>(std::round(position.centre.y)),
-                   circle.radius,
-                   circle.colour);
-    });
-    world->each(
-        [](const RectangleComponent &rectangle, const Position &position) {
-            DrawRectangle(static_cast<int>(std::round(position.centre.x) -
-                                           0.5 * rectangle.width),
-                          static_cast<int>(std::round(position.centre.y) -
-                                           0.5 * rectangle.height),
-                          static_cast<int>(std::round(rectangle.width)),
-                          static_cast<int>(std::round(rectangle.height)),
-                          rectangle.colour);
-        });
+    auto render_circle_position_entities_system =
+        world->system<const CircleComponent, const Position>().each(
+            [](const CircleComponent &circle, const Position &position) {
+                DrawCircle(static_cast<int>(std::round(position.centre.x)),
+                           static_cast<int>(std::round(position.centre.y)),
+                           circle.radius,
+                           circle.colour);
+            });
+
+    return render_circle_position_entities_system;
+}
+
+flecs::system add_render_rectangle_position_entities_system(flecs::world *world)
+{
+    auto render_rectangle_position_entities_system =
+        world->system<const RectangleComponent, const Position>().each(
+            [](const RectangleComponent &rectangle, const Position &position) {
+                DrawRectangle(static_cast<int>(std::round(position.centre.x) -
+                                               0.5 * rectangle.width),
+                              static_cast<int>(std::round(position.centre.y) -
+                                               0.5 * rectangle.height),
+                              static_cast<int>(std::round(rectangle.width)),
+                              static_cast<int>(std::round(rectangle.height)),
+                              rectangle.colour);
+            });
+
+    return render_rectangle_position_entities_system;
 }
 
 float top(const Position &position, const CollisionBox &collision_box)

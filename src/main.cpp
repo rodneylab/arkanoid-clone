@@ -128,6 +128,8 @@ int main()
 
     const auto game_state_query = get_game_state_query(world);
     const auto game_state_update_query = get_game_state_update_query(world);
+    const auto velocity_entity_position_update_query =
+        get_velocity_entity_position_update_query(world);
     const auto wall_collider_query = get_wall_collider_query(world);
 
     const flecs::system paddle_movement_system{
@@ -138,6 +140,10 @@ int main()
         add_ball_with_paddle_collision_system(&world, &ball)};
     const flecs::system ball_with_brick_collision_system{
         add_ball_with_brick_collision_system(&world, &ball)};
+    const flecs::system render_circle_position_entities_system{
+        add_render_circle_position_entities_system(&world)};
+    const flecs::system render_rectangle_position_entities_system{
+        add_render_rectangle_position_entities_system(&world)};
 
     SetTargetFPS(constants::kTargetFramerate);
 
@@ -190,7 +196,8 @@ int main()
 
         case GameMode::PLAYING:
             // update
-            update_velocity_entities(&world, frame_time);
+            update_velocity_entities(velocity_entity_position_update_query,
+                                     frame_time);
 
             // handle paddle movement
             paddle_movement_system.run();
@@ -204,7 +211,8 @@ int main()
 
             ClearBackground(BLACK);
 
-            render_position_entities(&world);
+            render_circle_position_entities_system.run();
+            render_rectangle_position_entities_system.run();
 
             BeginShaderMode(shader);
             render_side_panel(game_state_query, hud_font);
