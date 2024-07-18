@@ -5,11 +5,13 @@ on:
       - "*"
     branches: [main, master]
 permissions:
-  contents: write
-  pages: write
+  contents: read
 jobs:
   build:
     name: Build and publish documentation
+    permissions:
+      contents: write
+      pages: write
     runs-on: ubuntu-latest
     steps:
       - name: Harden Runner
