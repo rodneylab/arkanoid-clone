@@ -27,11 +27,15 @@ void handle_game_state_input_system(
     const flecs::query<GameState> &game_state_update_query);
 void handle_round_title_playing_transition_system(
     const flecs::query<GameState> &game_state_update_query);
-void update_velocity_entities(flecs::world *world, float frame_time);
+void update_velocity_entities(const flecs::query<Position, const Velocity>
+                                  &velocity_entity_position_update_query,
+                              float /* frame_time */);
 void render_hud(const flecs::query<const GameState> &game_state_query,
                 const Font &hud_font);
 void render_instructions(const Font &hud_font);
-void render_position_entities(flecs::world *world);
+flecs::system add_render_circle_position_entities_system(flecs::world *world);
+flecs::system add_render_rectangle_position_entities_system(
+    flecs::world *world);
 void render_title(const Font &title_font);
 void render_round_title(const flecs::query<const GameState> &game_state_query,
                         const Font &hud_font);
