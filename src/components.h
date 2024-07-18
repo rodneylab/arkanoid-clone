@@ -63,9 +63,9 @@ struct AxisAlignedOneWayCollider
     }
 
     /**
-     * \brief Constructor initialisng collider with displacement and collision side values
+     * \brief Constructor initialising collider with displacement and collision side values
      *
-     * \param[in] displacement_value displacement of active collision side from left of window, for left and right colliders, displacement from top of window fortop and bottom colliders.
+     * \param[in] displacement_value displacement of active collision side from left of window, for left and right colliders, displacement from top of window for top and bottom colliders.
      * \param[in] collision_side_value either top, right, bottom or left depending on active collision side. For example,
      * LEFT indicates collider will only register collisions from an object moving right, hitting the left side
      */
