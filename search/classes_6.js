@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['timer_28',['Timer',['../structTimer.html',1,'']]]
+  ['rectanglecomponent_30',['RectangleComponent',['../structRectangleComponent.html',1,'']]]
 ];
