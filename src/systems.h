@@ -17,8 +17,10 @@ flecs::system add_ball_with_wall_collision_system(
         &wall_collider_query);
 flecs::system add_ball_with_paddle_collision_system(flecs::world *world,
                                                     flecs::entity *ball);
-flecs::system add_ball_with_brick_collision_system(flecs::world *world,
-                                                   flecs::entity *ball);
+flecs::system add_ball_with_brick_collision_system(
+    const flecs::query<GameState> &game_state_update_query,
+    flecs::world *world,
+    flecs::entity *ball);
 
 void update_timer_system(const flecs::query<GameState> &game_state_update_query,
                          float delta_time);

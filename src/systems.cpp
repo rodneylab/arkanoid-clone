@@ -190,15 +190,18 @@ flecs::system add_ball_with_paddle_collision_system(flecs::world *world,
     return ball_with_paddle_collision_system;
 }
 
-flecs::system add_ball_with_brick_collision_system(flecs::world *world,
-                                                   flecs::entity *ball)
+flecs::system add_ball_with_brick_collision_system(
+    const flecs::query<GameState> &game_state_update_query,
+    flecs::world *world,
+    flecs::entity *ball)
 {
     flecs::system ball_with_brick_collision_system =
-        world->system<Brick, Position, CollisionBox>().each(
-            [ball, world](flecs::entity entity,
-                          Brick /* brick */,
-                          Position position,
-                          CollisionBox collision_box) {
+        world->system<Brick, Position, CollisionBox, Destructible>().each(
+            [ball, game_state_update_query, world](flecs::entity entity,
+                                                   Brick /* brick */,
+                                                   Position position,
+                                                   CollisionBox collision_box,
+                                                   Destructible destructible) {
                 if (!is_intersecting(*ball->get<Position>(),
                                      *ball->get<CollisionBox>(),
                                      position,
@@ -207,6 +210,11 @@ flecs::system add_ball_with_brick_collision_system(flecs::world *world,
                     return;
                 }
 
+                // collision detected
+                game_state_update_query.each(
+                    [destructible](GameState &game_state) {
+                        game_state.score += destructible.points_value;
+                    });
                 if (IsAudioDeviceReady())
                 {
                     const Sound sound{world->lookup("BallBrickCollisionSound")
@@ -214,6 +222,8 @@ flecs::system add_ball_with_brick_collision_system(flecs::world *world,
                                           ->sound};
                     PlaySound(sound);
                 }
+
+                // update ball properties
                 const float overlap_left{
                     right(*ball->get<Position>(), *ball->get<CollisionBox>()) -
                     left(position, collision_box)};
