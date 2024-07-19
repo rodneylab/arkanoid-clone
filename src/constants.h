@@ -30,6 +30,7 @@ inline constexpr int kBrickColumns{11};
 inline constexpr float kBricksWidth{
     constants::kBrickColumns *
     (constants::kBrickWidth + 1.F * constants::kBrickPadding)};
+inline constexpr int kBrickDestructionPoints{10};
 
 inline constexpr int kHudFontSize{18};
 inline constexpr float kHudFontSpacing{1.F};

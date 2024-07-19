@@ -139,7 +139,9 @@ int main()
     const flecs::system ball_with_paddle_collision_system{
         add_ball_with_paddle_collision_system(&world, &ball)};
     const flecs::system ball_with_brick_collision_system{
-        add_ball_with_brick_collision_system(&world, &ball)};
+        add_ball_with_brick_collision_system(game_state_update_query,
+                                             &world,
+                                             &ball)};
     const flecs::system render_circle_position_entities_system{
         add_render_circle_position_entities_system(&world)};
     const flecs::system render_rectangle_position_entities_system{

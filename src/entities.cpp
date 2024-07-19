@@ -62,7 +62,9 @@ void create_bricks(flecs::world *world)
                                                         constants::kBrickHeight,
                                                         YELLOW))
             .set<CollisionBox>(CollisionBox{collision_box_half_width,
-                                            collision_box_half_height})};
+                                            collision_box_half_height})
+            .set<Destructible>(
+                Destructible{constants::kBrickDestructionPoints})};
     for (int column{0}; column < constants::kBrickRows; ++column)
     {
         for (int row{0}; row < constants::kBrickColumns; ++row)

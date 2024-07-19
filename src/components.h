@@ -5,6 +5,8 @@
  * \brief Declarations for ECS component classes and structs
  */
 
+#include "constants.h"
+
 #include <raylib.h>
 
 struct Audible
@@ -24,6 +26,17 @@ struct Ball
  */
 struct Brick
 {
+};
+
+/**
+ * \brief Destructible component, used for entities that deliver points on destruction.
+ */
+struct Destructible
+{
+    /**
+    * \brief Points earned by the player for destroying the destructible
+    */
+    int points_value{constants::kBrickDestructionPoints};
 };
 
 struct CircleComponent
