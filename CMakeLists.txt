@@ -66,6 +66,7 @@ set_target_properties(FileSystem_lib PROPERTIES CXX_CLANG_TIDY
                                                 "${CLANG_TIDY_COMMAND}")
 target_link_libraries(
     FileSystem_lib
+    Components_lib
     fmt::fmt
     nlohmann_json::nlohmann_json
     raylib
