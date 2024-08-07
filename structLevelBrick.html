@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Arkanoid: Destructible Struct Reference</title>
+<title>Arkanoid: LevelBrick Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -64,38 +64,51 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="structDestructible-members.html">List of all members</a>  </div>
+<a href="#friends">Friends</a> &#124;
+<a href="structLevelBrick-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">Destructible Struct Reference</div>  </div>
+<div class="title">LevelBrick Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p><a class="el" href="structDestructible.html" title="Destructible component, used for entities that deliver points on destruction.">Destructible</a> component, used for entities that deliver points on destruction.  
- <a href="structDestructible.html#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="components_8h_source.html">components.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a8efcd123852341191429ca80bd9b1caf"><td class="memItemLeft" align="right" valign="top"><a id="a8efcd123852341191429ca80bd9b1caf"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Destructible</b> (const int points_value_value, const int hits_to_destroy_value)</td></tr>
-<tr class="separator:a8efcd123852341191429ca80bd9b1caf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1056cc9779557e3ec203ba7f71cddfe"><td class="memItemLeft" align="right" valign="top"><a id="af1056cc9779557e3ec203ba7f71cddfe"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>LevelBrick</b> (BrickType brick_type, int value, int hits_to_destroy_value)</td></tr>
+<tr class="separator:af1056cc9779557e3ec203ba7f71cddfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a20bee9cc67bd81773d7d9c42b60055e0"><td class="memItemLeft" align="right" valign="top"><a id="a20bee9cc67bd81773d7d9c42b60055e0"></a>
+static std::map&lt; std::string, BrickType &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>get_string_to_brick_type_map</b> ()</td></tr>
+<tr class="separator:a20bee9cc67bd81773d7d9c42b60055e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a1329e705c5c86af66b9c8aaa0d595d3d"><td class="memItemLeft" align="right" valign="top"><a id="a1329e705c5c86af66b9c8aaa0d595d3d"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structDestructible.html#a1329e705c5c86af66b9c8aaa0d595d3d">points_value</a></td></tr>
-<tr class="memdesc:a1329e705c5c86af66b9c8aaa0d595d3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Points earned by the player for destroying the destructible. <br /></td></tr>
-<tr class="separator:a1329e705c5c86af66b9c8aaa0d595d3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a149b865692e58b1eefe13d53108c06d5"><td class="memItemLeft" align="right" valign="top"><a id="a149b865692e58b1eefe13d53108c06d5"></a>
+<tr class="memitem:aa867ae143d1d323c7eeeec6b6a5b19f5"><td class="memItemLeft" align="right" valign="top"><a id="aa867ae143d1d323c7eeeec6b6a5b19f5"></a>
+Color&#160;</td><td class="memItemRight" valign="bottom"><b>colour</b></td></tr>
+<tr class="separator:aa867ae143d1d323c7eeeec6b6a5b19f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66332c2096895ee0ed86cd1de7c17ea0"><td class="memItemLeft" align="right" valign="top"><a id="a66332c2096895ee0ed86cd1de7c17ea0"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>points_value</b></td></tr>
+<tr class="separator:a66332c2096895ee0ed86cd1de7c17ea0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a285795ca8f9bf254ec46bb329ebea7ab"><td class="memItemLeft" align="right" valign="top"><a id="a285795ca8f9bf254ec46bb329ebea7ab"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>hits_to_destroy</b></td></tr>
-<tr class="separator:a149b865692e58b1eefe13d53108c06d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a285795ca8f9bf254ec46bb329ebea7ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:aac8d0c33dee6b1d4e715502d108d4f7d"><td class="memItemLeft" align="right" valign="top"><a id="aac8d0c33dee6b1d4e715502d108d4f7d"></a>
+std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;&lt;</b> (std::ostream &amp;out, const <a class="el" href="structLevelBrick.html">LevelBrick</a> &amp;brick)</td></tr>
+<tr class="separator:aac8d0c33dee6b1d4e715502d108d4f7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b32cdb4fb2413e3f25fb9fb25b6f0ba"><td class="memItemLeft" align="right" valign="top"><a id="a5b32cdb4fb2413e3f25fb9fb25b6f0ba"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>to_string</b> (const <a class="el" href="structLevelBrick.html">LevelBrick</a> &amp;brick)</td></tr>
+<tr class="separator:a5b32cdb4fb2413e3f25fb9fb25b6f0ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p><a class="el" href="structDestructible.html" title="Destructible component, used for entities that deliver points on destruction.">Destructible</a> component, used for entities that deliver points on destruction. </p>
-</div><hr/>The documentation for this struct was generated from the following file:<ul>
+<hr/>The documentation for this struct was generated from the following files:<ul>
 <li>/home/runner/work/arkanoid-clone/arkanoid-clone/src/<a class="el" href="components_8h_source.html">components.h</a></li>
+<li>/home/runner/work/arkanoid-clone/arkanoid-clone/src/components.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

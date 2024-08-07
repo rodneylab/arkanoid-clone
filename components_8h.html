@@ -77,7 +77,9 @@ $(function() {
 <p>Declarations for ECS component classes and structs.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="constants_8h_source.html">constants.h</a>&quot;</code><br />
+<code>#include &lt;spdlog/spdlog.h&gt;</code><br />
 <code>#include &lt;raylib.h&gt;</code><br />
+<code>#include &lt;map&gt;</code><br />
 </div>
 <p><a href="components_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -87,6 +89,8 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBall.html">Ball</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structBall.html" title="Ball ECS tag.">Ball</a> ECS tag.  <a href="structBall.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLevelBrick.html">LevelBrick</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBrick.html">Brick</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structBrick.html" title="Brick ECS tag.">Brick</a> ECS tag.  <a href="structBrick.html#details">More...</a><br /></td></tr>
@@ -116,6 +120,22 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
+<tr class="memitem:aaea554449717d4fd98ba8fb01c08b54f"><td class="memItemLeft" align="right" valign="top"><a id="aaea554449717d4fd98ba8fb01c08b54f"></a>enum class &#160;</td><td class="memItemRight" valign="bottom"><b>BrickType</b> { <br />
+&#160;&#160;<b>kWhite</b>
+, <b>kOrange</b>
+, <b>kCyan</b>
+, <b>kGreen</b>
+, <br />
+&#160;&#160;<b>kRed</b>
+, <b>kBlue</b>
+, <b>kMagenta</b>
+, <b>kYellow</b>
+, <br />
+&#160;&#160;<b>kSilver</b>
+, <b>kGold</b>
+<br />
+ }</td></tr>
+<tr class="separator:aaea554449717d4fd98ba8fb01c08b54f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aea507c61aeb6edf0dc0d90f24894e763"><td class="memItemLeft" align="right" valign="top"><a id="aea507c61aeb6edf0dc0d90f24894e763"></a>enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="components_8h.html#aea507c61aeb6edf0dc0d90f24894e763">CollisionSide</a> { <b>TOP</b>
 , <b>RIGHT</b>
 , <b>BOTTOM</b>
