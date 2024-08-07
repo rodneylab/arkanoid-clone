@@ -7,6 +7,13 @@
 
 #include "constants.h"
 
+// Windows workarounds for CloseWindow / ShowCursor errors
+
+#if defined(_WIN32)
+#define NOGDI  // All GDI defines and routines
+#define NOUSER // All USER defines and routines
+#endif
+
 #include <spdlog/spdlog.h>
 
 #undef near
