@@ -15,7 +15,8 @@
 #define NOUSER // All USER defines and routines
 #endif
 
-#include <fmt/core.h>
+#include <fmt/core.h> // NOLINT(misc-include-cleaner)
+//#include <fmt/format.h>
 
 #undef near
 #undef far
@@ -77,7 +78,9 @@ void create_bricks(flecs::world *world)
         for (int column{0}; column < constants::kBrickColumns; ++column)
         {
             const std::string name{
-                fmt::format("Brick_{:02}_{:02}", row + 1, column + 1)};
+                fmt::format("Brick_{:02}_{:02}", // NOLINT(misc-include-cleaner)
+                            row + 1,
+                            column + 1)};
             world->entity(name.c_str())
                 .is_a(BrickEntity)
                 .add<Brick>()

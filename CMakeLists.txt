@@ -53,7 +53,13 @@ cpmaddpackage("gh:gabime/spdlog#27cb4c76708608465c413f6d0e6b8d99a4d84302"
 add_library(Components_lib STATIC "${PROJECT_SOURCE_DIR}/src/components.cpp")
 set_target_properties(Components_lib PROPERTIES CXX_CLANG_TIDY
                                                 "${CLANG_TIDY_COMMAND}")
-target_link_libraries(Components_lib fmt::fmt raylib arkanoid_compiler_flags)
+target_link_libraries(
+    Components_lib
+    fmt::fmt
+    raylib
+    spdlog::spdlog_header_only
+    arkanoid_compiler_flags)
+target_compile_definitions(Components_lib PRIVATE SPDLOG_FMT_EXTERNAL)
 
 add_library(FileSystem_lib STATIC "${PROJECT_SOURCE_DIR}/src/file_system.cpp")
 set_target_properties(FileSystem_lib PROPERTIES CXX_CLANG_TIDY
@@ -76,7 +82,6 @@ target_link_libraries(
     Entities_lib
     FileSystem_lib
     flecs::flecs_static
-    fmt::fmt
     raylib
     arkanoid_compiler_flags)
 target_compile_definitions(

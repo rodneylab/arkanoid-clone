@@ -7,6 +7,10 @@
 
 #include "constants.h"
 
+#include <spdlog/spdlog.h>
+
+#undef near
+#undef far
 #include <raylib.h>
 
 #include <map>
@@ -43,79 +47,34 @@ struct LevelBrick
     {
     }
 
-    LevelBrick(const BrickType brick_type, int value, int hits_to_destroy_value)
-        : colour(WHITE), points_value(value),
-          hits_to_destroy(hits_to_destroy_value)
-    {
-        switch (brick_type)
-        {
-        case BrickType::kWhite:
-        {
-            colour = WHITE;
-            break;
-        }
-        case BrickType::kOrange:
-        {
-            colour = ORANGE;
-            break;
-        }
-        case BrickType::kCyan:
-        {
-            colour = SKYBLUE;
-            break;
-        }
-        case BrickType::kGreen:
-        {
-            colour = GREEN;
-            break;
-        }
-        case BrickType::kRed:
-        {
-            colour = RED;
-            break;
-        }
-        case BrickType::kBlue:
-        {
-            colour = BLUE;
-            break;
-        }
-        case BrickType::kMagenta:
-        {
-            colour = MAGENTA;
-            break;
-        }
-        case BrickType::kYellow:
-        {
-            colour = YELLOW;
-            break;
-        }
-        case BrickType::kSilver:
-        {
-            colour = LIGHTGRAY;
-            break;
-        }
-        case BrickType::kGold:
-        {
-            colour = GOLD;
-            break;
-        }
-        }
-    }
+    LevelBrick(BrickType brick_type, int value, int hits_to_destroy_value);
 
     static std::map<std::string, BrickType> get_string_to_brick_type_map()
     {
-        return std::map<std::string, BrickType>{
-            {"blue", BrickType::kBlue},
-            {"cyan", BrickType::kCyan},
-            {"gold", BrickType::kGold},
-            {"green", BrickType::kGreen},
-            {"magenta", BrickType::kMagenta},
-            {"orange", BrickType::kOrange},
-            {"red", BrickType::kRed},
-            {"silver", BrickType::kSilver},
-            {"white", BrickType::kWhite},
-            {"yellow", BrickType::kYellow},
-        };
+        std::map<std::string, BrickType> result{};
+
+        try
+        {
+            result = std::map<std::string, BrickType>{
+                {"blue", BrickType::kBlue},
+                {"cyan", BrickType::kCyan},
+                {"gold", BrickType::kGold},
+                {"green", BrickType::kGreen},
+                {"magenta", BrickType::kMagenta},
+                {"orange", BrickType::kOrange},
+                {"red", BrickType::kRed},
+                {"silver", BrickType::kSilver},
+                {"white", BrickType::kWhite},
+                {"yellow", BrickType::kYellow},
+            };
+        }
+        catch (std::out_of_range &e)
+        {
+            spdlog::error("Error creating string to brick type map, check keys "
+                          "are valid.");
+        }
+
+        return result;
     }
 
     Color colour;
