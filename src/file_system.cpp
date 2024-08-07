@@ -17,7 +17,11 @@
 void parse_level_bricks_file(std::string_view json_path,
                              nlohmann::json &json_data)
 {
-    std::ifstream json_file(json_path.data());
+    std::ifstream json_file{json_path.data()};
+    if (!json_file)
+    {
+        spdlog::error("Unable to open {} for reading.", json_path);
+    }
 
     try
     {
@@ -28,6 +32,7 @@ void parse_level_bricks_file(std::string_view json_path,
         spdlog::error("Error parsing JSON from `{}`: {}.",
                       json_path,
                       exception.what());
+        throw exception;
     }
 }
 
@@ -63,13 +68,14 @@ std::map<BrickType, LevelBrick> load_brick_properties()
                           json_path,
                           to_string(result.at(brick_type)));
         }
-        catch (const std::out_of_range & /* exception */)
+        catch (const std::out_of_range &exception)
         {
             const std::string element_value{element["colour"]};
             spdlog::error(
                 "Error in JSON data from `{}`: unknown BrickType: '{}'.",
                 json_path,
                 element_value);
+            throw exception;
         }
     }
 
@@ -83,11 +89,8 @@ std::vector<BrickType> load_level_data()
     nlohmann::json json_data;
     parse_level_bricks_file(json_path, json_data);
 
-    std::vector<BrickType> brick_rows{};
     const int level_1_rows{
         static_cast<int>(json_data["levelBricks"][0]["rows"].size())};
-    brick_rows.reserve(static_cast<size_t>(level_1_rows));
-
     if (level_1_rows == 0)
     {
         spdlog::error("Error in JSON data from `{}`: expected at least one row "
@@ -95,6 +98,8 @@ std::vector<BrickType> load_level_data()
                       json_path);
     }
 
+    std::vector<BrickType> brick_rows{};
+    brick_rows.reserve(static_cast<size_t>(level_1_rows));
     for (const auto &element : json_data["levelBricks"][0]["rows"])
     {
         try
@@ -102,13 +107,13 @@ std::vector<BrickType> load_level_data()
             brick_rows.emplace_back(
                 LevelBrick::get_string_to_brick_type_map().at(element));
         }
-        catch (const std::out_of_range & /* exception */)
+        catch (const std::out_of_range &exception)
         {
-            const std::string element_value{element};
             spdlog::error(
                 "Error in JSON data from `{}`: unknown BrickType: '{}'.",
                 json_path,
-                element_value);
+                std::string(element));
+            throw exception;
         }
     }
 
