@@ -106,12 +106,9 @@ target_link_libraries(
            Systems_lib
            dbg_macro
            flecs::flecs_static
-           fmt
            arkanoid_compiler_flags
            spdlog::spdlog_header_only)
-
 target_include_directories(Arkanoid PUBLIC "${PROJECT_BINARY_DIR}")
-
 target_compile_definitions(
     Arkanoid PUBLIC ASSETS_PATH="${CMAKE_CURRENT_SOURCE_DIR}/assets/")
 target_compile_definitions(Arkanoid PRIVATE SPDLOG_FMT_EXTERNAL)
