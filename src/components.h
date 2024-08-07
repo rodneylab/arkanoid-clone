@@ -75,7 +75,7 @@ struct LevelBrick
                 {"yellow", BrickType::kYellow},
             };
         }
-        catch (std::out_of_range &e)
+        catch (std::out_of_range & /* e */)
         {
             spdlog::error("Error creating string to brick type map, check keys "
                           "are valid.");

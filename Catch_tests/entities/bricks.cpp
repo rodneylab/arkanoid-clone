@@ -6,7 +6,19 @@
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers_floating_point.hpp>
 #include <flecs.h>
+
+// Windows workarounds for CloseWindow / ShowCursor errors
+
+#if defined(_WIN32)
+#define NOGDI  // All GDI defines and routines
+#define NOUSER // All USER defines and routines
+#endif
+
 #include <fmt/core.h>
+
+#undef near
+#undef far
+
 #include <raylib.h>
 
 #include <algorithm>

@@ -63,7 +63,7 @@ std::map<BrickType, LevelBrick> load_brick_properties()
                           json_path,
                           to_string(result.at(brick_type)));
         }
-        catch (const std::out_of_range &exception)
+        catch (const std::out_of_range & /* exception */)
         {
             const std::string element_value{element["colour"]};
             spdlog::error(
