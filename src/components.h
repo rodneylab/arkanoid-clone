@@ -7,7 +7,20 @@
 
 #include "constants.h"
 
+// Windows workarounds for CloseWindow / ShowCursor errors
+
+#if defined(_WIN32)
+#define NOGDI  // All GDI defines and routines
+#define NOUSER // All USER defines and routines
+#endif
+
+#include <spdlog/spdlog.h>
+
+#undef near
+#undef far
 #include <raylib.h>
+
+#include <map>
 
 struct Audible
 {
@@ -19,6 +32,64 @@ struct Audible
  */
 struct Ball
 {
+};
+
+enum class BrickType
+{
+    kWhite,
+    kOrange,
+    kCyan,
+    kGreen,
+    kRed,
+    kBlue,
+    kMagenta,
+    kYellow,
+    kSilver,
+    kGold
+};
+
+struct LevelBrick
+{
+    explicit LevelBrick() : colour(WHITE), points_value(0), hits_to_destroy(1)
+    {
+    }
+
+    LevelBrick(BrickType brick_type, int value, int hits_to_destroy_value);
+
+    static std::map<std::string, BrickType> get_string_to_brick_type_map()
+    {
+        std::map<std::string, BrickType> result{};
+
+        try
+        {
+            result = std::map<std::string, BrickType>{
+                {"blue", BrickType::kBlue},
+                {"cyan", BrickType::kCyan},
+                {"gold", BrickType::kGold},
+                {"green", BrickType::kGreen},
+                {"magenta", BrickType::kMagenta},
+                {"orange", BrickType::kOrange},
+                {"red", BrickType::kRed},
+                {"silver", BrickType::kSilver},
+                {"white", BrickType::kWhite},
+                {"yellow", BrickType::kYellow},
+            };
+        }
+        catch (std::out_of_range & /* e */)
+        {
+            spdlog::error("Error creating string to brick type map, check keys "
+                          "are valid.");
+        }
+
+        return result;
+    }
+
+    Color colour;
+    int points_value;
+    int hits_to_destroy;
+
+    friend std::ostream &operator<<(std::ostream &out, const LevelBrick &brick);
+    friend std::string to_string(const LevelBrick &brick);
 };
 
 /**
@@ -33,10 +104,22 @@ struct Brick
  */
 struct Destructible
 {
+    Destructible() : points_value{0}, hits_to_destroy{1}
+    {
+    }
+
+    Destructible(const int points_value_value, const int hits_to_destroy_value)
+        : points_value{points_value_value},
+          hits_to_destroy{hits_to_destroy_value}
+    {
+    }
+
     /**
     * \brief Points earned by the player for destroying the destructible
     */
-    int points_value{constants::kBrickDestructionPoints};
+    int points_value;
+
+    int hits_to_destroy;
 };
 
 struct CircleComponent
@@ -151,7 +234,7 @@ struct RectangleComponent
 
     RectangleComponent(const float width_value,
                        const float height_value,
-                       const Color colour_value)
+                       const Color &colour_value)
         : width{width_value}, height{height_value}, colour{colour_value}
     {
     }

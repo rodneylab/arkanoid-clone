@@ -2,6 +2,9 @@
 #define SRC_RESOURCES_H
 
 #include "constants.h"
+#include "file_system.h"
+
+#include <map>
 
 enum class GameMode
 {

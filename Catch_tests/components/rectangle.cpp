@@ -27,3 +27,25 @@ TEST_CASE("It creates rectangle", "[Rectangle(float,float,colour)]")
     REQUIRE(rectangle_component.colour.b == BLUE.b);
     REQUIRE(rectangle_component.colour.a == BLUE.a);
 }
+
+TEST_CASE("It creates rectangle", "[Rectangle(Rectangle)]")
+{
+    // arrange
+    constexpr float width{16.F};
+    constexpr float height{9.F};
+
+    // act
+    const RectangleComponent rectangle_component_a{width, height, BLUE};
+    const RectangleComponent rectangle_component_b(rectangle_component_a);
+
+    REQUIRE_THAT(rectangle_component_b.width,
+                 Catch::Matchers::WithinRel(width, kFloatEps) ||
+                     Catch::Matchers::WithinAbs(width, kFloatAbsMargin));
+    REQUIRE_THAT(rectangle_component_b.height,
+                 Catch::Matchers::WithinRel(height, kFloatEps) ||
+                     Catch::Matchers::WithinAbs(height, kFloatAbsMargin));
+    REQUIRE(rectangle_component_b.colour.r == BLUE.r);
+    REQUIRE(rectangle_component_b.colour.g == BLUE.g);
+    REQUIRE(rectangle_component_b.colour.b == BLUE.b);
+    REQUIRE(rectangle_component_b.colour.a == BLUE.a);
+}

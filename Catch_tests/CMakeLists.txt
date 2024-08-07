@@ -8,7 +8,7 @@ add_subdirectory(entities)
 
 add_executable(Catch_tests_run systems.cpp)
 
-target_link_libraries(Catch_tests_run PRIVATE Entities_lib Systems_lib
+target_link_libraries(Catch_tests_run PRIVATE Components_lib Entities_lib Systems_lib
                                               arkanoid_compiler_flags)
 target_link_libraries(Catch_tests_run PRIVATE Catch2::Catch2WithMain)
 target_include_directories(Catch_tests_run PUBLIC "${PROJECT_SOURCE_DIR}/src")

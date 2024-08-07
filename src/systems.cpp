@@ -185,6 +185,8 @@ flecs::system add_ball_with_paddle_collision_system(flecs::world *world,
                     ball->set<Velocity>(
                         Velocity{constants::kBallVelocity, new_velocity_y});
                 }
+                spdlog::trace("{} collision with paddle detected.",
+                              ball->name().c_str());
             });
 
     return ball_with_paddle_collision_system;
@@ -211,10 +213,6 @@ flecs::system add_ball_with_brick_collision_system(
                 }
 
                 // collision detected
-                game_state_update_query.each(
-                    [destructible](GameState &game_state) {
-                        game_state.score += destructible.points_value;
-                    });
                 if (IsAudioDeviceReady())
                 {
                     const Sound sound{world->lookup("BallBrickCollisionSound")
@@ -262,7 +260,28 @@ flecs::system add_ball_with_brick_collision_system(
                         Velocity{current_ball_velocity_values.x,
                                  -current_ball_velocity_values.y});
                 }
-                entity.destruct();
+
+                // Update score
+                game_state_update_query.each(
+                    [destructible](GameState &game_state) {
+                        game_state.score += destructible.points_value;
+                    });
+
+                // Update brick properties
+                const int current_hits_to_destroy{
+                    entity.get<Destructible>()->hits_to_destroy};
+                const int new_hits_to_destroy{current_hits_to_destroy - 1};
+                entity.set<Destructible>(Destructible{destructible.points_value,
+                                                      new_hits_to_destroy});
+                spdlog::trace("{} hitsToDestroy value reduced from {} to {}.",
+                              entity.name().c_str(),
+                              current_hits_to_destroy,
+                              new_hits_to_destroy);
+
+                if (new_hits_to_destroy == 0)
+                {
+                    entity.destruct();
+                }
             });
 
     return ball_with_brick_collision_system;

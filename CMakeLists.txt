@@ -44,20 +44,43 @@ cpmaddpackage("gh:SanderMertens/flecs#eeb9eaa64243536c5d5c19279c9c305a52d0b9b3"
 cpmaddpackage("gh:fmtlib/fmt#e69e5f977d458f2650bb346dadf2ad30c5320281") # 10.x
 cpmaddpackage("gh:raysan5/raylib#ae50bfa2cc569c0f8d5bc4315d39db64005b1b0"
 )# v5.0
+cpmaddpackage("gh:nlohmann/json#9cca280a4d0ccf0c08f47a99aa71d1b0e52f8d03"
+)# v3.11.3
 message(STATUS "Include spdlog")
 cpmaddpackage("gh:gabime/spdlog#27cb4c76708608465c413f6d0e6b8d99a4d84302"
 )# v1.14.1
+
+add_library(Components_lib STATIC "${PROJECT_SOURCE_DIR}/src/components.cpp")
+set_target_properties(Components_lib PROPERTIES CXX_CLANG_TIDY
+                                                "${CLANG_TIDY_COMMAND}")
+target_link_libraries(
+    Components_lib
+    fmt::fmt
+    raylib
+    spdlog::spdlog_header_only
+    arkanoid_compiler_flags)
+target_compile_definitions(Components_lib PRIVATE SPDLOG_FMT_EXTERNAL)
+
+add_library(FileSystem_lib STATIC "${PROJECT_SOURCE_DIR}/src/file_system.cpp")
+set_target_properties(FileSystem_lib PROPERTIES CXX_CLANG_TIDY
+                                                "${CLANG_TIDY_COMMAND}")
+target_link_libraries(
+    FileSystem_lib
+    Components_lib
+    nlohmann_json::nlohmann_json
+    arkanoid_compiler_flags)
+target_compile_definitions(
+    FileSystem_lib PUBLIC ASSETS_PATH="${CMAKE_CURRENT_SOURCE_DIR}/assets/")
+target_compile_definitions(FileSystem_lib PRIVATE SPDLOG_FMT_EXTERNAL)
 
 add_library(Entities_lib STATIC "${PROJECT_SOURCE_DIR}/src/entities.cpp")
 set_target_properties(Entities_lib PROPERTIES CXX_CLANG_TIDY
                                               "${CLANG_TIDY_COMMAND}")
 target_link_libraries(
     Entities_lib
+    FileSystem_lib
     flecs::flecs_static
-    fmt::fmt
-    raylib
     arkanoid_compiler_flags)
-
 target_compile_definitions(
     Entities_lib PUBLIC ASSETS_PATH="${CMAKE_CURRENT_SOURCE_DIR}/assets/")
 
@@ -78,17 +101,14 @@ set_target_properties(Arkanoid PROPERTIES CXX_CLANG_TIDY
                                           "${CLANG_TIDY_COMMAND}")
 target_link_libraries(
     Arkanoid
-    PUBLIC Entities_lib
+    PUBLIC Components_lib
+           Entities_lib
            Systems_lib
            dbg_macro
            flecs::flecs_static
-           fmt
-           raylib
            arkanoid_compiler_flags
            spdlog::spdlog_header_only)
-
 target_include_directories(Arkanoid PUBLIC "${PROJECT_BINARY_DIR}")
-
 target_compile_definitions(
     Arkanoid PUBLIC ASSETS_PATH="${CMAKE_CURRENT_SOURCE_DIR}/assets/")
 target_compile_definitions(Arkanoid PRIVATE SPDLOG_FMT_EXTERNAL)

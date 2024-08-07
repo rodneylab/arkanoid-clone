@@ -88,6 +88,7 @@ int main()
 
     // Seed the Raylib RNG used in the create_ball method
     SetRandomSeed((unsigned int)std::time(nullptr));
+
     create_ball(&world);
     create_paddle(&world);
     create_bricks(&world);

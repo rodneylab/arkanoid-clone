@@ -1,0 +1,17 @@
+{
+  "bricks": [
+    { "colour": "white", "value": 50 },
+    { "colour": "orange", "value": 60 },
+    { "colour": "cyan", "value": 70 },
+    { "colour": "green", "value": 80 },
+    { "colour": "red", "value": 90 },
+    { "colour": "blue", "value": 100 },
+    { "colour": "magenta", "value": 110 },
+    { "colour": "yellow", "value": 120 },
+    { "colour": "silver", "value": 50, "hitsToDestroy": 2 },
+    { "colour": "gold", "value": 0, "hitsToDestroy": 999 }
+  ],
+  "levelBricks": [
+    { "level": 1, "rows": ["silver", "red", "blue", "orange", "magenta", "green"] }
+  ]
+}

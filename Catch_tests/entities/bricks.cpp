@@ -1,11 +1,24 @@
 #include "entities.h"
 
 #include "components.h"
+#include "resources.h"
 
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers_floating_point.hpp>
 #include <flecs.h>
+
+// Windows workarounds for CloseWindow / ShowCursor errors
+
+#if defined(_WIN32)
+#define NOGDI  // All GDI defines and routines
+#define NOUSER // All USER defines and routines
+#endif
+
 #include <fmt/core.h>
+
+#undef near
+#undef far
+
 #include <raylib.h>
 
 #include <algorithm>
@@ -35,7 +48,7 @@ TEST_CASE("It creates bricks with expected components and tags",
     SECTION("It gives each brick a Brick tag")
     {
         // assert
-        REQUIRE(world.count<Brick>() == 55);
+        REQUIRE(world.count<Brick>() == 66);
     }
 
     // arrange
@@ -60,7 +73,6 @@ TEST_CASE("It creates bricks with expected components and tags",
             random_brick_entity.get<RectangleComponent>()};
         constexpr float expected_width{42.F};
         constexpr float expected_height{16.F};
-        constexpr Color expected_colour{YELLOW};
         REQUIRE(rectangle_component != nullptr);
         REQUIRE(random_brick_entity.has<RectangleComponent>());
         REQUIRE_THAT(
@@ -71,6 +83,19 @@ TEST_CASE("It creates bricks with expected components and tags",
             rectangle_component->height,
             Catch::Matchers::WithinRel(expected_height, kFloatEps) ||
                 Catch::Matchers::WithinAbs(expected_height, kFloatAbsMargin));
+    }
+
+    SECTION("It gives bricks a Rectangle component with expected colour")
+    {
+        const std::string random_brick_name{
+            fmt::format("Brick_{:02}_{:02}", 1, 1)};
+        flecs::entity random_brick_entity(
+            world.lookup(random_brick_name.c_str()));
+
+        // assert
+        const RectangleComponent *rectangle_component{
+            random_brick_entity.get<RectangleComponent>()};
+        constexpr Color expected_colour{LIGHTGRAY};
         REQUIRE(rectangle_component->colour.r == expected_colour.r);
         REQUIRE(rectangle_component->colour.g == expected_colour.g);
         REQUIRE(rectangle_component->colour.b == expected_colour.b);
