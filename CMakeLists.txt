@@ -69,7 +69,6 @@ target_link_libraries(
     Components_lib
     fmt::fmt
     nlohmann_json::nlohmann_json
-    raylib
     spdlog::spdlog_header_only
     arkanoid_compiler_flags)
 target_compile_definitions(
@@ -83,7 +82,6 @@ target_link_libraries(
     Entities_lib
     FileSystem_lib
     flecs::flecs_static
-    raylib
     arkanoid_compiler_flags)
 target_compile_definitions(
     Entities_lib PUBLIC ASSETS_PATH="${CMAKE_CURRENT_SOURCE_DIR}/assets/")
@@ -111,7 +109,6 @@ target_link_libraries(
            dbg_macro
            flecs::flecs_static
            fmt
-           raylib
            arkanoid_compiler_flags
            spdlog::spdlog_header_only)
 
