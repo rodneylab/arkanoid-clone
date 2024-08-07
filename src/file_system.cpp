@@ -102,7 +102,7 @@ std::vector<BrickType> load_level_data()
             brick_rows.emplace_back(
                 LevelBrick::get_string_to_brick_type_map().at(element));
         }
-        catch (const std::out_of_range &exception)
+        catch (const std::out_of_range & /* exception */)
         {
             const std::string element_value{element};
             spdlog::error(

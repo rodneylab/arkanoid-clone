@@ -67,9 +67,7 @@ set_target_properties(FileSystem_lib PROPERTIES CXX_CLANG_TIDY
 target_link_libraries(
     FileSystem_lib
     Components_lib
-    fmt::fmt
     nlohmann_json::nlohmann_json
-    spdlog::spdlog_header_only
     arkanoid_compiler_flags)
 target_compile_definitions(
     FileSystem_lib PUBLIC ASSETS_PATH="${CMAKE_CURRENT_SOURCE_DIR}/assets/")
