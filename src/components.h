@@ -9,6 +9,8 @@
 
 #include <raylib.h>
 
+#include <map>
+
 struct Audible
 {
     Sound sound;
@@ -19,6 +21,109 @@ struct Audible
  */
 struct Ball
 {
+};
+
+enum class BrickType
+{
+    kWhite,
+    kOrange,
+    kCyan,
+    kGreen,
+    kRed,
+    kBlue,
+    kMagenta,
+    kYellow,
+    kSilver,
+    kGold
+};
+
+struct LevelBrick
+{
+    explicit LevelBrick() : colour(WHITE), points_value(0), hits_to_destroy(1)
+    {
+    }
+
+    LevelBrick(const BrickType brick_type, int value, int hits_to_destroy_value)
+        : colour(WHITE), points_value(value),
+          hits_to_destroy(hits_to_destroy_value)
+    {
+        switch (brick_type)
+        {
+        case BrickType::kWhite:
+        {
+            colour = WHITE;
+            break;
+        }
+        case BrickType::kOrange:
+        {
+            colour = ORANGE;
+            break;
+        }
+        case BrickType::kCyan:
+        {
+            colour = SKYBLUE;
+            break;
+        }
+        case BrickType::kGreen:
+        {
+            colour = GREEN;
+            break;
+        }
+        case BrickType::kRed:
+        {
+            colour = RED;
+            break;
+        }
+        case BrickType::kBlue:
+        {
+            colour = BLUE;
+            break;
+        }
+        case BrickType::kMagenta:
+        {
+            colour = MAGENTA;
+            break;
+        }
+        case BrickType::kYellow:
+        {
+            colour = YELLOW;
+            break;
+        }
+        case BrickType::kSilver:
+        {
+            colour = LIGHTGRAY;
+            break;
+        }
+        case BrickType::kGold:
+        {
+            colour = GOLD;
+            break;
+        }
+        }
+    }
+
+    static std::map<std::string, BrickType> get_string_to_brick_type_map()
+    {
+        return std::map<std::string, BrickType>{
+            {"blue", BrickType::kBlue},
+            {"cyan", BrickType::kCyan},
+            {"gold", BrickType::kGold},
+            {"green", BrickType::kGreen},
+            {"magenta", BrickType::kMagenta},
+            {"orange", BrickType::kOrange},
+            {"red", BrickType::kRed},
+            {"silver", BrickType::kSilver},
+            {"white", BrickType::kWhite},
+            {"yellow", BrickType::kYellow},
+        };
+    }
+
+    Color colour;
+    int points_value;
+    int hits_to_destroy;
+
+    friend std::ostream &operator<<(std::ostream &out, const LevelBrick &brick);
+    friend std::string to_string(const LevelBrick &brick);
 };
 
 /**
@@ -33,10 +138,22 @@ struct Brick
  */
 struct Destructible
 {
+    Destructible() : points_value{0}, hits_to_destroy{1}
+    {
+    }
+
+    Destructible(const int points_value_value, const int hits_to_destroy_value)
+        : points_value{points_value_value},
+          hits_to_destroy{hits_to_destroy_value}
+    {
+    }
+
     /**
     * \brief Points earned by the player for destroying the destructible
     */
-    int points_value{constants::kBrickDestructionPoints};
+    int points_value;
+
+    int hits_to_destroy;
 };
 
 struct CircleComponent
@@ -151,7 +268,7 @@ struct RectangleComponent
 
     RectangleComponent(const float width_value,
                        const float height_value,
-                       const Color colour_value)
+                       const Color &colour_value)
         : width{width_value}, height{height_value}, colour{colour_value}
     {
     }

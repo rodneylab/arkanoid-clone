@@ -25,7 +25,6 @@ inline constexpr float kBrickHeight{16.F};
 inline constexpr float kBrickPadding{3.F};
 inline constexpr int kBricksInsetX{kWallWidth};
 inline constexpr int kBricksInsetY{80};
-inline constexpr int kBrickRows{5};
 inline constexpr int kBrickColumns{11};
 inline constexpr float kBricksWidth{
     constants::kBrickColumns *

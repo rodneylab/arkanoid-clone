@@ -1,6 +1,7 @@
 #include "entities.h"
 
 #include "components.h"
+#include "resources.h"
 
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers_floating_point.hpp>
@@ -22,15 +23,15 @@ TEST_CASE("It creates paddle with expected components and tags",
 
     // act
     create_paddle(&world);
-    auto paddle_entity(world.entity("Paddle"));
+    flecs::entity paddle_entity(world.entity("Paddle"));
 
     SECTION("It has a Paddle tag")
     {
         // assert
-        // Test Ball exists with expected label
+        // Test Paddle exists with expected label
         REQUIRE(world.lookup("Paddle") != 0);
 
-        // Test the ball entity has a ball Tag
+        // Test the paddle entity has a paddle Tag
         REQUIRE(paddle_entity.has<Paddle>());
     }
 
@@ -42,6 +43,8 @@ TEST_CASE("It creates paddle with expected components and tags",
         constexpr float expected_width{72.F};
         constexpr float expected_height{16.F};
         constexpr Color expected_colour{RED};
+
+        REQUIRE(paddle_entity.name() == "Paddle");
         REQUIRE(rectangle_component != nullptr);
         REQUIRE_THAT(
             rectangle_component->width,
