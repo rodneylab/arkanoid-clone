@@ -89,6 +89,7 @@ set_target_properties(Systems_lib PROPERTIES CXX_CLANG_TIDY
                                              "${CLANG_TIDY_COMMAND}")
 target_link_libraries(
     Systems_lib
+    Components_lib
     Entities_lib
     #flecs::flecs_static
     fmt::fmt
