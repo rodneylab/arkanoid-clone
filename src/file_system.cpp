@@ -54,10 +54,9 @@ std::map<BrickType, LevelBrick> load_brick_properties()
     {
         try
         {
+            const std::string colour_field{element.at("colour")};
             const BrickType brick_type =
-                LevelBrick::get_string_to_brick_type_map().at(
-                    element.at("colour"));
-
+                LevelBrick::get_string_to_brick_type_map().at(colour_field);
             result.emplace(brick_type,
                            LevelBrick{brick_type,
                                       element.at("value"),
