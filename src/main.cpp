@@ -15,7 +15,7 @@
 #define NOUSER // All USER defines and routines
 #endif
 
-#include <fmt/core.h>
+#include <fmt/format.h>
 #include <spdlog/cfg/env.h>
 
 #undef near

@@ -41,7 +41,7 @@ cpmaddpackage("gh:sharkdp/dbg-macro#fb9976f410f8b29105818b20278cd0be0e853fe8"
 )# v0.5.1
 cpmaddpackage("gh:SanderMertens/flecs#eeb9eaa64243536c5d5c19279c9c305a52d0b9b3"
 )# v4.0.0
-cpmaddpackage("gh:fmtlib/fmt#e69e5f977d458f2650bb346dadf2ad30c5320281") # 10.x
+cpmaddpackage("gh:fmtlib/fmt#0c9fce2ffefecfdce794e1859584e25877b7b592") # 11.0.2
 cpmaddpackage("gh:raysan5/raylib#ae50bfa2cc569c0f8d5bc4315d39db64005b1b0"
 )# v5.0
 cpmaddpackage("gh:nlohmann/json#9cca280a4d0ccf0c08f47a99aa71d1b0e52f8d03"

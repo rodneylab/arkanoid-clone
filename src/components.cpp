@@ -7,7 +7,7 @@
 #define NOUSER // All USER defines and routines
 #endif
 
-#include <fmt/core.h>
+#include <fmt/format.h>
 
 #undef near
 #undef far
