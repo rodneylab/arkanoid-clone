@@ -89,10 +89,12 @@ set_target_properties(Systems_lib PROPERTIES CXX_CLANG_TIDY
                                              "${CLANG_TIDY_COMMAND}")
 target_link_libraries(
     Systems_lib
-    flecs::flecs_static
+    Components_lib
+    Entities_lib
+    #flecs::flecs_static
     fmt::fmt
     raylib
-    spdlog::spdlog_header_only
+    #spdlog::spdlog_header_only
     arkanoid_compiler_flags)
 target_compile_definitions(Systems_lib PRIVATE SPDLOG_FMT_EXTERNAL)
 
