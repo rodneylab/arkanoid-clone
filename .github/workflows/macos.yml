@@ -20,9 +20,10 @@ jobs:
         uses: aminya/setup-cpp@290824452986e378826155f3379d31bce8753d76 # v0.37.0
         with:
           clangtidy: true
+      - uses: actions/setup-python@39cd14951b08e74b54015e9e001cdefcf80e669f # v5.1.1
       - name: configure
         run: |
-          cmake -H. -Bbuild -G "Unix Makefiles" -DCMAKE_BUILD_TYPE="Debug"
+          cmake -H. -Bbuild -G "Unix Makefiles" -DCMAKE_BUILD_TYPE="Debug" -DCREATE_DOCUMENTATION=OFF
       - name: building
         run: |
           cmake --build build --config Debug --target Catch_tests_run -j4

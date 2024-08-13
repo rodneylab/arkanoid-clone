@@ -43,4 +43,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          build_dir: ./build/docs/doc_doxygen/html
+          build_dir: ./build/docs/sphinx
+          #build_dir: ./build/docs/doc_doxygen/html
