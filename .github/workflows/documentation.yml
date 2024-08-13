@@ -37,7 +37,7 @@ jobs:
           cmake -H. -Bbuild -G "Unix Makefiles" -DCMAKE_BUILD_TYPE="Debug"
       - name: building
         run: |
-          cmake --build build --config Debug --target doc_doxygen -j4
+          cmake --build build --config Debug --target doc_doxygen Sphinx -j4
       - name: Deploy to GitHub Pages
         uses: Cecilapp/GitHub-Pages-deploy@526a34f794dfdf7edd6a4ac94321b1e7945910c0 # v3
         env:
