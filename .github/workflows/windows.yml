@@ -16,6 +16,11 @@ jobs:
           egress-policy: audit
           disable-telemetry: true
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+      - uses: actions/setup-python@39cd14951b08e74b54015e9e001cdefcf80e669f # v5.1.1
+      - name: Install Docs
+        run: |
+          sudo apt-get install doxygen
+          pip install -r requirements.txt  --require-hashes
       - name: configure
         run: |
           cmake -H"." -Bbuild -T host=x86 -A x64 -DCMAKE_BUILD_TYPE="Debug"

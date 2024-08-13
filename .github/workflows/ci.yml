@@ -27,6 +27,11 @@ jobs:
       - name: Install Linux Dependencies
         if: runner.os == 'Linux'
         run: sudo apt-get update && sudo apt-get install libxrandr-dev libxcursor-dev libudev-dev libopenal-dev libflac-dev libvorbis-dev libgl1-mesa-dev libegl1-mesa-dev freeglut3-dev libxinerama-dev libxi-dev
+      - uses: actions/setup-python@39cd14951b08e74b54015e9e001cdefcf80e669f # v5.1.1
+      - name: Install Docs
+        run: |
+          sudo apt-get install doxygen
+          pip install -r requirements.txt  --require-hashes
       - name: Checkout
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
       - name: Setup Cpp
