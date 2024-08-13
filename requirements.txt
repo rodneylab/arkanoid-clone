@@ -7,7 +7,7 @@ breathe==4.35.0 \
 certifi==2024.7.4 \
   --hash=sha256:c198e21b1289c2ab85ee4e67bb4b4ef3ead0892059901a8d5b622f24a1101e90
 charset_normalizer==3.3.2 \
-  --hash=sha256:ddbb2551d7e0102e7252db79ba445cdab71b26640817ab1e3e3648dad515003b
+  --hash=sha256:8465322196c8b4d7ab6d1e049e4c5cb460d0394da4a27d23cc242fbf0034b6b5
 colorlog==6.8.2 \
   --hash=sha256:4dcbb62368e2800cb3c5abd348da7e53f6c362dda502ec27c560b2e58a66bd33
 docutils==0.21.2 \
