@@ -13,6 +13,6 @@ jobs:
           egress-policy: audit
           disable-telemetry: true
       - name: Checkout Actions Repository
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
       - name: Check spelling of entire workspace
-        uses: crate-ci/typos@945d407a5fc9097f020969446a16f581612ab4df # v1.24.5
+        uses: crate-ci/typos@f12cee1d8f3c79282a98ecb41d235aef17dfa8fd # v1.25.0
