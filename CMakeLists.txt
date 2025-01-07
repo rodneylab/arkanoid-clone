@@ -91,10 +91,8 @@ target_link_libraries(
     Systems_lib
     Components_lib
     Entities_lib
-    #flecs::flecs_static
     fmt::fmt
     raylib
-    #spdlog::spdlog_header_only
     arkanoid_compiler_flags)
 target_compile_definitions(Systems_lib PRIVATE SPDLOG_FMT_EXTERNAL)
 
@@ -123,6 +121,6 @@ endif()
 
 option(CREATE_DOCUMENTATION "Create documentation" ON)
 if(CREATE_DOCUMENTATION)
-    set (CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
+    set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
     add_subdirectory(docs)
 endif()
