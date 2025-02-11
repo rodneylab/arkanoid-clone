@@ -109,7 +109,7 @@ void create_paddle(flecs::world *world)
                                   static_cast<float>(constants::kPaddleHeight),
                                   RED})
         .set<Position>({static_cast<float>(constants::kWallWidth) +
-                            0.5F * constants::kBricksWidth,
+                            (0.5F * constants::kBricksWidth),
                         kPaddleTop})
         .set<CollisionBox>(
             {0.5F * constants::kPaddleWidth, 0.5F * constants::kPaddleHeight})
