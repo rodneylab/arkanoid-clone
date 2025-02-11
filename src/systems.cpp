@@ -408,6 +408,8 @@ void render_round_title(const flecs::query<const GameState> &game_state_query,
     });
 }
 
+namespace
+{
 void render_text_line_left_aligned(Font font,
                                    const std::string_view &text,
                                    const float left_x_offset,
@@ -416,7 +418,7 @@ void render_text_line_left_aligned(Font font,
 {
     DrawTextEx(
         font,
-        text.data(),
+        std::string(text).data(),
         Vector2{left_x_offset,
                 static_cast<float>(line_number) * constants::kHudFontSize},
         constants::kHudFontSize,
@@ -436,13 +438,14 @@ void render_text_line_right_aligned(Font font,
                                                   constants::kHudFontSpacing)};
     DrawTextEx(
         font,
-        text.data(),
+        std::string(text).data(),
         Vector2{right_x_offset - text_measurements.x,
                 static_cast<float>(line_number) * constants::kHudFontSize},
         constants::kHudFontSize,
         constants::kHudFontSpacing,
         colour);
 }
+} // namespace
 
 void render_side_panel(const flecs::query<const GameState> &game_state_query,
                        const Font &hud_font)
@@ -514,9 +517,9 @@ flecs::system add_render_rectangle_position_entities_system(flecs::world *world)
         world->system<const RectangleComponent, const Position>().each(
             [](const RectangleComponent &rectangle, const Position &position) {
                 DrawRectangle(static_cast<int>(std::round(position.centre.x) -
-                                               0.5 * rectangle.width),
+                                               (0.5 * rectangle.width)),
                               static_cast<int>(std::round(position.centre.y) -
-                                               0.5 * rectangle.height),
+                                               (0.5 * rectangle.height)),
                               static_cast<int>(std::round(rectangle.width)),
                               static_cast<int>(std::round(rectangle.height)),
                               rectangle.colour);
