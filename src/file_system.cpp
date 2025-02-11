@@ -14,6 +14,8 @@
 #include <string_view>
 #include <vector>
 
+namespace
+{
 void parse_level_bricks_file(std::string_view json_path,
                              nlohmann::json &json_data)
 {
@@ -35,6 +37,7 @@ void parse_level_bricks_file(std::string_view json_path,
         throw exception;
     }
 }
+} // namespace
 
 std::map<BrickType, LevelBrick> load_brick_properties()
 {
