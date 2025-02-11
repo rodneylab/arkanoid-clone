@@ -433,7 +433,7 @@ void render_text_line_right_aligned(Font font,
                                     const Color colour)
 {
     const Vector2 text_measurements{MeasureTextEx(font,
-                                                  text.data(),
+                                                  std::string(text).data(),
                                                   constants::kHudFontSize,
                                                   constants::kHudFontSpacing)};
     DrawTextEx(
