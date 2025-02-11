@@ -20,7 +20,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install lcov libxrandr-dev libxcursor-dev libudev-dev libopenal-dev libflac-dev libvorbis-dev libgl1-mesa-dev libegl1-mesa-dev freeglut3-dev libxinerama-dev libxi-dev
       - uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5.3.0
       - name: Setup Cpp
-        uses: aminya/setup-cpp@12e62a1b8da8f1e66acc75305a2621234ef49dd0 # v0.46.0
+        uses: aminya/setup-cpp@a03cb7ea002c225d3c1aae86a1e751f9598345ed # v0.46.1
         with:
           clangtidy: true
       - name: configure
