@@ -19,7 +19,7 @@ namespace
 void parse_level_bricks_file(std::string_view json_path,
                              nlohmann::json &json_data)
 {
-    std::ifstream json_file{json_path.data()};
+    std::ifstream json_file{std::string(json_path).data()};
     if (!json_file)
     {
         spdlog::error("Unable to open {} for reading.", json_path);
