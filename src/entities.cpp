@@ -28,11 +28,11 @@
 #include <vector>
 
 constexpr float kPaddleTop{static_cast<float>(constants::kWindowHeight) -
-                           0.5 * constants::kPaddleHeight -
+                           (0.5 * constants::kPaddleHeight) -
                            constants::kPaddleInsetBottom};
 
 constexpr float kBallInitialPositionTop{kPaddleTop -
-                                        2.F * constants::kBallRadius};
+                                        (2.F * constants::kBallRadius)};
 
 void create_ball(flecs::world *world)
 {
@@ -45,7 +45,7 @@ void create_ball(flecs::world *world)
         .add<Ball>()
         .set<CircleComponent>(CircleComponent(constants::kBallRadius, RED))
         .set<Position>(Position(static_cast<float>(constants::kWallWidth) +
-                                    0.5F * constants::kBricksWidth,
+                                    (0.5F * constants::kBricksWidth),
                                 kBallInitialPositionTop))
         .set<CollisionBox>(
             CollisionBox(constants::kBallRadius, 0.5F * constants::kBallRadius))
@@ -90,12 +90,13 @@ void create_bricks(flecs::world *world)
                                        level_brick.colour})
                 .set<Destructible>(Destructible(level_brick.points_value,
                                                 level_brick.hits_to_destroy))
-                .set<Position>(Position(
-                    static_cast<float>(column) * padded_brick_width +
-                        constants::kBricksInsetX +
-                        0.5F * constants::kBrickWidth,
-                    static_cast<float>(row) * padded_brick_height +
-                        constants::kBricksInsetY + 0.5F * padded_brick_height));
+                .set<Position>(
+                    Position((static_cast<float>(column) * padded_brick_width) +
+                                 constants::kBricksInsetX +
+                                 (0.5F * constants::kBrickWidth),
+                             (static_cast<float>(row) * padded_brick_height) +
+                                 constants::kBricksInsetY +
+                                 (0.5F * padded_brick_height)));
         }
     }
 }
@@ -108,7 +109,7 @@ void create_paddle(flecs::world *world)
                                   static_cast<float>(constants::kPaddleHeight),
                                   RED})
         .set<Position>({static_cast<float>(constants::kWallWidth) +
-                            0.5F * constants::kBricksWidth,
+                            (0.5F * constants::kBricksWidth),
                         kPaddleTop})
         .set<CollisionBox>(
             {0.5F * constants::kPaddleWidth, 0.5F * constants::kPaddleHeight})
