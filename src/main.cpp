@@ -24,15 +24,19 @@
 #include <raylib.h>
 
 #include <ctime>
+#include <string>
 #include <string_view>
 
+namespace
+{
 void initialise_sdf_font(const std::string_view &font_path,
                          Font *sdf_font,
                          Shader *shader)
 {
     // Load font into memory
     int fileSize{0};
-    unsigned char *fileData = LoadFileData(font_path.data(), &fileSize);
+    unsigned char *fileData =
+        LoadFileData(std::string(font_path).data(), &fileSize);
 
     // Generate default font from TTF
     constexpr int kFontBaseSize{27};
@@ -77,6 +81,7 @@ void initialise_sdf_font(const std::string_view &font_path,
 
     SetTextureFilter(sdf_font->texture, TEXTURE_FILTER_BILINEAR);
 }
+} // namespace
 
 int main()
 {
