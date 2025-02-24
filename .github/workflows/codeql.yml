@@ -72,7 +72,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install gcovr lcov libxrandr-dev libxcursor-dev libudev-dev libopenal-dev libflac-dev libvorbis-dev libgl1-mesa-dev libegl1-mesa-dev freeglut3-dev libxinerama-dev libxi-dev
       - if: matrix.language == 'c-cpp'
         name: Setup Cpp
-        uses: aminya/setup-cpp@12e62a1b8da8f1e66acc75305a2621234ef49dd0 # v0.46.0
+        uses: aminya/setup-cpp@abe2d67f8c619c5f4b9e40358430e33df461d5b8 # v0.46.2
         with:
           clangtidy: true
       - if: matrix.language == 'c-cpp'
