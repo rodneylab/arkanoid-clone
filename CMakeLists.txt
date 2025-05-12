@@ -3,7 +3,7 @@ project(
     Arkanoid
     VERSION 0.0.1
     DESCRIPTION "Arkanoid clone built in C++ with raylib and flecs."
-    LANGUAGES CXX)
+    LANGUAGES CXX )
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_EXPORT_COMPILE_COMMANDS True)
