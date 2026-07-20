@@ -1,6 +1,6 @@
-colorlog==6.10.1 \
-  --hash=sha256:2d7e8348291948af66122cff006c9f8da6255d224e7cf8e37d8de2df3bad8c9c \
-  --hash=sha256:eb4ae5cb65fe7fec7773c2306061a8e63e02efc2c72eba9d27b0fa23c94f1321
+colorlog==6.11.0 \
+  --hash=sha256:9d90fb53fa906c8970c18fbe46506bae1fb5f86b513b8f867db37e4ace9be7ae \
+  --hash=sha256:f1e27d75aa2cb138f3f640c0e305b65b680ccbef6ecc034eba7e03494ffcd2a1
 gcovr==8.6 \
   --hash=sha256:b2e7042abca9321cadbab8a06eb34d19f801b831557b28cdc30a029313de8b9e \
   --hash=sha256:dbf9d87c38042752ad6f530aa8210427e22b526611bb7b7bfed0e81977d1f1ef
